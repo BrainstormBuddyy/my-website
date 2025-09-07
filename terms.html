@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="title">Terms of Service</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4f2ff;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+    }
+    .container {
+      max-width: 960px;
+      background: white;
+      padding: 2rem 3rem;
+      margin: auto;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    h1, h2 {
+      color: #6c63ff;
+    }
+    p, li {
+      line-height: 1.6;
+    }
+    select {
+      float: right;
+      margin-bottom: 1rem;
+      padding: 0.4rem;
+      border-radius: 5px;
+      font-size: 0.95rem;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <select id="lang-select">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+      <option value="ru">Русский</option>
+      <option value="it">Italiano</option>
+      <option value="pt">Português</option>
+    </select>
+
+    <h1 id="title">Terms of Service</h1>
+    <p id="effective-date">Effective Date: July 6, 2025</p>
+
+    <h2 id="intro-heading">1. Introduction</h2>
+    <p id="intro-text">Welcome to Brainstorm Buddy. By using our services, you agree to these terms.</p>
+
+    <h2 id="use-heading">2. Use of the Extension</h2>
+    <p id="use-text">Brainstorm Buddy is a productivity tool powered by AI. You must use it legally and responsibly.</p>
+
+    <h2 id="ai-heading">3. AI-Generated Content</h2>
+<p id="ai-text1">Brainstorm Buddy uses OpenAI's ChatGPT to help you generate ideas. The output may not always be accurate.</p>
+<p id="ai-text2">By using this feature, you agree that:</p>
+<ul>
+  <li id="ai-li1"></li>
+  <li id="ai-li2"></li>
+</ul>
+<p id="ai-text3"></p>
+
+
+    <h2 id="fairuse-heading">4. Fair Use Policy</h2>
+    <p id="fairuse-text1">Brainstorm Buddy is provided for individual, lawful, and reasonable use. By accessing our services, you agree to the following conditions:</p>
+    <ul>
+  <li id="fairuse-li1">The "Unlimited" plan offers generous usage...</li>
+  <li id="fairuse-li2">Creating multiple accounts...</li>
+  <li id="fairuse-li3">The name "Brainstorm Buddy"... </li>
+  <li id="fairuse-li4">You may not use the service to produce content...</li>
+</ul>
+
+    <p id="fairuse-text2">We reserve the right to limit, suspend, or terminate access to users who violate this Fair Use Policy.</p>
+
+    <h2 id="account-heading">5. User Accounts</h2>
+    <p id="account-text">Accounts are required for certain features. You are responsible for your credentials and activity.</p>
+
+    <h2 id="privacy-heading">6. Data Collection & Privacy</h2>
+    <p id="privacy-text1">We collect login and usage data to personalize the experience. See our <a href="privacy.html">Privacy Policy</a>.</p>
+    <p id="privacy-text2">We comply with UK GDPR. You may request access, changes, or deletion of your data.</p>
+
+    <h2 id="ip-heading">7. Intellectual Property</h2>
+    <p id="ip-text">All content and branding associated with Brainstorm Buddy is the property of the developer.</p>
+
+    <h2 id="third-heading">8. Third-Party Services</h2>
+    <p id="third-text">We integrate services like Google and OpenAI. We're not responsible for their terms or policies.</p>
+
+    <h2 id="termination-heading">9. Termination</h2>
+    <p id="termination-text">We may suspend or terminate your access at any time for violating these terms.</p>
+
+    <h2 id="liability-heading">10. Limitation of Liability</h2>
+    <p id="liability-text">Brainstorm Buddy is provided “as is.” We are not responsible for indirect or consequential damages.</p>
+
+    <h2 id="changes-heading">11. Changes to Terms</h2>
+    <p id="changes-text">We may revise these terms at any time. Continued use implies your acceptance of any changes.</p>
+
+    <h2 id="contact-heading">12. Contact</h2>
+    <p id="contact-text">If you have questions, contact us at <a href="mailto:brainstormbuddyy@gmail.com">brainstormbuddyy@gmail.com</a>.</p>
+
+    <footer>&copy; 2025 Brainstorm Buddy. All rights reserved.</footer>
+  </div>
+
+  <script>
+    const translations = JSON.parse(localStorage.getItem('translationsData')) || {};
+
+    function applyLanguage(lang) {
+      const t = translations[lang];
+      if (!t) return;
+      for (const id in t) {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = t[id];
+      }
+    }
+
+    document.getElementById('lang-select').addEventListener('change', e => {
+      const lang = e.target.value;
+      localStorage.setItem('selectedLanguage', lang);
+      applyLanguage(lang);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const lang = localStorage.getItem('selectedLanguage') || 'en';
+      document.getElementById('lang-select').value = lang;
+      fetch('translations.json')
+        .then(response => response.json())
+        .then(data => {
+          localStorage.setItem('translationsData', JSON.stringify(data));
+          applyLanguage(lang);
+        });
+    });
+  </script>
+</body>
+</html>

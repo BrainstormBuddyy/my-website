@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Request a Refund - Brainstorm Buddy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6c63ff;
+      --accent: #a259ff;
+      --bg: #f5f4fa;
+      --dark-bg: #1a1a1a;
+      --text: #333;
+      --text-dark: #f0f0f0;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body.dark {
+      background: var(--dark-bg);
+      color: var(--text-dark);
+    }
+
+    header {
+      background: linear-gradient(to right, var(--accent), var(--primary));
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-left img {
+      width: 40px;
+      cursor: pointer;
+    }
+
+    .btn {
+      background: white;
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover {
+      background: #eae8ff;
+    }
+
+    main {
+      max-width: 600px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary);
+    }
+
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    body.dark form {
+      background: #2a2a2a;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    input[type="submit"] {
+      background: var(--primary);
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background: #554cf2;
+    }
+
+    p.note {
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-left">
+      <img src="icon128.png" alt="Logo" onclick="location.href='index.html'">
+      <button class="btn" onclick="location.href='index.html'">Home</button>
+    </div>
+  </header>
+
+  <main>
+    <h1>Request a Refund</h1>
+    <p class="note">Refunds are only available within 7 days for yearly plans. Monthly payments are non-refundable.</p>
+
+    <form action="https://formspree.io/f/xjkowdod" method="POST">
+      <!-- Force subject line of the email -->
+      <input type="hidden" name="_subject" value="Refund">
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="reason">Reason for Refund</label>
+      <textarea id="reason" name="message" required></textarea>
+
+      <input type="submit" value="Submit Refund Request" />
+    </form>
+  </main>
+</body>
+</html>

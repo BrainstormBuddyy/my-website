@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Billing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary:#6c63ff; --primary-2:#a259ff; --text:#333; --muted:#555; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:'Inter',sans-serif; background:linear-gradient(to bottom,#fff,#f7f3ff); display:flex; flex-direction:column; min-height:100vh; }
+    header { background:linear-gradient(to right,var(--primary-2),var(--primary)); color:#fff; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; }
+    .home-btn { background:#fff; color:var(--primary); padding:0.5rem 1rem; border-radius:0.5rem; border:none; font-weight:600; cursor:pointer; }
+    main { flex:1; padding:4rem 2rem; max-width:640px; margin:auto; text-align:center; }
+    h1 { font-size:2rem; color:var(--text); margin:0; }
+    .card { background:#fff; padding:2rem; border-radius:1rem; box-shadow:0 0 10px rgba(0,0,0,0.05); margin-top:2rem; text-align:left; }
+    .row { margin:0.8rem 0; color:var(--muted); }
+    .label { font-weight:700; color:#222; }
+    .btn { margin-top:1.2rem; padding:0.6rem 1.2rem; border-radius:0.5rem; font-weight:600; cursor:pointer; border:none; transition:transform .02s ease-in; }
+    .btn:active { transform:translateY(1px); }
+    .btn-primary { background:var(--primary); color:#fff; }
+    .btn-outline { background:#f5f5f5; color:var(--primary-2); border:2px solid var(--primary-2); margin-left:.5rem; }
+    .btn[disabled]{ opacity:.6; cursor:not-allowed; }
+    .note { margin-top:1rem; font-weight:600; }
+    .error { color:#c0392b; }
+    .ok { color:green; }
+    .muted { color:#777; font-size:.95rem; }
+    .overlay { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(255,255,255,.7); backdrop-filter:blur(2px); z-index:99; }
+    .overlay.show { display:flex; }
+    .spinner { width:44px; height:44px; border:4px solid rgba(0,0,0,0.1); border-top-color:var(--primary); border-radius:50%; animation:spin .9s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Billing</h2>
+    <button class="home-btn" onclick="window.location.href='index.html'">Home</button>
+  </header>
+
+  <main>
+    <h1>Your Billing Details</h1>
+    <div class="card">
+      <p class="row"><span class="label">Plan:</span> <span id="user-plan">Free</span></p>
+      <p class="row"><span class="label">Email:</span> <span id="user-email">-</span></p>
+      <p class="row"><span class="label">Status:</span> <span id="status">Loading…</span></p>
+      <p class="row"><span class="label">Next Billing Date:</span> <span id="billing-date">Loading…</span></p>
+      <p class="row muted" id="cancel-note" style="display:none;"></p>
+
+      <button class="btn btn-primary" onclick="window.location.href='pricing.html'">Manage Plan</button>
+      <button class="btn btn-outline" id="portal-btn" onclick="openCustomerPortal()">Manage / Cancel in Portal</button>
+      <button class="btn btn-outline" id="cancel-btn" onclick="cancelSubscription()">Cancel at period end</button>
+
+      <p class="note" id="msg"></p>
+    </div>
+  </main>
+
+  <div class="overlay" id="overlay" aria-hidden="true" aria-label="Loading">
+    <div class="spinner" role="status" aria-live="polite"></div>
+  </div>
+
+  <script>
+    // ===== API base (local vs production) =====
+    const API_BASE = location.hostname.includes('localhost') || location.hostname.startsWith('127.')
+      ? "http://localhost:5050"
+      : "https://auth-backend-b1b6.onrender.com"; // <-- your Render URL
+
+    // Optional: Stripe's generic portal login (fallback)
+    const GENERIC_PORTAL_LOGIN = "https://billing.stripe.com/p/login/28E3cu5ef1lk0F3gSK2Ry00";
+
+    // Debug toggle: add ?debug=1 to URL to see grouped logs
+    const DEBUG = new URLSearchParams(location.search).get('debug') === '1';
+    const dlog = (...args) => { if (DEBUG) console.log('[billing]', ...args); };
+    const dgroup = (label) => { if (DEBUG) console.groupCollapsed(label); };
+    const dgroupEnd = () => { if (DEBUG) console.groupEnd(); };
+
+    window.onload = () => {
+      const email = (localStorage.getItem("userEmail") || "").trim();
+      document.getElementById("user-email").textContent = email || "Not logged in";
+      loadPlan();
+      loadBillingDate();
+    };
+
+    // ===== Helpers =====
+    function showOverlay(show){
+      const o = document.getElementById("overlay");
+      o.classList.toggle("show", !!show);
+      o.setAttribute("aria-hidden", show ? "false" : "true");
+    }
+    function setButtonLoading(id, isLoading, loadingText, defaultText){
+      const b = document.getElementById(id);
+      if (!b) return;
+      b.disabled = !!isLoading;
+      if (isLoading) b.textContent = loadingText || "Working…";
+      else b.textContent = defaultText || b.dataset.defaultText || b.textContent;
+    }
+    function setMsg(text, type){
+      const el = document.getElementById("msg");
+      el.textContent = text || "";
+      el.classList.toggle("error", type==="error");
+      el.classList.toggle("ok", type==="ok");
+    }
+    function formatDateTime(iso){
+      const dt = new Date(iso);
+      return dt.toLocaleString(undefined, {
+        weekday:"short", year:"numeric", month:"short", day:"numeric",
+        hour:"2-digit", minute:"2-digit"
+      });
+    }
+    async function safeJson(res){ try { return await res.json(); } catch { return null; } }
+    const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
+    // ===== Load current plan (webhook/in-memory or persisted) =====
+    async function loadPlan(){
+      const email = localStorage.getItem("userEmail");
+      const planEl = document.getElementById("user-plan");
+      const statusEl = document.getElementById("status");
+      dgroup('loadPlan');
+      if (!email) { planEl.textContent = "Free"; dgroupEnd(); return; }
+
+      try {
+        const url = `${API_BASE}/api/subscription-status?email=${encodeURIComponent(email)}`;
+        dlog('GET', url);
+        const res = await fetch(url);
+        const data = await res.json();
+        dlog('status data:', data);
+        const plan = (data.plan || 'free');
+        planEl.textContent = cap(plan);
+        if (data.oneTime && plan !== 'free') {
+          statusEl.textContent = "One-time purchase • No renewal";
+        }
+      } catch (e) {
+        console.warn('[billing] /api/subscription-status failed:', e);
+      } finally { dgroupEnd(); }
+    }
+
+    // ===== Load next billing date (live from Stripe) =====
+    async function loadBillingDate(){
+      const email = localStorage.getItem("userEmail");
+      const billingEl = document.getElementById("billing-date");
+      const statusEl  = document.getElementById("status");
+      const cancelBtn = document.getElementById("cancel-btn");
+      const cancelNote = document.getElementById("cancel-note");
+      dgroup('loadBillingDate');
+
+      if (!email) {
+        billingEl.textContent = "Not available";
+        statusEl.textContent  = "No account";
+        if (cancelBtn) cancelBtn.style.display = 'none';
+        dgroupEnd();
+        return;
+      }
+
+      try {
+        const url = `${API_BASE}/get-billing-date`;
+        dlog('POST', url, { email });
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+
+        if (!res.ok) {
+          const maybe = await safeJson(res);
+          const msg = maybe?.error || `HTTP ${res.status}`;
+          dlog('get-billing-date failed:', msg);
+          billingEl.textContent = "Not available";
+          if (!statusEl.textContent.includes("One-time purchase")) {
+            statusEl.textContent = msg.includes("Stripe not configured") ? "Stripe not configured" : "Unknown";
+          }
+          if (cancelBtn) cancelBtn.style.display = 'none';
+          cancelNote.style.display = 'none';
+          return;
+        }
+
+        const data = await res.json();
+        dlog('billing data:', data);
+
+        // Show cancel-at-period-end note if present
+        if (data.cancelAtPeriodEnd) {
+          cancelNote.textContent = data.cancelAt
+            ? `Cancellation scheduled — access ends on ${formatDateTime(data.cancelAt)}`
+            : `Cancellation scheduled at period end`;
+          cancelNote.style.display = 'block';
+          // Hide the cancel button (already scheduled)
+          if (cancelBtn) cancelBtn.style.display = 'none';
+        } else {
+          cancelNote.style.display = 'none';
+        }
+
+        const isSub = !!data.nextBillingDate || (['trialing','active','past_due','unpaid'].includes(data.status));
+        if (cancelBtn) cancelBtn.style.display = isSub && !data.cancelAtPeriodEnd ? 'inline-block' : 'none';
+
+        if (!data.nextBillingDate) {
+          billingEl.textContent = "Not available";
+          if (!statusEl.textContent.includes("One-time purchase")) {
+            statusEl.textContent =
+              (data.status === 'no_subscription' || data.status === 'no_active_sub' || data.status === 'no_account')
+              ? "Free / No active subscription"
+              : (data.status || "Unknown");
+          }
+          return;
+        }
+
+        billingEl.textContent = formatDateTime(data.nextBillingDate);
+        statusEl.textContent  = data.priceNickname ? `${data.status} • ${data.priceNickname}` : data.status;
+      } catch (err) {
+        console.error('[billing] unexpected error:', err);
+        billingEl.textContent = "Not available";
+        if (!statusEl.textContent.includes("One-time purchase")) {
+          statusEl.textContent  = "Unknown";
+        }
+        if (cancelBtn) cancelBtn.style.display = 'none';
+        cancelNote.style.display = 'none';
+      } finally { dgroupEnd(); }
+    }
+
+    // ===== Open Stripe Customer Portal =====
+    async function openCustomerPortal(){
+      const email = localStorage.getItem("userEmail");
+      if (!email) { alert("You must be logged in to manage your subscription."); return; }
+      setMsg("", null); setButtonLoading("portal-btn", true, "Opening Portal...", "Manage / Cancel in Portal"); showOverlay(true);
+      try {
+        const res = await fetch(`${API_BASE}/create-portal-session`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, returnUrl: window.location.href })
+        });
+        if (!res.ok) { const e = await safeJson(res); throw new Error(e?.error || `HTTP ${res.status}`); }
+        const data = await res.json();
+        if (data?.url) { window.location.href = data.url; return; }
+        throw new Error("No portal URL in response.");
+      } catch (err) {
+        console.error('[billing] portal open error:', err);
+        setMsg("Could not open a personalized portal session. Redirecting to secure portal login…", "error");
+        window.location.href = GENERIC_PORTAL_LOGIN; // fallback
+      } finally {
+        setButtonLoading("portal-btn", false, "", "Manage / Cancel in Portal");
+        showOverlay(false);
+      }
+    }
+
+    // ===== Cancel at period end (server-side) =====
+    async function cancelSubscription(){
+      const email = localStorage.getItem("userEmail");
+      if (!email) { alert("You must be logged in."); return; }
+
+      if (!confirm("Cancel your subscription at the end of the current period?")) return;
+
+      setMsg("", null);
+      setButtonLoading("cancel-btn", true, "Scheduling cancellation...", "Cancel at period end");
+      showOverlay(true);
+
+      try {
+        const res = await fetch(`${API_BASE}/cancel-subscription`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+        const data = await safeJson(res);
+        if (!res.ok || !data?.success) {
+          throw new Error(data?.message || `HTTP ${res.status}`);
+        }
+        setMsg("Cancellation scheduled. You will retain access until the end of the current billing period.", "ok");
+        // Refresh UI (shows the "cancellation scheduled" note and hides button)
+        await loadBillingDate();
+      } catch (err) {
+        console.error('[billing] cancel error:', err);
+        setMsg("Could not schedule cancellation. Please try again, or use the Customer Portal.", "error");
+      } finally {
+        setButtonLoading("cancel-btn", false, "", "Cancel at period end");
+        showOverlay(false);
+      }
+    }
+  </script>
+
+  <!-- Keep any site-specific JS below -->
+  <script src="stripe-server.js"></script>
+</body>
+</html>

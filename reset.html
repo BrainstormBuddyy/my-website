@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reset Password</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #f4f2ff, #ffffff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .reset-box {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .reset-box input {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    .reset-box button {
+      width: 100%;
+      background: #6c63ff;
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .reset-box button[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .back-link {
+      margin-top: 1.5rem;
+      display: block;
+      font-size: 0.95rem;
+      color: #6c63ff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="reset-box">
+    <h2>Reset Your Password</h2>
+    <input type="email" placeholder="Your Email" id="resetEmail" />
+    <button id="resetBtn">Send Reset Link</button>
+    <a href="login.html" class="back-link">Back to Login</a>
+  </div>
+
+  <!-- EmailJS CDN must load first -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <!-- Your script (keep at the end of <body>) -->
+  <script>
+    // ---- CONFIG: put your actual keys/IDs here ----
+    const EMAILJS_PUBLIC_KEY = "lxHf7ktyUVF4qkEmS";    // your EmailJS Public Key
+    const EMAILJS_SERVICE_ID = "service_ubo0miq";      // your EmailJS Service ID
+    const EMAILJS_TEMPLATE_ID = "template_5gwcj8t";    // your EmailJS Template ID
+    // Make sure the template has variables named exactly: {{email}} and {{reset_link}}
+    // or change the keys you send below to match your template.
+    // -----------------------------------------------
+
+    (function () {
+      // must run after the CDN script above
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    })();
+
+    const btn = document.getElementById("resetBtn");
+    btn.addEventListener("click", sendResetLink);
+
+    async function sendResetLink() {
+      const emailInput = document.getElementById("resetEmail");
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        alert("Please enter your email.");
+        return;
+      }
+
+      try {
+        btn.disabled = true;
+        btn.textContent = "Sending…";
+
+        // Ask backend to generate a time-limited token + reset URL
+        const res = await fetch("http://localhost:5050/request-reset", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await res.json();
+        if (!res.ok || data.error) {
+          throw new Error(data.error || "Failed to request reset link.");
+        }
+
+        const resetLink = data.resetLink;
+        console.log("Reset link being sent:", resetLink);
+
+        // Send the email via EmailJS
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          {
+            email: email,          // must match your template var name
+            reset_link: resetLink  // must match your template var name
+          }
+        );
+
+        alert("Password reset link has been sent to your email.");
+      } catch (err) {
+        console.error("Email send failed:", err);
+        alert(`Failed to send reset email: ${err.message || "Unknown error"}`);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Send Reset Link";
+      }
+    }
+  </script>
+</body>
+</html>

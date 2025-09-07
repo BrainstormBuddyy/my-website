@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enterprise Contact</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #6c63ff;
+      --accent: #a259ff;
+      --bg: #fffafc;
+      --bg-dark: #1a1a1a;
+      --text: #333;
+      --text-dark: #f0f0f0;
+      --input-border: #ccc;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 2rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.75rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .switcher {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.9rem;
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    form {
+      max-width: 700px;
+      margin: 0 auto;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      background: white;
+      color: var(--text);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    body.dark input,
+    body.dark select,
+    body.dark textarea {
+      background: #2a2a2a;
+      color: var(--text-dark);
+      border: 1px solid #444;
+    }
+
+    .submit-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: var(--accent);
+    }
+
+    body.dark .submit-btn {
+      background: white;
+      color: var(--primary);
+    }
+
+    body.dark .submit-btn:hover {
+      background: #f4f0ff;
+    }
+
+    .optional {
+      font-weight: normal;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    body.dark .optional {
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="pageTitle">Enterprise Contact</h1>
+    <div class="controls">
+      <button class="switcher" type="button" onclick="toggleDarkMode()">🌙</button>
+      <select class="switcher" onchange="changeLanguage(this.value)">
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+        <option value="fr">FR</option>
+        <option value="ru">RU</option>
+        <option value="it">IT</option>
+        <option value="pt">PT</option>
+      </select>
+    </div>
+  </header>
+
+  <form id="enterpriseForm" action="https://formspree.io/f/xjkowdod" method="POST">
+    <!-- Hidden subject field (filled by JS before submit) -->
+    <input type="hidden" name="_subject" id="_subject" value="Enterprise" />
+
+    <div>
+      <label for="email" id="labelEmail">Work email*</label>
+      <input type="email" name="email" id="email" required />
+    </div>
+
+    <div>
+      <label for="function" id="labelFunction">Function*</label>
+      <select name="function" id="function" required>
+        <option value="">Select...</option>
+        <option>Engineering</option>
+        <option>Sales</option>
+        <option>Marketing</option>
+        <option>Product</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="level" id="labelLevel">Management level*</label>
+      <select name="level" id="level" required>
+        <option value="">Select...</option>
+        <option>Executive</option>
+        <option>Director</option>
+        <option>Manager</option>
+        <option>Contributor</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="company" id="labelCompany">Company name*</label>
+      <input type="text" name="company" id="company" required />
+    </div>
+
+    <div>
+      <label for="size" id="labelSize">Company size*</label>
+      <select name="size" id="size" required>
+        <option value="">Select...</option>
+        <option>1-10</option>
+        <option>11-50</option>
+        <option>51-200</option>
+        <option>201-500</option>
+        <option>500+</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="first" id="labelFirst">First name*</label>
+      <input type="text" name="first" id="first" required />
+    </div>
+
+    <div>
+      <label for="last" id="labelLast">Last name*</label>
+      <input type="text" name="last" id="last" required />
+    </div>
+
+    <div>
+      <label for="phone" id="labelPhone">Phone*</label>
+      <input type="tel" name="phone" id="phone" required />
+    </div>
+
+    <div>
+      <label for="country" id="labelCountry">Country*</label>
+      <select name="country" id="country" required>
+        <option value="">Select...</option>
+        <option>United States</option>
+        <option>Canada</option>
+        <option>United Kingdom</option>
+        <option>Germany</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="message" id="labelMessage">How can our sales team help you? <span class="optional">(Optional)</span></label>
+      <textarea name="message" id="message"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+  </form>
+
+  <script>
+    // i18n strings
+    const translations = {
+      en: {
+        pageTitle: "Enterprise Contact",
+        labelEmail: "Work email*",
+        labelFunction: "Function*",
+        labelLevel: "Management level*",
+        labelCompany: "Company name*",
+        labelSize: "Company size*",
+        labelFirst: "First name*",
+        labelLast: "Last name*",
+        labelPhone: "Phone*",
+        labelCountry: "Country*",
+        labelMessage: "How can our sales team help you? (Optional)",
+        submitBtn: "Submit"
+      },
+      es: {
+        pageTitle: "Contacto empresarial",
+        labelEmail: "Correo electrónico laboral*",
+        labelFunction: "Función*",
+        labelLevel: "Nivel de gestión*",
+        labelCompany: "Nombre de la empresa*",
+        labelSize: "Tamaño de la empresa*",
+        labelFirst: "Nombre*",
+        labelLast: "Apellido*",
+        labelPhone: "Teléfono*",
+        labelCountry: "País*",
+        labelMessage: "¿Cómo puede ayudarle nuestro equipo de ventas? (Opcional)",
+        submitBtn: "Enviar"
+      },
+      fr: {
+        pageTitle: "Contact entreprise",
+        labelEmail: "Email professionnel*",
+        labelFunction: "Fonction*",
+        labelLevel: "Niveau hiérarchique*",
+        labelCompany: "Nom de l'entreprise*",
+        labelSize: "Taille de l'entreprise*",
+        labelFirst: "Prénom*",
+        labelLast: "Nom*",
+        labelPhone: "Téléphone*",
+        labelCountry: "Pays*",
+        labelMessage: "Comment notre équipe commerciale peut-elle vous aider ? (Optionnel)",
+        submitBtn: "Envoyer"
+      },
+      ru: {
+        pageTitle: "Связаться с отделом продаж",
+        labelEmail: "Рабочий Email*",
+        labelFunction: "Должность*",
+        labelLevel: "Уровень управления*",
+        labelCompany: "Название компании*",
+        labelSize: "Размер компании*",
+        labelFirst: "Имя*",
+        labelLast: "Фамилия*",
+        labelPhone: "Телефон*",
+        labelCountry: "Страна*",
+        labelMessage: "Как наша команда продаж может помочь вам? (Необязательно)",
+        submitBtn: "Отправить"
+      },
+      it: {
+        pageTitle: "Contatto aziendale",
+        labelEmail: "Email di lavoro*",
+        labelFunction: "Funzione*",
+        labelLevel: "Livello di gestione*",
+        labelCompany: "Nome dell'azienda*",
+        labelSize: "Dimensioni aziendali*",
+        labelFirst: "Nome*",
+        labelLast: "Cognome*",
+        labelPhone: "Telefono*",
+        labelCountry: "Paese*",
+        labelMessage: "Come può aiutarti il nostro team di vendita? (Facoltativo)",
+        submitBtn: "Invia"
+      },
+      pt: {
+        pageTitle: "Contato corporativo",
+        labelEmail: "Email profissional*",
+        labelFunction: "Função*",
+        labelLevel: "Nível de gerenciamento*",
+        labelCompany: "Nome da empresa*",
+        labelSize: "Tamanho da empresa*",
+        labelFirst: "Nome*",
+        labelLast: "Sobrenome*",
+        labelPhone: "Telefone*",
+        labelCountry: "País*",
+        labelMessage: "Como nossa equipe de vendas pode te ajudar? (Opcional)",
+        submitBtn: "Enviar"
+      }
+    };
+
+    function changeLanguage(lang) {
+      const t = translations[lang];
+      for (const key in t) {
+        const el = document.getElementById(key);
+        if (el) el.textContent = t[key];
+      }
+      localStorage.setItem("selectedLanguage", lang);
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    // Build a nice subject line before submit
+    function buildSubject() {
+      const first = (document.getElementById('first')?.value || '').trim();
+      const last = (document.getElementById('last')?.value || '').trim();
+      const company = (document.getElementById('company')?.value || '').trim();
+      const country = (document.getElementById('country')?.value || '').trim();
+
+      const namePart = [first, last].filter(Boolean).join(' ').trim();
+      const who = namePart || company ? [namePart, company && `from ${company}`].filter(Boolean).join(' ') : '';
+      const where = country ? ` (${country})` : '';
+
+      const dynamic = who ? `Enterprise – ${who}${where}` : 'Enterprise';
+      return dynamic;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedLang = localStorage.getItem("selectedLanguage") || "en";
+      changeLanguage(savedLang);
+
+      // Attach submit handler to set _subject
+      const form = document.getElementById('enterpriseForm');
+      const subjectField = document.getElementById('_subject');
+
+      form.addEventListener('submit', () => {
+        subjectField.value = buildSubject();
+      });
+    });
+  </script>
+</body>
+</html>

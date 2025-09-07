@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - Brainstorm Buddy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6c63ff;
+      --accent: #a259ff;
+      --bg: #f5f4fa;
+      --dark-bg: #1a1a1a;
+      --text: #333;
+      --text-dark: #f0f0f0;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: var(--dark-bg);
+      color: var(--text-dark);
+    }
+    header {
+      background: linear-gradient(to right, var(--accent), var(--primary));
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-left, .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .nav-left img {
+      width: 40px;
+      cursor: pointer;
+    }
+    .btn {
+      background: white;
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover {
+      background: #eae8ff;
+    }
+    .switcher {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    main {
+      padding: 3rem 1rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    section {
+      margin-bottom: 3rem;
+    }
+    h1, h2 {
+      text-align: center;
+      color: var(--primary);
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .faq-item {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      cursor: pointer;
+    }
+    body.dark .faq-item {
+      background: #2a2a2a;
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      opacity: 1;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+      text-align: center;
+    }
+    ul li {
+      margin: 0.5rem 0;
+      font-size: 1.05rem;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      background: #fafafa;
+    }
+    footer a {
+      margin: 0 1rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-left">
+      <img src="icon128.png" alt="Logo" onclick="location.href='index.html'">
+      <button class="btn" onclick="location.href='index.html'">Home</button>
+    </div>
+    <div class="nav-right">
+      <button class="switcher" onclick="toggleDarkMode()">🌙</button>
+      <select class="switcher" onchange="changeLanguage(this.value)">
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+        <option value="fr">FR</option>
+        <option value="ru">RU</option>
+        <option value="it">IT</option>
+        <option value="pt">PT</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+    <section class="fade-in">
+      <h1 id="aboutTitle">About Brainstorm Buddy</h1>
+     <p id="aboutText">
+  Brainstorm Buddy is your creative thinking companion — an AI-powered extension designed to turn messy sparks of inspiration into organized, actionable notes. Whether you're drafting an article, outlining a business pitch, or simply collecting thoughts, our tool helps you capture, refine, and explore ideas with speed and clarity — all from the comfort of your browser.
+</p>
+    </section>
+
+    <section class="fade-in">
+      <h2 id="whyTitle">Why We Built It</h2>
+    <p id="whyText">
+  Great ideas often strike when you're not expecting them — and traditional note apps can slow you down or leave you disorganized. We built Brainstorm Buddy to eliminate that friction. Our goal was to create a seamless, AI-enhanced space where creativity flows naturally, and ideas can evolve into action — without jumping between apps or losing your train of thought.
+</p>
+
+    </section>
+
+    <section class="fade-in">
+      <h2 id="whoTitle">Who It's For</h2>
+      <ul id="whoList">
+        <li id="who1">🧑‍🎓 Students: Essay and study planning</li>
+        <li id="who2">✍️ Writers: Break writer’s block and ideate</li>
+        <li id="who3">💡 Entrepreneurs: Business and product notes</li>
+      </ul>
+    </section>
+
+    <section class="fade-in">
+      <h2 id="missionTitle">Our Mission</h2>
+      <p id="missionText">To empower anyone to generate, refine, and organize ideas — intelligently and instantly.</p>
+    </section>
+
+    <section class="fade-in">
+      <h2 id="faqTitle">❓ Frequently Asked Questions</h2>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <h3 id="faqQ1">How does Brainstorm Buddy work?</h3>
+        <div class="faq-answer" id="faqA1">It uses AI to generate ideas based on your prompts. You can also write, edit, and save notes in your browser.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <h3 id="faqQ2">Is there a free version?</h3>
+        <div class="faq-answer" id="faqA2">Yes! The free version gives you access to essential features, allowing you to generate 10 AI ideas per month. You can upgrade for access to more advanced tools.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <h3 id="faqQ3">Can I export my notes?</h3>
+        <div class="faq-answer" id="faqA3">Absolutely. You can export or import notes at any time from the extension.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+  <h3 id="faqQ4">Can I get a refund?</h3>
+  <div class="faq-answer" id="faqA4">
+  <p><strong>Monthly Subscriptions:</strong> Monthly plans offer maximum flexibility — you can cancel anytime. However, all monthly payments are final and non-refundable once charged.</p>
+
+  <p><strong>Yearly Subscriptions:</strong> You may request a refund within 7 days of purchase. After that period, yearly subscriptions are non-refundable.</p>
+
+  <p><strong>Refund Policy Notes:</strong> To prevent misuse, we may limit future purchases or decline refund requests if more than two have been approved for the same account or payment method.</p>
+
+  <p>Refunds are typically processed within 5 to 10 business days.</p>
+
+  <p>
+    <a href="requestrefund.html" style="color: var(--primary); text-decoration: underline;">Request a refund here.</a>
+  </p>
+</div>
+
+</div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="privacy.html" id="footerPrivacy">Privacy Policy</a>
+    <a href="terms.html" id="footerTerms">Terms of Service</a>
+    <a href="contact.html" id="footerContact">Contact Us</a>
+    <a id="footerSupport" href="support.html">Support Us</a>
+  </footer>
+
+  <script>
+  const translations = {
+    en: {
+      aboutTitle: "About Brainstorm Buddy",
+      aboutText: "Brainstorm Buddy is your creative thinking companion — an AI-powered extension designed to turn messy sparks of inspiration into organized, actionable notes. Whether you're drafting an article, outlining a business pitch, or simply collecting thoughts, our tool helps you capture, refine, and explore ideas with speed and clarity — all from the comfort of your browser.",
+      whyTitle: "Why We Built It",
+    whyText: "Great ideas often strike when you're not expecting them — and traditional note apps can slow you down or leave you disorganized. We built Brainstorm Buddy to eliminate that friction. Our goal was to create a seamless, AI-enhanced space where creativity flows naturally, and ideas can evolve into action — without jumping between apps or losing your train of thought.",
+      whoTitle: "Who It's For",
+      who1: "🧑‍🎓 Students: Essay and study planning",
+      who2: "✍️ Writers: Break writer’s block and ideate",
+      who3: "💡 Entrepreneurs: Business and product notes",
+      missionTitle: "Our Mission",
+      missionText: "To empower anyone to generate, refine, and organize ideas — intelligently and instantly.",
+      faqTitle: "❓ Frequently Asked Questions",
+      faqQ1: "How does Brainstorm Buddy work?",
+      faqA1: "It uses AI to generate ideas based on your prompts. You can also write, edit, and save notes in your browser.",
+      faqQ2: "Is there a free version?",
+      faqA2: "Yes! The free version gives you access to essential features, allowing you to generate 10 AI ideas per month. You can upgrade for access to more advanced tools.",
+      faqQ3: "Can I export my notes?",
+      faqA3: "Absolutely. You can export or import notes at any time from the extension.",
+      faqQ4: "Can I get a refund?",
+      faqA4: `
+        <p><strong>Monthly Subscriptions:</strong> Monthly plans offer maximum flexibility — you can cancel anytime. However, all monthly payments are final and non-refundable once charged.</p>
+        <p><strong>Yearly Subscriptions:</strong> You may request a refund within 7 days of purchase. After that period, yearly subscriptions are non-refundable.</p>
+        <p><strong>Refund Policy Notes:</strong> To prevent misuse, we may limit future purchases or decline refund requests if more than two have been approved for the same account or payment method.</p>
+        <p>Refunds are typically processed within 5 to 10 business days.</p>
+        <p><a href="requestrefund.html" style="color: var(--primary); text-decoration: underline;">Request a refund here.</a></p>
+      `,
+      footerPrivacy: "Privacy Policy",
+      footerTerms: "Terms of Service",
+      footerContact: "Contact Us",
+      footerSupport: "Support Us"
+    },
+
+    es: {
+      aboutTitle: "Acerca de Brainstorm Buddy",
+     aboutText: "Brainstorm Buddy es tu compañero para el pensamiento creativo: una extensión impulsada por IA diseñada para convertir chispas caóticas de inspiración en notas organizadas y accionables. Ya sea que estés redactando un artículo, planificando un negocio o simplemente recopilando ideas, nuestra herramienta te ayuda a capturarlas, refinarlas y explorarlas con rapidez y claridad, todo desde tu navegador.",
+      whyTitle: "Por qué lo creamos",
+      whyText: "Las grandes ideas suelen surgir cuando menos lo esperas, y las aplicaciones tradicionales de notas pueden entorpecer tu flujo o dejarte desorganizado. Creamos Brainstorm Buddy para eliminar esa fricción. Nuestro objetivo es ofrecer un espacio fluido, mejorado con IA, donde la creatividad fluya naturalmente y las ideas se conviertan en acción, sin tener que saltar entre aplicaciones ni perder el hilo.",
+      whoTitle: "Para quién es",
+      who1: "🧑‍🎓 Estudiantes: Ensayos y planificación",
+      who2: "✍️ Escritores: Superar bloqueos creativos",
+      who3: "💡 Emprendedores: Notas de negocio",
+      missionTitle: "Nuestra misión",
+      missionText: "Empoderar a cualquiera para generar y organizar ideas de forma inteligente.",
+      faqTitle: "❓ Preguntas frecuentes",
+      faqQ1: "¿Cómo funciona Brainstorm Buddy?",
+      faqA1: "Usa IA para generar ideas. También puedes guardar y editar notas.",
+      faqQ2: "¿Tiene versión gratuita?",
+      faqA2: "¡Sí! La versión gratuita te da acceso a funciones esenciales, permitiéndote generar 10 ideas con IA por mes.",
+      faqQ3: "¿Puedo exportar mis notas?",
+      faqA3: "Sí. Puedes exportarlas o importarlas cuando lo necesites.",
+      faqQ4: "¿Puedo solicitar un reembolso?",
+      faqA4: `
+        <p><strong>Suscripciones mensuales:</strong> Puedes cancelar en cualquier momento. Sin embargo, todos los pagos mensuales son finales y no reembolsables una vez cobrados.</p>
+        <p><strong>Suscripciones anuales:</strong> Puedes solicitar un reembolso dentro de los 7 días posteriores a la compra. Después de ese período, no son reembolsables.</p>
+        <p><strong>Notas de la política de reembolsos:</strong> Podemos limitar futuras compras o rechazar solicitudes si se aprueban más de dos por cuenta o método.</p>
+        <p>Los reembolsos suelen procesarse en un plazo de 5 a 10 días hábiles.</p>
+        <p><a href="requestrefund.html" style="color: var(--primary); text-decoration: underline;">Solicita un reembolso aquí.</a></p>
+      `,
+      footerPrivacy: "Política de Privacidad",
+      footerTerms: "Términos del Servicio",
+      footerContact: "Contáctanos",
+      footerSupport: "Apóyanos"
+    },
+    fr: {
+    aboutTitle: "À propos de Brainstorm Buddy",
+    aboutText: "Brainstorm Buddy est votre compagnon de pensée créative — une extension alimentée par l'IA conçue pour transformer les éclairs d'inspiration en notes claires et exploitables. Que vous rédigiez un article, prépariez un pitch ou notiez vos idées, notre outil vous aide à les capturer, les affiner et les développer rapidement et facilement — directement dans votre navigateur.",
+    whyTitle: "Pourquoi nous l'avons créé",
+   whyText: "Les meilleures idées arrivent souvent par surprise — et les applications de notes classiques peuvent freiner ou désorganiser votre élan créatif. Nous avons créé Brainstorm Buddy pour supprimer ces obstacles. Notre ambition : un espace fluide, optimisé par l’IA, où la créativité s’épanouit et où vos idées se concrétisent, sans distractions ni allers-retours entre applications.",
+    whoTitle: "Pour qui est-ce fait",
+    who1: "🧑‍🎓 Étudiants : planification de dissertations et d'études",
+    who2: "✍️ Écrivains : surmonter le blocage de l'écrivain et trouver des idées",
+    who3: "💡 Entrepreneurs : notes commerciales et produits",
+    missionTitle: "Notre mission",
+    missionText: "Permettre à chacun de générer, affiner et organiser des idées — intelligemment et instantanément.",
+    faqTitle: "❓ Questions fréquentes",
+    faqQ1: "Comment fonctionne Brainstorm Buddy ?",
+    faqA1: "Il utilise l’IA pour générer des idées à partir de vos indications. Vous pouvez également écrire, modifier et enregistrer des notes dans votre navigateur.",
+    faqQ2: "Y a-t-il une version gratuite ?",
+    faqA2: "Oui ! La version gratuite vous donne accès aux fonctionnalités essentielles, vous permettant de générer 10 idées d'IA par mois. Vous pouvez passer à la version premium pour accéder à des outils avancés.",
+    faqQ3: "Puis-je exporter mes notes ?",
+    faqA3: "Absolument. Vous pouvez exporter ou importer vos notes à tout moment depuis l'extension.",
+    faqQ4: "Puis-je demander un remboursement ?",
+    faqA4: `
+      <p><strong>Abonnements mensuels :</strong> Vous pouvez annuler à tout moment. Cependant, tous les paiements mensuels sont définitifs et non remboursables une fois facturés.</p>
+      <p><strong>Abonnements annuels :</strong> Vous pouvez demander un remboursement dans les 7 jours suivant l’achat. Après cette période, les abonnements ne sont pas remboursables.</p>
+      <p><strong>Notes :</strong> Pour éviter les abus, nous pouvons limiter les futurs achats ou refuser les remboursements si plus de deux ont été approuvés pour le même compte ou moyen de paiement.</p>
+      <p>Les remboursements sont généralement traités sous 5 à 10 jours ouvrables.</p>
+      <p><a href=\"requestrefund.html\" style=\"color: var(--primary); text-decoration: underline;\">Demandez un remboursement ici.</a></p>`
+  },
+  ru: {
+    aboutTitle: "О Brainstorm Buddy",
+    aboutText: "Brainstorm Buddy — ваш помощник в креативном мышлении: расширение с ИИ, которое превращает хаотичные идеи в чёткие, структурированные заметки. Пишете ли вы статью, разрабатываете бизнес-план или просто собираете мысли — инструмент поможет быстро и понятно фиксировать, развивать и структурировать идеи прямо в браузере.",
+    whyTitle: "Зачем мы это создали",
+    whyText: "Гениальные идеи часто приходят внезапно — а обычные приложения для заметок могут сбить темп или запутать. Мы создали Brainstorm Buddy, чтобы устранить это трение. Наша цель — создать плавную, интуитивную среду с ИИ, где креативность течёт свободно, а идеи быстро превращаются в действия — без переключения между приложениями и потери фокуса.",
+    whoTitle: "Для кого это",
+    who1: "🧑‍🎓 Студенты: планирование эссе и учебы",
+    who2: "✍️ Писатели: преодоление творческих блоков и генерация идей",
+    who3: "💡 Предприниматели: бизнес- и продуктовые заметки",
+    missionTitle: "Наша миссия",
+    missionText: "Помочь каждому генерировать, уточнять и организовывать идеи — умно и мгновенно.",
+    faqTitle: "❓ Часто задаваемые вопросы",
+    faqQ1: "Как работает Brainstorm Buddy?",
+    faqA1: "Он использует ИИ для генерации идей по вашим запросам. Вы также можете писать, редактировать и сохранять заметки в браузере.",
+    faqQ2: "Есть ли бесплатная версия?",
+    faqA2: "Да! Бесплатная версия предоставляет доступ к основным функциям и позволяет генерировать 10 идей в месяц. Вы можете перейти на расширенный тариф для доступа к продвинутым функциям.",
+    faqQ3: "Можно ли экспортировать заметки?",
+    faqA3: "Конечно. Вы можете экспортировать или импортировать заметки в любое время из расширения.",
+    faqQ4: "Можно ли запросить возврат?",
+    faqA4: `
+      <p><strong>Месячные подписки:</strong> Вы можете отменить в любое время. Однако все платежи являются окончательными и не подлежат возврату.</p>
+      <p><strong>Годовые подписки:</strong> Возврат возможен в течение 7 дней после покупки. После этого срока подписка не подлежит возврату.</p>
+      <p><strong>Примечание:</strong> Чтобы предотвратить злоупотребления, мы можем ограничить будущие покупки или отказать в возврате, если было одобрено более двух возвратов на одну учетную запись или способ оплаты.</p>
+      <p>Возвраты обычно обрабатываются в течение 5–10 рабочих дней.</p>
+      <p><a href=\"requestrefund.html\" style=\"color: var(--primary); text-decoration: underline;\">Запросить возврат здесь.</a></p>`
+  },
+
+  it: {
+    aboutTitle: "Informazioni su Brainstorm Buddy",
+    aboutText: "Brainstorm Buddy è il tuo compagno di pensiero creativo — un'estensione basata sull'IA progettata per trasformare lampi disordinati di ispirazione in note organizzate e utilizzabili. Che tu stia scrivendo un articolo, pianificando un business o raccogliendo idee, il nostro strumento ti aiuta a catturarle, perfezionarle ed esplorarle con chiarezza e velocità — tutto dal tuo browser.",
+    whyTitle: "Perché lo abbiamo creato",
+   whyText: "Le grandi idee spesso arrivano inaspettatamente — e le app tradizionali per prendere appunti possono rallentarti o creare confusione. Abbiamo creato Brainstorm Buddy per eliminare questi ostacoli. Il nostro obiettivo è fornire uno spazio fluido, potenziato dall’IA, dove la creatività può fluire liberamente e le idee possono trasformarsi in azioni — senza perdere il filo o cambiare continuamente applicazione.",
+    whoTitle: "Per chi è",
+    who1: "🧑‍🎓 Studenti: pianificazione di saggi e studi",
+    who2: "✍️ Scrittori: superare il blocco dello scrittore e ideare",
+    who3: "💡 Imprenditori: note di business e di prodotto",
+    missionTitle: "La nostra missione",
+    missionText: "Consentire a chiunque di generare, perfezionare e organizzare idee — in modo intelligente e istantaneo.",
+    faqTitle: "❓ Domande frequenti",
+    faqQ1: "Come funziona Brainstorm Buddy?",
+    faqA1: "Usa l’IA per generare idee basate sui tuoi suggerimenti. Puoi anche scrivere, modificare e salvare note nel browser.",
+    faqQ2: "Esiste una versione gratuita?",
+    faqA2: "Sì! La versione gratuita ti consente di accedere alle funzionalità essenziali e generare 10 idee al mese. Puoi passare alla versione a pagamento per sbloccare strumenti avanzati.",
+    faqQ3: "Posso esportare le mie note?",
+    faqA3: "Assolutamente. Puoi esportare o importare note in qualsiasi momento direttamente dall'estensione.",
+    faqQ4: "Posso richiedere un rimborso?",
+    faqA4: `
+      <p><strong>Abbonamenti mensili:</strong> Puoi annullare in qualsiasi momento. Tuttavia, tutti i pagamenti mensili sono definitivi e non rimborsabili dopo l’addebito.</p>
+      <p><strong>Abbonamenti annuali:</strong> Puoi richiedere un rimborso entro 7 giorni dall’acquisto. Dopo questo periodo non è previsto alcun rimborso.</p>
+      <p><strong>Note:</strong> Per evitare abusi, possiamo limitare futuri acquisti o rifiutare rimborsi se più di due sono già stati approvati per lo stesso account o metodo di pagamento.</p>
+      <p>I rimborsi vengono generalmente elaborati entro 5–10 giorni lavorativi.</p>
+      <p><a href=\"requestrefund.html\" style=\"color: var(--primary); text-decoration: underline;\">Richiedi un rimborso qui.</a></p>`
+  },
+
+  pt: {
+    aboutTitle: "Sobre o Brainstorm Buddy",
+    aboutText: "O Brainstorm Buddy é seu parceiro para o pensamento criativo — uma extensão com IA projetada para transformar ideias soltas em anotações organizadas e acionáveis. Seja escrevendo um artigo, esboçando um plano de negócios ou apenas organizando pensamentos, nossa ferramenta ajuda você a capturar, refinar e explorar ideias com rapidez e clareza — tudo dentro do seu navegador.",
+    whyTitle: "Por que criamos isso",
+    whyText: "Grandes ideias muitas vezes surgem de forma inesperada — e os apps tradicionais de anotações podem atrapalhar ou desorganizar o processo. Criamos o Brainstorm Buddy para eliminar esse atrito. Nosso objetivo é oferecer um espaço fluido, aprimorado por IA, onde a criatividade flui naturalmente e as ideias evoluem para ações — sem trocar de aplicativo ou perder a linha de raciocínio.",
+    whoTitle: "Para quem é",
+    who1: "🧑‍🎓 Estudantes: planejamento de redações e estudos",
+    who2: "✍️ Escritores: superar bloqueios criativos e gerar ideias",
+    who3: "💡 Empreendedores: anotações de negócios e produtos",
+    missionTitle: "Nossa missão",
+    missionText: "Capacitar qualquer pessoa a gerar, refinar e organizar ideias — de forma inteligente e instantânea.",
+    faqTitle: "❓ Perguntas frequentes",
+    faqQ1: "Como funciona o Brainstorm Buddy?",
+    faqA1: "Ele usa IA para gerar ideias com base nos seus comandos. Você também pode escrever, editar e salvar anotações no navegador.",
+    faqQ2: "Existe uma versão gratuita?",
+    faqA2: "Sim! A versão gratuita oferece acesso às funcionalidades essenciais, permitindo gerar 10 ideias por mês. Você pode fazer upgrade para recursos avançados.",
+    faqQ3: "Posso exportar minhas anotações?",
+    faqA3: "Com certeza. Você pode exportar ou importar suas anotações a qualquer momento através da extensão.",
+    faqQ4: "Posso solicitar um reembolso?",
+    faqA4: `
+      <p><strong>Assinaturas mensais:</strong> Você pode cancelar a qualquer momento. No entanto, todos os pagamentos mensais são finais e não reembolsáveis após a cobrança.</p>
+      <p><strong>Assinaturas anuais:</strong> É possível solicitar um reembolso dentro de 7 dias após a compra. Depois disso, não haverá reembolso.</p>
+      <p><strong>Notas:</strong> Para evitar abusos, podemos limitar compras futuras ou recusar pedidos de reembolso se mais de dois já tiverem sido aprovados para a mesma conta ou método de pagamento.</p>
+      <p>Os reembolsos normalmente são processados em até 5 a 10 dias úteis.</p>
+      <p><a href=\"requestrefund.html\" style=\"color: var(--primary); text-decoration: underline;\">Solicite um reembolso aqui.</a></p>`
+  }
+
+    // You can copy/paste the same format to add other languages like fr, ru, etc.
+  };
+
+  function changeLanguage(lang) {
+    const t = translations[lang];
+    if (!t) return;
+
+    for (const key in t) {
+      const el = document.getElementById(key);
+      if (!el) continue;
+
+      if (key.startsWith("faqA")) {
+        el.innerHTML = t[key]; // allow HTML formatting
+      } else {
+        el.textContent = t[key]; // plain text
+      }
+    }
+
+    localStorage.setItem('selectedLanguage', lang);
+  }
+
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark");
+  }
+
+  function toggleFAQ(item) {
+    item.classList.toggle("active");
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const lang = localStorage.getItem("selectedLanguage") || "en";
+    changeLanguage(lang);
+
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeEls.forEach(el => observer.observe(el));
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="title">Privacy Policy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4f2ff;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+    }
+    .container {
+      max-width: 960px;
+      background: white;
+      padding: 2rem 3rem;
+      margin: auto;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    h1, h2 {
+      color: #6c63ff;
+    }
+    p, li {
+      line-height: 1.6;
+    }
+    select {
+      float: right;
+      margin-bottom: 1rem;
+      padding: 0.4rem;
+      border-radius: 5px;
+      font-size: 0.95rem;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <select id="lang-select">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+      <option value="ru">Русский</option>
+      <option value="it">Italiano</option>
+      <option value="pt">Português</option>
+    </select>
+
+    <h1 id="title">Privacy Policy</h1>
+    <p id="effective-date">Effective Date: July 6, 2025</p>
+
+    <h2 id="intro-heading">1. Introduction</h2>
+    <p id="intro-text">This Privacy Policy describes how Brainstorm Buddy collects, uses, and protects your personal data.</p>
+
+    <h2 id="data-heading">2. Data We Collect</h2>
+    <ul>
+      <li id="data-login">Login credentials (email, authentication tokens)</li>
+      <li id="data-usage">Usage data (features used, time spent, preferences)</li>
+      <li id="data-device">Device information (browser, operating system, IP address)</li>
+    </ul>
+
+    <h2 id="use-heading">3. How We Use Data</h2>
+    <ul>
+      <li id="use-personalize">To personalize your experience</li>
+      <li id="use-improve">To improve the extension and add new features</li>
+      <li id="use-legal">To comply with legal obligations</li>
+    </ul>
+
+    <h2 id="storage-heading">4. Data Storage</h2>
+    <p id="storage-text">Data is stored securely on our servers and with third-party services such as Google and Firebase.</p>
+
+    <h2 id="sharing-heading">5. Sharing Data</h2>
+    <p id="sharing-text">We do not sell your personal data. We may share it with service providers necessary to operate Brainstorm Buddy.</p>
+
+    <h2 id="rights-heading">6. Your Rights</h2>
+    <ul>
+      <li id="rights-access">Access your data</li>
+      <li id="rights-update">Request corrections</li>
+      <li id="rights-delete">Request deletion of your data</li>
+    </ul>
+
+    <h2 id="gdpr-heading">7. GDPR Compliance</h2>
+    <p id="gdpr-text">If you're in the UK or EU, we comply with GDPR regulations regarding consent and data control.</p>
+
+    <h2 id="contact-heading">8. Contact</h2>
+    <p id="contact-text">For privacy questions, contact us at <a href="mailto:brainstormbuddyy@gmail.com">brainstormbuddyy@gmail.com</a>.</p>
+
+    <footer>&copy; 2025 Brainstorm Buddy. All rights reserved.</footer>
+  </div>
+
+  <script>
+    const translations = {
+      en: { ...document.querySelectorAll('[id]').length && Object.fromEntries([...document.querySelectorAll('[id]')].map(el => [el.id, el.innerHTML])) },
+      es: {
+        "title": "Política de Privacidad",
+        "effective-date": "Fecha de vigencia: 6 de julio de 2025",
+        "intro-heading": "1. Introducción",
+        "intro-text": "Esta Política describe cómo Brainstorm Buddy recopila, utiliza y protege tus datos personales.",
+        "data-heading": "2. Datos que Recopilamos",
+        "data-login": "Credenciales de inicio de sesión (correo electrónico, tokens de autenticación)",
+        "data-usage": "Datos de uso (funciones utilizadas, tiempo, preferencias)",
+        "data-device": "Información del dispositivo (navegador, sistema operativo, dirección IP)",
+        "use-heading": "3. Cómo Usamos los Datos",
+        "use-personalize": "Para personalizar tu experiencia",
+        "use-improve": "Para mejorar la extensión y agregar funciones",
+        "use-legal": "Para cumplir con obligaciones legales",
+        "storage-heading": "4. Almacenamiento de Datos",
+        "storage-text": "Los datos se almacenan de forma segura en nuestros servidores y en servicios como Google y Firebase.",
+        "sharing-heading": "5. Compartir Datos",
+        "sharing-text": "No vendemos tus datos. Podemos compartirlos con proveedores necesarios para operar Brainstorm Buddy.",
+        "rights-heading": "6. Tus Derechos",
+        "rights-access": "Accede a tus datos",
+        "rights-update": "Solicita correcciones",
+        "rights-delete": "Solicita eliminación de tus datos",
+        "gdpr-heading": "7. Cumplimiento del RGPD",
+        "gdpr-text": "Cumplimos con el RGPD si estás en Reino Unido o la UE.",
+        "contact-heading": "8. Contacto",
+        "contact-text": "Si tienes preguntas, contáctanos en <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>."
+      },
+      fr: {
+        "title": "Politique de Confidentialité",
+        "effective-date": "Date d'effet : 6 juillet 2025",
+        "intro-heading": "1. Introduction",
+        "intro-text": "Cette politique décrit comment Brainstorm Buddy collecte, utilise et protège vos données personnelles.",
+        "data-heading": "2. Données que Nous Collectons",
+        "data-login": "Identifiants de connexion (email, jetons d'authentification)",
+        "data-usage": "Données d'utilisation (fonctionnalités utilisées, temps passé, préférences)",
+        "data-device": "Informations sur l'appareil (navigateur, système d'exploitation, IP)",
+        "use-heading": "3. Utilisation des Données",
+        "use-personalize": "Pour personnaliser votre expérience",
+        "use-improve": "Pour améliorer l’extension et ajouter des fonctionnalités",
+        "use-legal": "Pour respecter les obligations légales",
+        "storage-heading": "4. Stockage des Données",
+        "storage-text": "Les données sont stockées en toute sécurité sur nos serveurs et ceux de Google ou Firebase.",
+        "sharing-heading": "5. Partage des Données",
+        "sharing-text": "Nous ne vendons pas vos données. Elles peuvent être partagées avec les prestataires techniques.",
+        "rights-heading": "6. Vos Droits",
+        "rights-access": "Accéder à vos données",
+        "rights-update": "Demander des corrections",
+        "rights-delete": "Demander la suppression",
+        "gdpr-heading": "7. Conformité au RGPD",
+        "gdpr-text": "Nous respectons le RGPD si vous êtes au Royaume-Uni ou en UE.",
+        "contact-heading": "8. Contact",
+        "contact-text": "Pour toute question, contactez-nous à <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>."
+      },
+      ru: {
+        "title": "Политика конфиденциальности",
+        "effective-date": "Дата вступления в силу: 6 июля 2025 г.",
+        "intro-heading": "1. Введение",
+        "intro-text": "Эта политика описывает, как Brainstorm Buddy собирает, использует и защищает ваши данные.",
+        "data-heading": "2. Какие данные мы собираем",
+        "data-login": "Учетные данные (email, токены)",
+        "data-usage": "Данные об использовании (функции, предпочтения, время)",
+        "data-device": "Информация об устройстве (браузер, ОС, IP)",
+        "use-heading": "3. Как мы используем данные",
+        "use-personalize": "Для персонализации",
+        "use-improve": "Для улучшения расширения",
+        "use-legal": "Для соблюдения законодательства",
+        "storage-heading": "4. Хранение данных",
+        "storage-text": "Данные надежно хранятся на наших серверах и сервисах, как Google и Firebase.",
+        "sharing-heading": "5. Передача данных",
+        "sharing-text": "Мы не продаем ваши данные. Они могут быть переданы партнерам.",
+        "rights-heading": "6. Ваши права",
+        "rights-access": "Получить доступ к данным",
+        "rights-update": "Запросить изменения",
+        "rights-delete": "Удалить ваши данные",
+        "gdpr-heading": "7. Соответствие GDPR",
+        "gdpr-text": "Мы соблюдаем GDPR в Великобритании и ЕС.",
+        "contact-heading": "8. Контакты",
+        "contact-text": "По вопросам пишите на <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>."
+      },
+      it: {
+        "title": "Informativa sulla Privacy",
+        "effective-date": "Data di entrata in vigore: 6 luglio 2025",
+        "intro-heading": "1. Introduzione",
+        "intro-text": "Questa informativa descrive come Brainstorm Buddy raccoglie, usa e protegge i tuoi dati personali.",
+        "data-heading": "2. Dati Raccolti",
+        "data-login": "Credenziali di accesso (email, token)",
+        "data-usage": "Dati di utilizzo (funzioni, tempo, preferenze)",
+        "data-device": "Info dispositivo (browser, sistema operativo, IP)",
+        "use-heading": "3. Come usiamo i dati",
+        "use-personalize": "Per personalizzare l’esperienza",
+        "use-improve": "Per migliorare l'estensione",
+        "use-legal": "Per rispettare obblighi legali",
+        "storage-heading": "4. Archiviazione Dati",
+        "storage-text": "I dati sono archiviati su server sicuri e servizi come Google o Firebase.",
+        "sharing-heading": "5. Condivisione dei Dati",
+        "sharing-text": "Non vendiamo i tuoi dati. Possiamo condividerli con fornitori tecnici.",
+        "rights-heading": "6. I tuoi diritti",
+        "rights-access": "Accedere ai tuoi dati",
+        "rights-update": "Richiedere correzioni",
+        "rights-delete": "Chiedere eliminazione",
+        "gdpr-heading": "7. Conformità GDPR",
+        "gdpr-text": "Rispettiamo il GDPR per utenti nel Regno Unito o UE.",
+        "contact-heading": "8. Contatti",
+        "contact-text": "Contattaci a <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>."
+      },
+      pt: {
+        "title": "Política de Privacidade",
+        "effective-date": "Data de vigência: 6 de julho de 2025",
+        "intro-heading": "1. Introdução",
+        "intro-text": "Esta política descreve como o Brainstorm Buddy coleta, usa e protege seus dados.",
+        "data-heading": "2. Dados que Coletamos",
+        "data-login": "Credenciais de login (email, tokens)",
+        "data-usage": "Dados de uso (funções, tempo, preferências)",
+        "data-device": "Informações do dispositivo (navegador, sistema, IP)",
+        "use-heading": "3. Como Usamos os Dados",
+        "use-personalize": "Para personalizar sua experiência",
+        "use-improve": "Para melhorar a extensão",
+        "use-legal": "Para cumprir obrigações legais",
+        "storage-heading": "4. Armazenamento de Dados",
+        "storage-text": "Os dados são armazenados com segurança com Google, Firebase e nossos servidores.",
+        "sharing-heading": "5. Compartilhamento",
+        "sharing-text": "Não vendemos seus dados. Compartilhamos apenas com serviços necessários.",
+        "rights-heading": "6. Seus Direitos",
+        "rights-access": "Acessar seus dados",
+        "rights-update": "Corrigir informações",
+        "rights-delete": "Excluir dados",
+        "gdpr-heading": "7. Conformidade com o GDPR",
+        "gdpr-text": "Cumprimos o GDPR no Reino Unido e na UE.",
+        "contact-heading": "8. Contato",
+        "contact-text": "Fale conosco: <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>."
+      }
+    };
+
+    function applyLanguage(lang) {
+      const t = translations[lang];
+      if (!t) return;
+      for (const id in t) {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = t[id];
+      }
+    }
+
+    document.getElementById('lang-select').addEventListener('change', e => {
+      const lang = e.target.value;
+      localStorage.setItem('selectedLanguage', lang);
+      applyLanguage(lang);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const lang = localStorage.getItem('selectedLanguage') || 'en';
+      document.getElementById('lang-select').value = lang;
+      applyLanguage(lang);
+    });
+  </script>
+</body>
+</html>

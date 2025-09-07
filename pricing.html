@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pricing Plans</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary:#6c63ff; --accent:#a259ff; --bg:#fffafc; --bg-dark:#1a1a1a; --card-dark:#2a2a2a; --text:#333; --text-dark:#f0f0f0; --text-muted:#888; --text-muted-dark:#ccc; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s}
+    body.dark{background:var(--bg-dark);color:var(--text-dark)}
+    header{background:linear-gradient(to right,var(--accent),var(--primary));padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;color:#fff}
+    .nav-left img{width:40px;cursor:pointer}
+    .switcher{background:transparent;color:#fff;border:1px solid #fff;padding:.5rem .75rem;border-radius:6px;cursor:pointer}
+    .pricing-header{text-align:center;padding:2rem 1rem}
+    .toggle-switch{background:#f2f2f2;display:inline-flex;border-radius:2rem;overflow:hidden;margin-top:1rem}
+    body.dark .toggle-switch{background:#444}
+    .toggle-switch button{padding:.5rem 1.25rem;border:0;background:transparent;font-weight:600;cursor:pointer;transition:background .3s;color:inherit}
+    .toggle-switch .active{background:#333;color:#fff}
+    body.dark .toggle-switch .active{background:#eee;color:#000}
+    .user-info{text-align:center;margin-top:1rem;font-size:1rem;color:var(--text-muted)}
+    body.dark .user-info{color:var(--text-muted-dark)}
+    .pricing-container{display:flex;justify-content:center;flex-wrap:wrap;gap:2rem;padding:3rem 2rem}
+    .pricing-card{background:#fff;border-radius:1.25rem;box-shadow:0 0 15px rgba(0,0,0,.05);padding:2rem;width:300px;text-align:center;transition:all .3s}
+    body.dark .pricing-card{background:var(--card-dark);color:var(--text-dark)}
+    .pricing-card.highlight{background:linear-gradient(to bottom right,#a259ff,#6c63ff);color:#fff}
+    .price{font-size:2rem;margin:1rem 0 .3rem;font-weight:700}
+    .small-text{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem}
+    body.dark .small-text{color:var(--text-muted-dark)}
+    .pricing-card.highlight .small-text,.pricing-card.highlight .save-msg{color:#fff}
+    .subscribe-btn{padding:.75rem 1.5rem;border-radius:2rem;border:2px solid var(--primary);background:transparent;color:var(--primary);font-weight:600;cursor:pointer;transition:.3s;width:100%}
+    .subscribe-btn:hover{background:#f4f0ff}
+    body.dark .subscribe-btn{border-color:var(--accent);color:var(--accent)}
+    body.dark .subscribe-btn:hover{background:rgba(255,255,255,.1)}
+    .pricing-card.highlight .subscribe-btn{background:#fff;color:var(--primary);border:none}
+    .save-msg{margin-top:1rem;color:var(--primary);font-weight:600;font-size:.95rem;cursor:pointer}
+    .save-msg::after{content:' ›'}
+    body.dark .save-msg{color:var(--accent)}
+    .features-box{text-align:left;margin-top:1rem}
+    .features-box p{margin:.25rem 0}
+    .enterprise-btn{padding:.85rem 2rem;background:var(--primary);color:#fff;font-weight:600;border:none;border-radius:2rem;font-size:1rem;cursor:pointer;transition:background .3s;margin-top:2rem}
+    .enterprise-btn:hover{background:var(--accent)}
+    body.dark .enterprise-btn{background:#fff;color:var(--primary)}
+    body.dark .enterprise-btn:hover{background:#f4f0ff}
+    @media (max-width:768px){.pricing-container{flex-direction:column;align-items:center}}
+
+    /* Optional: visual nudge after switching to yearly */
+    .pricing-card.nudge { transform: scale(1.02); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-left">
+      <img src="icon128.png" alt="Logo" onclick="location.href='index.html'">
+    </div>
+    <div class="nav-right">
+      <button class="switcher" id="darkToggle" title="Toggle dark mode">🌙</button>
+      <select class="switcher" id="langSelect" title="Language">
+        <option value="en">EN</option><option value="es">ES</option><option value="fr">FR</option>
+        <option value="ru">RU</option><option value="it">IT</option><option value="pt">PT</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="pricing-header">
+    <h1 id="pricingTitle">Choose Your Plan</h1>
+    <div class="toggle-switch">
+      <button id="toggle-yearly" class="active">Yearly</button>
+      <button id="toggle-monthly">Monthly</button>
+    </div>
+  </div>
+
+  <div class="user-info">
+    <p><strong id="planLabel">Current Plan:</strong> <span id="current-plan">Free</span></p>
+    <p><strong id="emailLabel">Email:</strong> <span id="current-email">Not logged in</span></p>
+  </div>
+
+  <div class="pricing-container" id="pricingCards"></div>
+
+  <div style="text-align:center;margin-bottom:3rem;">
+    <button onclick="location.href='enterprisecontact.html'" class="enterprise-btn" id="enterpriseBtn">Enterprise Contact Us</button>
+  </div>
+
+  <script>
+  const API_BASE =
+  (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
+    ? 'http://127.0.0.1:5050'
+    : 'https://auth-backend-b1b6.onrender.com';
+
+    const translations = {
+      en:{pricingTitle:"Choose Your Plan",planLabel:"Current Plan:",emailLabel:"Email:",subscribeNow:"Subscribe Now",loginToSubscribe:"Login to Subscribe",basic:"Basic",unlimited:"Unlimited",pro:"Pro",perMonth:"/mo",saveAnnual:a=>`Save ${a} with annual plan`,aroundPerDay:a=>`Around ${a}/day`,enterpriseBtn:"Enterprise Contact Us"},
+      es:{pricingTitle:"Elige tu plan",planLabel:"Plan actual:",emailLabel:"Correo electrónico:",subscribeNow:"Suscribirse ahora",loginToSubscribe:"Iniciar sesión para suscribirse",basic:"Básico",unlimited:"Ilimitado",pro:"Pro",perMonth:"/mes",saveAnnual:a=>`Ahorra ${a} con el plan anual`,aroundPerDay:a=>`Alrededor de ${a}/día`,enterpriseBtn:"Contacto empresarial"},
+      fr:{pricingTitle:"Choisissez votre plan",planLabel:"Plan actuel:",emailLabel:"Email:",subscribeNow:"S'abonner",loginToSubscribe:"Se connecter pour s'abonner",basic:"Basique",unlimited:"Illimité",pro:"Pro",perMonth:"/mois",saveAnnual:a=>`Économisez ${a} avec le plan annuel`,aroundPerDay:a=>`Environ ${a}/jour`,enterpriseBtn:"Contact entreprise"},
+      ru:{pricingTitle:"Выберите план",planLabel:"Текущий план:",emailLabel:"Электронная почта:",subscribeNow:"Подписаться",loginToSubscribe:"Войти, чтобы подписаться",basic:"Базовый",unlimited:"Безлимитный",pro:"Про",perMonth:"/мес",saveAnnual:a=>`Сэкономьте ${a} с годовым планом`,aroundPerDay:a=>`Примерно ${a}/день`,enterpriseBtn:"Связаться с отделом продаж"},
+      it:{pricingTitle:"Scegli il tuo piano",planLabel:"Piano attuale:",emailLabel:"Email:",subscribeNow:"Abbonati ora",loginToSubscribe:"Accedi per abbonarti",basic:"Base",unlimited:"Illimitato",pro:"Pro",perMonth:"/mese",saveAnnual:a=>`Risparmia ${a} con il piano annuale`,aroundPerDay:a=>`Circa ${a}/giorno`,enterpriseBtn:"Contatto aziendale"},
+      pt:{pricingTitle:"Escolha seu plano",planLabel:"Plano atual:",emailLabel:"Email:",subscribeNow:"Assinar agora",loginToSubscribe:"Entrar para assinar",basic:"Básico",unlimited:"Ilimitado",pro:"Pro",perMonth:"/mês",saveAnnual:a=>`Economize ${a} com o plano anual`,aroundPerDay:a=>`Cerca de ${a}/dia`,enterpriseBtn:"Contato corporativo"}
+    };
+
+    /* === Feature translations (auto) === */
+    const featureI18n = {
+      es: { voice: '✅ Voz a notas', allpro: '✅ Todas las funciones Pro', priority: '✅ Soporte prioritario', early: '✅ Acceso anticipado a nuevas funciones', idea: n => `✅ ${n} generaciones de ideas con IA/mes` },
+      fr: { voice: '✅ Dictée en notes', allpro: '✅ Toutes les fonctionnalités Pro', priority: '✅ Support prioritaire', early: '✅ Accès anticipé aux nouvelles fonctionnalités', idea: n => `✅ ${n} générations d\'idées IA/mois` },
+      ru: { voice: '✅ Голос в заметки', allpro: '✅ Все функции Pro', priority: '✅ Приоритетная поддержка', early: '✅ Ранний доступ к новым функциям', idea: n => `✅ ${n} генераций идей ИИ/мес` },
+      it: { voice: '✅ Voce in note', allpro: '✅ Tutte le funzionalità Pro', priority: '✅ Supporto prioritario', early: '✅ Accesso anticipato alle nuove funzionalità', idea: n => `✅ ${n} generazioni di idee IA/mese` },
+      pt: { voice: '✅ Voz para notas', allpro: '✅ Todos os recursos Pro', priority: '✅ Suporte prioritário', early: '✅ Acesso antecipado a novos recursos', idea: n => `✅ ${n} gerações de ideias com IA/mês` },
+      en: { voice: '✅ Voice to note', allpro: '✅ All Pro features', priority: '✅ Priority support', early: '✅ Early access to new features', idea: n => `✅ ${n} AI idea generations/month` }
+    };
+
+    function translateFeature(f, lang) {
+      const t = featureI18n[lang] || featureI18n.en;
+      const m = f.match(/^\s*✅\s*(\d+)\s*AI idea generations\/month\s*$/i);
+      if (m) return t.idea(m[1]);
+      if (/voice to note/i.test(f)) return t.voice;
+      if (/all pro features/i.test(f)) return t.allpro;
+      if (/priority support/i.test(f)) return t.priority;
+      if (/early access to new features/i.test(f)) return t.early;
+      return f;
+    }
+
+    // Your Payment Links (URL form). We'll append prefilled_email + client_reference_id (base64url of email).
+    const pricingData = {
+      yearly: [
+        { key:'basic', title:'Basic', price:'US$ 6',  detail:'US$ 72/year',  save:'Save US$ 48 with annual plan', url:'https://buy.stripe.com/dRmfZg8qrggeafD1XQ2Ry08', features:["✅ 120 AI idea generations/month","✅ Voice to note"] },
+        { key:'unlimited', title:'Unlimited', price:'US$ 24', detail:'US$ 288/year', save:'Save US$ 192 with annual plan', url:'https://buy.stripe.com/fZu6oG9uvfcacnLcCu2Ry0a', features:["✅ 700 AI idea generations/month","✅ All Pro features","✅ Priority support","✅ Early access to new features"] },
+        { key:'pro', title:'Pro', price:'US$ 12', detail:'US$ 144/year', save:'Save US$ 96 with annual plan', url:'https://buy.stripe.com/9B6eVc2232po9bzfOG2Ry09', features:["✅ 300 AI idea generations/month","✅ Voice to note"] }
+      ],
+      monthly: [
+        { key:'basic', title:'Basic', price:'US$ 10', detail:'Around US$ 0.33/day', save:'Save US$ 48 with annual plan', url:'https://buy.stripe.com/8x228qcGH0hg87v1XQ2Ry03', features:["✅ 120 AI idea generations/month","✅ Voice to note"] },
+        { key:'unlimited', title:'Unlimited', price:'US$ 40', detail:'Around US$ 1.33/day', save:'Save US$ 192 with annual plan', url:'https://buy.stripe.com/fZu9AS7mn2po1J7fOG2Ry01', features:["✅ 700 AI idea generations/month","✅ All Pro features","✅ Priority support","✅ Early access to new features"] },
+        { key:'pro', title:'Pro', price:'US$ 20', detail:'Around US$ 0.66/day', save:'Save US$ 96 with annual plan', url:'https://buy.stripe.com/4gMaEWayz5BA1J7gSK2Ry02', features:["✅ 300 AI idea generations/month","✅ Voice to note"] }
+      ]
+    };
+
+    const $ = id => document.getElementById(id);
+    const darkToggle = $('darkToggle');
+    const langSelect = $('langSelect');
+    let currentMode = 'yearly';
+
+    function toggleDarkMode(){ 
+      document.body.classList.toggle('dark'); 
+      localStorage.setItem('dark', document.body.classList.contains('dark')?'1':'0'); 
+      darkToggle.textContent=document.body.classList.contains('dark')?'☀️':'🌙'; 
+    }
+
+    function applyLang(lang){ 
+      const t=translations[lang]||translations.en; 
+      $('pricingTitle').textContent=t.pricingTitle; 
+      $('planLabel').textContent=t.planLabel; 
+      $('emailLabel').textContent=t.emailLabel; 
+      $('enterpriseBtn').textContent=t.enterpriseBtn; 
+      // Keep toggles in EN; adjust if you add translations:
+      $('toggle-yearly').textContent='Yearly'; 
+      $('toggle-monthly').textContent='Monthly'; 
+    }
+
+    function priceDetail(lang,mode,raw){ 
+      const t=translations[lang]||translations.en; 
+      if(mode==='monthly'){ 
+        const m=raw.match(/US\$ [\d.]+/); 
+        return t.aroundPerDay(m?m[0]:raw); 
+      } 
+      return raw; 
+    }
+
+    function saveMsgText(lang,raw){ 
+      const t=translations[lang]||translations.en; 
+      const m=raw.match(/US\$ [\d.]+/); 
+      return t.saveAnnual(m?m[0]:raw); 
+    }
+
+    // Stripe-safe client_reference_id (only [A-Za-z0-9_-])
+    function makeClientRef(email) {
+      if (!email) return '';
+      const b64 = btoa(email).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+      return 'e_' + b64;
+    }
+
+    // Append BOTH prefilled_email (UX) AND client_reference_id (for webhook mapping)
+    function withParams(url, email){
+      if(!email) return url;
+      const j = url.includes('?') ? '&' : '?';
+      const clientRef = makeClientRef(email);
+      return `${url}${j}prefilled_email=${encodeURIComponent(email)}&client_reference_id=${clientRef}`;
+    }
+
+    function renderCards(mode){
+      const container = $('pricingCards'); 
+      container.innerHTML='';
+      const lang = localStorage.getItem('selectedLanguage') || 'en';
+      const t = translations[lang] || translations.en;
+      const userEmail = localStorage.getItem('userEmail') || '';
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true' && !!userEmail;
+
+      pricingData[mode].forEach(plan=>{
+        const card = document.createElement('div');
+        card.className='pricing-card';
+        card.setAttribute('data-plan-key', plan.key);           // stable per-plan id
+        if(plan.title==='Unlimited') card.classList.add('highlight');
+
+        const translatedTitle = t[plan.title.toLowerCase()] || plan.title;
+        const detail = priceDetail(lang, mode, plan.detail);
+        const saveMsg = saveMsgText(lang, plan.save);
+        const buttonLabel = isLoggedIn ? t.subscribeNow : t.loginToSubscribe;
+
+        // Translate feature bullets dynamically
+        const translatedFeatures = plan.features.map(f => translateFeature(f, lang));
+
+        card.innerHTML = `
+          <h2>${translatedTitle}</h2>
+          <div class="price">${plan.price}<span style="font-size:1rem;"> ${t.perMonth}</span></div>
+          <div class="small-text">${detail}</div>
+          <button class="subscribe-btn">${buttonLabel}</button>
+          <div class="save-msg" role="button" tabindex="0">${saveMsg}</div>
+          <div class="features-box">${translatedFeatures.map(f=>`<p>${f}</p>`).join('')}</div>
+        `;
+
+        // Subscribe click
+        card.querySelector('.subscribe-btn').addEventListener('click', ()=>{
+          if(!isLoggedIn){ window.location.href='login.html'; return; }
+          const finalUrl = withParams(plan.url, userEmail);
+          console.log('Buying:', finalUrl);
+          window.location.href = finalUrl;
+        });
+
+        // "Save ... with annual plan" click -> switch to Yearly view and focus same plan
+        const saveEl = card.querySelector('.save-msg');
+        const goYearly = () => {
+          if(currentMode !== 'yearly'){
+            // flip toggle UI
+            $('toggle-yearly').classList.add('active');
+            $('toggle-monthly').classList.remove('active');
+            // switch mode + re-render
+            currentMode = 'yearly';
+            renderCards(currentMode);
+            // after render, scroll to same plan card
+            requestAnimationFrame(() => {
+              const target = document.querySelector(`.pricing-card[data-plan-key="${plan.key}"]`);
+              if(target){
+                target.scrollIntoView({ behavior:'smooth', block:'center' });
+                target.classList.add('nudge');
+                setTimeout(()=> target.classList.remove('nudge'), 700);
+              }
+            });
+          }
+        };
+        saveEl.addEventListener('click', goYearly);
+        saveEl.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') goYearly(); });
+
+        container.appendChild(card);
+      });
+    }
+
+    async function refreshStatus(){
+      const email = localStorage.getItem('userEmail') || '';
+      $('current-email').textContent = email || 'Not logged in';
+      if(!email){ $('current-plan').textContent='Free'; return; }
+      try{
+        const res = await fetch(`${API_BASE}/api/subscription-status?email=${encodeURIComponent(email)}`);
+        if(!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        $('current-plan').textContent = data.plan || 'free';
+      }catch(e){ console.error('Status fetch failed:', e); $('current-plan').textContent='error'; }
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      if(localStorage.getItem('dark')==='1'){ document.body.classList.add('dark'); darkToggle.textContent='☀️'; }
+      const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+      langSelect.value = savedLang; applyLang(savedLang);
+
+      darkToggle.addEventListener('click', toggleDarkMode);
+      langSelect.addEventListener('change', e=>{ localStorage.setItem('selectedLanguage', e.target.value); applyLang(e.target.value); renderCards(currentMode); });
+      $('toggle-yearly').addEventListener('click', ()=>{ $('toggle-yearly').classList.add('active'); $('toggle-monthly').classList.remove('active'); currentMode='yearly'; renderCards(currentMode); });
+      $('toggle-monthly').addEventListener('click', ()=>{ $('toggle-monthly').classList.add('active'); $('toggle-yearly').classList.remove('active'); currentMode='monthly'; renderCards(currentMode); });
+
+      renderCards(currentMode);
+      refreshStatus();
+    });
+
+    window.addEventListener('focus', refreshStatus);
+    document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) refreshStatus(); });
+  </script>
+</body>
+</html>
