@@ -1,129 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Reset Password</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body { margin:0; font-family:'Inter',sans-serif; background:linear-gradient(to right,#f4f2ff,#ffffff); display:flex; justify-content:center; align-items:center; min-height:100vh; }
-    .reset-box { background:#fff; padding:2.5rem; border-radius:1rem; box-shadow:0 0 15px rgba(0,0,0,.05); width:100%; max-width:400px; text-align:center; }
-    .reset-box h2 { margin:0 0 1rem; color:#333; }
-    .reset-box input { width:100%; padding:.75rem; margin:.5rem 0; border-radius:.5rem; border:1px solid #ccc; font-size:1rem; }
-    .reset-box button { width:100%; background:#6c63ff; color:#fff; border:none; padding:.75rem; font-size:1rem; font-weight:600; border-radius:.5rem; margin-top:1rem; cursor:pointer; }
-    .reset-box button[disabled]{ opacity:.6; cursor:not-allowed; }
-    .back-link { margin-top:1.5rem; display:block; font-size:.95rem; color:#6c63ff; text-decoration:none; font-weight:600; }
-    .msg { margin-top:.75rem; min-height:1.25rem; font-weight:600; }
-    .msg.error { color:#c0392b; }
-    .msg.ok { color:#2e7d32; }
+    body{margin:0;font-family:Inter,sans-serif;background:linear-gradient(to right,#f4f2ff,#fff);display:flex;justify-content:center;align-items:center;height:100vh}
+    .reset-box{background:#fff;padding:2.5rem;border-radius:1rem;box-shadow:0 0 15px rgba(0,0,0,.05);width:100%;max-width:400px;text-align:center}
+    .reset-box input{width:100%;padding:.75rem;margin:.5rem 0;border-radius:.5rem;border:1px solid #ccc;font-size:1rem}
+    .reset-box button{width:100%;background:#6c63ff;color:#fff;border:none;padding:.8rem;font-size:1rem;font-weight:600;border-radius:.5rem;margin-top:1rem;cursor:pointer}
+    .back-link{margin-top:1rem;display:block;color:#6c63ff;font-weight:600;text-decoration:none}
   </style>
-
-  <!-- Global API base: dev -> localhost, prod -> Render -->
-  <script>
-    window.API_BASE ??= (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
-      ? 'http://127.0.0.1:5050'
-      : 'https://auth-backend-b1b6.onrender.com'; /* ← your Render URL */
-  </script>
-
-  <!-- EmailJS CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 </head>
 <body>
   <div class="reset-box">
     <h2>Reset Your Password</h2>
-    <input type="email" placeholder="Your Email" id="resetEmail" autocomplete="email" />
+    <input type="email" placeholder="Your Email" id="resetEmail"/>
     <button id="resetBtn">Send Reset Link</button>
-    <div id="msg" class="msg"></div>
     <a href="login.html" class="back-link">Back to Login</a>
   </div>
 
   <script>
-    // ---- EmailJS config (public on purpose) ----
-    const EMAILJS_PUBLIC_KEY  = "lxHf7ktyUVF4qkEmS";
-    const EMAILJS_SERVICE_ID  = "service_ubo0miq";
-    const EMAILJS_TEMPLATE_ID = "template_5gwcj8t"; // expects {{email}} and {{reset_link}}
+    const API_BASE = (location.hostname.includes('localhost')||location.hostname.startsWith('127.'))
+      ? 'http://127.0.0.1:5050'
+      : 'https://auth-backend-b1b6.onrender.com';
 
-    // Init EmailJS
-    (function(){ emailjs.init(EMAILJS_PUBLIC_KEY); })();
-
-    const $ = sel => document.querySelector(sel);
-    const msgEl = $('#msg');
-    const setMsg = (t, type) => { msgEl.textContent = t || ''; msgEl.className = 'msg ' + (type||''); };
-
-    const FRONTEND_BASE = `${location.protocol}//${location.host}`; // e.g. https://www.brainstormbuddy.co.uk
-
-    // If backend still returns a localhost reset link, rewrite to live domain
-    function normalizeResetLink(link) {
-      try {
-        const url = new URL(link);
-        // Only rewrite if it's clearly pointing to localhost/127.*
-        if (['localhost','127.0.0.1'].includes(url.hostname)) {
-          const base = new URL(FRONTEND_BASE);
-          url.protocol = base.protocol;
-          url.host = base.host;
-          return url.toString();
-        }
-        return link;
-      } catch {
-        // If parsing fails, fallback to building from current site
-        return `${FRONTEND_BASE.replace(/\/+$/,'')}/update-password.html?token=${encodeURIComponent(link)}`;
-      }
-    }
-
-    function isValidEmail(e) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(e).trim());
-    }
-
-    async function sendResetLink() {
-      const emailInput = $('#resetEmail');
-      const btn = $('#resetBtn');
-      const email = emailInput.value.trim();
-
-      if (!isValidEmail(email)) {
-        setMsg('Please enter a valid email address.', 'error');
-        emailInput.focus();
-        return;
-      }
-
-      setMsg('');
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
+    const btn = document.getElementById('resetBtn');
+    btn.addEventListener('click', async () => {
+      const email = document.getElementById('resetEmail').value.trim();
+      if (!email) return alert('Please enter your email.');
 
       try {
-        // Ask backend for a time-limited token + link
+        btn.disabled = true; btn.textContent = 'Sending…';
         const res = await fetch(`${API_BASE}/request-reset`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method:'POST', headers:{'Content-Type':'application/json'},
           body: JSON.stringify({ email })
         });
         const data = await res.json();
-
-        if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
-
-        // Normalize reset link to live domain if needed
-        const resetLink = normalizeResetLink(data.resetLink);
-        console.log('[reset] resetLink:', resetLink);
-
-        // Send the email via EmailJS using your template variables
-        await emailjs.send(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_ID,
-          { email, reset_link: resetLink }
-        );
-
-        setMsg('Password reset link sent! Please check your inbox.', 'ok');
-      } catch (err) {
-        console.error('[reset] error:', err);
-        setMsg(err.message || 'Failed to send reset email. Please try again.', 'error');
+        if (!res.ok) throw new Error(data.error || 'Failed to send reset email');
+        alert('Password reset link sent. Check your inbox.');
+      } catch (e) {
+        alert(e.message || 'Server error');
       } finally {
-        btn.disabled = false;
-        btn.textContent = 'Send Reset Link';
+        btn.disabled = false; btn.textContent = 'Send Reset Link';
       }
-    }
-
-    // Wire up
-    $('#resetBtn').addEventListener('click', sendResetLink);
-    $('#resetEmail').addEventListener('keydown', e => { if (e.key === 'Enter') sendResetLink(); });
+    });
   </script>
 </body>
 </html>
