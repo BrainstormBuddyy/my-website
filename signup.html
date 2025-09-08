@@ -1,70 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Create Account</title>
+  <title>Create Account • Brainstorm Buddy</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <!-- Google Identity Services -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <!-- EmailJS (optional, for sending verification email) -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    :root { --primary:#6c63ff; --muted:#999; }
+    :root { --primary:#6c63ff; --text:#333; --muted:#777; }
     *{box-sizing:border-box}
-    body{
-      margin:0; font-family:'Inter',sans-serif;
-      background:linear-gradient(to right,#f4f2ff,#ffffff);
-      min-height:100vh; display:flex; align-items:center; justify-content:center;
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #f4f2ff, #ffffff);
+      min-height: 100vh; display:flex; align-items:center; justify-content:center;
     }
-    .signup-box{
-      background:#fff; width:100%; max-width:420px; padding:2.5rem;
-      border-radius:1rem; box-shadow:0 0 15px rgba(0,0,0,.06); text-align:center;
+    .signup-box {
+      background: white;
+      padding: 2.25rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
     }
-    h2{ margin:0 0 1.25rem; color:#333; }
-    input{
-      width:100%; padding:.8rem; margin:.45rem 0; border:1px solid #ddd;
-      border-radius:.6rem; font-size:1rem;
+    h2 { margin: 0 0 1.25rem; color: var(--text); }
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border-radius: 0.6rem;
+      border: 1px solid #ddd;
+      font-size: 1rem;
     }
-    .main-btn{
-      width:100%; background:var(--primary); color:#fff; border:none;
-      padding:.8rem; font-weight:600; border-radius:.6rem; cursor:pointer; margin-top:.6rem;
+    button.main-btn {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.85rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 0.6rem;
+      margin-top: 0.75rem;
+      cursor: pointer;
     }
-    .divider{ margin:1.25rem 0; color:var(--muted); position:relative; font-size:.95rem; }
-    .divider::before,.divider::after{
-      content:''; position:absolute; top:50%; width:37%; height:1px; background:#eee;
+    .divider {
+      margin: 1.25rem 0 .5rem;
+      text-align: center;
+      color: var(--muted);
+      position: relative;
     }
-    .divider::before{ left:0 } .divider::after{ right:0 }
-    .g_id_signin{ margin:0 auto 0.25rem; }
-    .login-link{ margin-top:1rem; font-size:.95rem; }
-    .login-link a{ color:var(--primary); font-weight:600; text-decoration:none; }
-    .msg{ margin-top:1rem; min-height:1.25rem; font-size:.95rem; }
-    .ok{ color:#1b8f3a } .err{ color:#c0392b }
-    .small{ color:#666; font-size:.9rem; margin-top:.5rem; }
-    .btn-link{
-      background:transparent; border:none; color:var(--primary); font-weight:600; cursor:pointer;
-      padding:0; margin-top:.2rem;
+    .divider::before, .divider::after {
+      content: ''; height: 1px; width: 36%; background: #eee;
+      position: absolute; top: 50%;
     }
-    .hidden{ display:none; }
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+    .g_id_signin { margin: 0.75rem auto 0; }
+    .login-link { margin-top: 1.25rem; font-size: .95rem; }
+    .login-link a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    .note { color: var(--muted); font-size: .95rem; margin-top: .5rem; }
   </style>
 </head>
 <body>
   <div class="signup-box">
-    <h2>Create Your Account</h2>
+    <h2 id="signup-title">Create Your Account</h2>
 
-    <input type="text" id="name" placeholder="Full Name"/>
-    <input type="email" id="email" placeholder="Email"/>
-    <input type="password" id="password" placeholder="Password"/>
+    <input type="text" placeholder="Full Name" id="name" autocomplete="name"/>
+    <input type="email" placeholder="Email" id="email" autocomplete="email"/>
+    <input type="password" placeholder="Password" id="password" autocomplete="new-password"/>
     <button class="main-btn" id="signup-btn">Create Account</button>
+    <p class="note">We’ll send a verification link to your email.</p>
 
-    <div class="divider">or</div>
+    <div class="divider" id="divider-text">or</div>
 
-    <!-- Google Sign-Up -->
+    <!-- Google Sign-Up (replace data-client_id with YOUR real client id) -->
     <div id="g_id_onload"
-         data-client_id="379118689427-db57bbdhsdf5qihl5eribu6gpod67v5j.apps.googleusercontent.com"
+         data-client_id="REPLACE_ME.apps.googleusercontent.com"
          data-context="signup"
          data-ux_mode="popup"
-         data-callback="onGoogleSignIn"
+         data-callback="handleGoogleCredential"
          data-auto_prompt="false">
     </div>
     <div class="g_id_signin"
@@ -76,179 +93,82 @@
          data-logo_alignment="left">
     </div>
 
-    <!-- Status / guidance -->
-    <div class="msg" id="msg"></div>
-    <div class="small hidden" id="verify-help">
-      Verification email sent. Didn’t get it?
-      <button class="btn-link" id="resend-btn">Resend verification</button>
-      <br/>
-      You can also open it directly:
-      <a id="open-link" href="#" target="_blank" rel="noopener">Open verification link</a>
-    </div>
-
     <div class="login-link">
-      Already have an account? <a href="login.html">Login</a>
+      <span id="login-text">Already have an account?</span>
+      <a href="login.html" id="login-link">Login</a>
     </div>
   </div>
 
   <script>
-    // ==== CONFIG ====
-    const API_BASE =
-      (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
-        ? 'http://127.0.0.1:5050'
-        : 'https://auth-backend-b1b6.onrender.com';
+    // Auto-pick backend: local vs Render
+    const API_BASE = (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
+      ? 'http://127.0.0.1:5050'
+      : 'https://auth-backend-b1b6.onrender.com';
 
-    // Optional EmailJS for sending verification email.
-    // Create a template (e.g. template_verify) with variables: {{email}} and {{verify_link}}
-    const EMAILJS_PUBLIC_KEY   = "";            // e.g. "lxHf7ktyUVF4qkEmS"
-    const EMAILJS_SERVICE_ID   = "";            // e.g. "service_ubo0miq"
-    const EMAILJS_TEMPLATE_ID  = "";            // e.g. "template_verify"
-
-    if (EMAILJS_PUBLIC_KEY) { try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch {} }
-
-    const $ = id => document.getElementById(id);
-    const msgEl = $('msg');
-    const verifyHelp = $('verify-help');
-    const openLink = $('open-link');
-    const resendBtn = $('resend-btn');
-    let lastSignupEmail = "";
-    let lastVerifyLink = "";
-
-    function setMsg(text, ok=false){
-      msgEl.textContent = text || "";
-      msgEl.classList.toggle('ok', !!ok);
-      msgEl.classList.toggle('err', !ok && !!text);
-    }
-
-    // ===== Manual Sign-Up (email/password) =====
-    $('signup-btn').addEventListener('click', async () => {
-      const name = $('name').value.trim();
-      const email = $('email').value.trim();
-      const password = $('password').value.trim();
+    // ===== Manual email+password signup (requires email verification) =====
+    document.getElementById('signup-btn').addEventListener('click', async () => {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
 
       if (!name || !email || !password) {
-        setMsg("Please fill in all fields.");
+        alert("Please fill in all fields.");
         return;
       }
 
       try {
-        setMsg("Creating account…");
         const res = await fetch(`${API_BASE}/signup`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email, password })
         });
         const data = await res.json();
-
-        if (!res.ok) {
-          setMsg(data.error || "Signup failed.");
-          return;
-        }
-
-        // Expect: { message, verifyLink }
-        lastSignupEmail = email;
-        lastVerifyLink = data.verifyLink || "";
-
-        setMsg("Account created. Please verify your email to continue.", true);
-        if (lastVerifyLink) {
-          openLink.href = lastVerifyLink;
-          verifyHelp.classList.remove('hidden');
-        }
-
-        // Send verification email via EmailJS if configured
-        if (EMAILJS_PUBLIC_KEY && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && lastVerifyLink) {
-          try {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-              email: email,
-              verify_link: lastVerifyLink
-            });
-            setMsg("Verification email sent. Please check your inbox.", true);
-          } catch (e) {
-            console.warn("EmailJS send failed:", e);
-          }
-        }
+        if (!res.ok) throw new Error(data.error || 'Signup failed.');
+        alert('Signup successful! Please check your inbox and verify your email before logging in.');
+        // Do NOT auto-login — require verification
+        window.location.href = 'login.html';
       } catch (err) {
         console.error(err);
-        setMsg("Server error. Please try again.");
+        alert(err.message || "Server error. Please try again.");
       }
     });
 
-    // ===== Resend verification =====
-    resendBtn.addEventListener('click', async () => {
-      const email = lastSignupEmail || $('email').value.trim();
-      if (!email) { setMsg("Enter your email first."); return; }
-
+    // ===== Google sign-up / login (verifies with backend) =====
+    async function handleGoogleCredential(response) {
       try {
-        setMsg("Resending verification…");
-        const res = await fetch(`${API_BASE}/resend-verification`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email })
-        });
-        const data = await res.json();
-        if (!res.ok) { setMsg(data.error || "Could not resend."); return; }
-
-        const newLink = data.verifyLink || "";
-        if (newLink) {
-          lastVerifyLink = newLink;
-          openLink.href = newLink;
-          verifyHelp.classList.remove('hidden');
-        }
-
-        if (EMAILJS_PUBLIC_KEY && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && newLink) {
-          try {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-              email: email,
-              verify_link: newLink
-            });
-            setMsg("Verification email sent again. Check your inbox.", true);
-          } catch (e) {
-            console.warn("EmailJS resend failed:", e);
-            setMsg("Resent. If you don't see it, use the link above.", true);
-          }
-        } else {
-          setMsg("Resent. If you don't see it, use the link above.", true);
-        }
-      } catch (e) {
-        console.error(e);
-        setMsg("Server error. Please try again.");
-      }
-    });
-
-    // ===== Google Sign-Up -> send idToken to backend =====
-    window.onGoogleSignIn = async (response) => {
-      try {
-        setMsg("Signing in with Google…");
         const idToken = response.credential;
         const res = await fetch(`${API_BASE}/google-login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ idToken })
         });
         const data = await res.json();
-        if (!res.ok) { setMsg(data.error || "Google login failed."); return; }
+        if (!res.ok) throw new Error(data.error || 'Google sign-in failed.');
 
-        // Save session & redirect
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("token", data.token || "");
-        // We don’t get email directly here; verify endpoint or keep in token if you like.
-        // For convenience, try to decode token email:
-        const email = parseJwtEmail(data.token) || "";
-        if (email) localStorage.setItem("userEmail", email);
-        localStorage.setItem("profileImage", data.profileImage || "default-avatar.png");
-        setMsg("Signed in with Google!", true);
-        window.location.href = "index.html";
+        // Save session data
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('token', data.token || '');
+        // If your backend returns the email in the token, you can verify it via /verify endpoint.
+        // For UX, we also set from Google payload decode (safe to skip).
+        const payload = parseJwt(idToken);
+        localStorage.setItem('userEmail', (payload && payload.email) || '');
+        localStorage.setItem('profileImage', data.profileImage || (payload && payload.picture) || 'default-avatar.png');
+
+        alert('Signed in with Google!');
+        window.location.href = 'index.html';
       } catch (e) {
         console.error(e);
-        setMsg("Google login error.");
+        alert(e.message || 'Google sign-in failed.');
       }
-    };
+    }
+    window.handleGoogleCredential = handleGoogleCredential;
 
-    function parseJwtEmail(token){
-      try{
-        const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
-        return payload.email || "";
-      }catch{ return ""; }
+    function parseJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        return JSON.parse(atob(base64));
+      } catch { return null; }
     }
   </script>
 </body>
