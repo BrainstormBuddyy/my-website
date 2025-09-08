@@ -1,59 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Create Account</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
-    body{margin:0;font-family:Inter,sans-serif;background:linear-gradient(to right,#f4f2ff,#fff);display:flex;justify-content:center;align-items:center;height:100vh}
-    .signup-box{background:#fff;padding:2.5rem;border-radius:1rem;box-shadow:0 0 15px rgba(0,0,0,.05);width:100%;max-width:400px;text-align:center}
-    .signup-box h2{margin-bottom:1.5rem;color:#333}
-    .signup-box input{width:100%;padding:.75rem;margin:.5rem 0;border-radius:.5rem;border:1px solid #ccc;font-size:1rem}
-    .signup-box button{width:100%;background:#6c63ff;color:#fff;border:none;padding:.8rem;font-size:1rem;font-weight:600;border-radius:.5rem;margin-top:1rem;cursor:pointer}
-    .login-link{margin-top:1rem;font-size:.95rem}
-    .login-link a{color:#6c63ff;text-decoration:none;font-weight:600}
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #f4f2ff, #ffffff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .signup-box {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .signup-box h2 { margin-bottom: 1.25rem; color: #333; }
+    .signup-box input {
+      width: 100%; padding: 0.75rem; margin: 0.5rem 0;
+      border-radius: 0.5rem; border: 1px solid #ccc; font-size: 1rem;
+    }
+    .signup-box button.main-btn {
+      width: 100%; background: #6c63ff; color: white; border: none;
+      padding: 0.75rem; font-size: 1rem; font-weight: 600;
+      border-radius: 0.5rem; margin-top: 1rem; cursor: pointer;
+    }
+    .divider { margin: 1.25rem 0; text-align: center; color: #aaa; position: relative; }
+    .divider::before, .divider::after {
+      content: ''; height: 1px; width: 40%; background: #ddd; position: absolute; top: 50%;
+    }
+    .divider::before { left: 0; } .divider::after { right: 0; }
+    .g_id_signin { margin: 1rem auto; }
+    .login-link { margin-top: 1.25rem; font-size: .95rem; }
+    .login-link a { color: #6c63ff; text-decoration: none; font-weight: 600; }
+    .msg { margin-top:.75rem; min-height:1.2rem; font-weight:600; }
+    .msg.error { color:#c0392b; }
+    .msg.ok { color:#2e7d32; }
   </style>
+
+  <!-- Global API base: dev -> localhost, prod -> Render -->
+  <script>
+    window.API_BASE ??= (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
+      ? 'http://127.0.0.1:5050'
+      : 'https://auth-backend-b1b6.onrender.com'; /* ← your Render URL */
+  </script>
 </head>
 <body>
   <div class="signup-box">
-    <h2>Create Your Account</h2>
+    <h2 id="signup-title">Create Your Account</h2>
 
-    <input type="text" placeholder="Full Name" id="name">
-    <input type="email" placeholder="Email" id="email">
-    <input type="password" placeholder="Password" id="password">
-    <button id="signup-btn">Create Account</button>
+    <input type="text" placeholder="Full Name" id="name" autocomplete="name" />
+    <input type="email" placeholder="Email" id="email" autocomplete="email" />
+    <input type="password" placeholder="Password" id="password" autocomplete="new-password" />
+    <button class="main-btn" id="signup-btn">Create Account</button>
+    <div id="msg" class="msg"></div>
+
+    <div class="divider" id="divider-text">or</div>
+
+    <!-- Google Sign-Up -->
+    <div id="g_id_onload"
+         data-client_id="379118689427-db57bbdhsdf5qihl5eribu6gpod67v5j.apps.googleusercontent.com"
+         data-context="signup"
+         data-ux_mode="popup"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+         data-type="standard"
+         data-shape="rectangular"
+         data-theme="outline"
+         data-text="signup_with"
+         data-size="large"
+         data-logo_alignment="left">
+    </div>
 
     <div class="login-link">
-      Already have an account? <a href="login.html">Login</a>
+      <span id="login-text">Already have an account?</span>
+      <a href="login.html" id="login-link">Login</a>
     </div>
   </div>
 
   <script>
-    const API_BASE = (location.hostname.includes('localhost')||location.hostname.startsWith('127.'))
-      ? 'http://127.0.0.1:5050'
-      : 'https://auth-backend-b1b6.onrender.com';
+    const $ = s => document.querySelector(s);
+    const setMsg = (t, type) => { const el = $('#msg'); el.textContent = t || ''; el.className = 'msg ' + (type||''); };
 
-    document.getElementById('signup-btn').addEventListener('click', async () => {
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      if (!name || !email || !password) return alert('Please fill in all fields.');
+    function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(e).trim()); }
+
+    // ===== Manual (email + password) signup -> /signup =====
+    async function doSignup(){
+      const name = $('#name').value.trim();
+      const email = $('#email').value.trim().toLowerCase();
+      const password = $('#password').value.trim();
+
+      if (!name || !email || !password) { setMsg("Please fill in all fields.", 'error'); return; }
+      if (!isValidEmail(email)) { setMsg("Please enter a valid email.", 'error'); return; }
+      if (password.length < 8) { setMsg("Password must be at least 8 characters.", 'error'); return; }
+
+      const btn = $('#signup-btn');
+      setMsg(''); btn.disabled = true; btn.textContent = 'Creating…';
 
       try {
         const res = await fetch(`${API_BASE}/signup`, {
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email, password })
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Signup failed');
+        if (!res.ok || data?.error) throw new Error(data?.error || `HTTP ${res.status}`);
 
-        alert('Account created. Please check your email to verify before logging in.');
-        window.location.href = 'login.html';
-      } catch (e) {
-        alert(e.message || 'Server error');
+        // Success: persist session bits
+        if (data.token) localStorage.setItem('token', data.token);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('profileImage', 'default-avatar.png');
+        if (data.stripeCustomerId) localStorage.setItem('stripeCustomerId', data.stripeCustomerId);
+
+        location.href = 'index.html';
+      } catch (err) {
+        console.error('[signup] error:', err);
+        setMsg(err.message || 'Signup failed.', 'error');
+      } finally {
+        btn.disabled = false; btn.textContent = 'Create Account';
       }
+    }
+
+    // ===== Google Sign-Up -> send idToken to /google-login =====
+    async function handleCredentialResponse(resp){
+      try {
+        setMsg('');
+        const idToken = resp?.credential;
+        if (!idToken) { setMsg('Google sign-in failed.', 'error'); return; }
+
+        const res = await fetch(`${API_BASE}/google-login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idToken })
+        });
+        const data = await res.json();
+        if (!res.ok || data?.error) throw new Error(data?.error || `HTTP ${res.status}`);
+
+        // Save returned session bits
+        if (data.token) localStorage.setItem('token', data.token);
+        localStorage.setItem('isLoggedIn', 'true');
+        if (data.profileImage) localStorage.setItem('profileImage', data.profileImage);
+        if (data.stripeCustomerId) localStorage.setItem('stripeCustomerId', data.stripeCustomerId);
+
+        // Also store email from the Google token for convenience
+        try {
+          const payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+          if (payload?.email) localStorage.setItem('userEmail', payload.email.toLowerCase());
+        } catch {}
+
+        location.href = 'index.html';
+      } catch (err) {
+        console.error('[google-signup] error:', err);
+        setMsg(err.message || 'Google signup failed.', 'error');
+      }
+    }
+    window.handleCredentialResponse = handleCredentialResponse; // expose for GSI
+
+    // Wire up UI
+    $('#signup-btn').addEventListener('click', doSignup);
+    ['name','email','password'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') doSignup();
+      });
+    });
+
+    // i18n (kept from your original)
+    const translations = {
+      en: { title:"Create Your Account", btn:"Create Account", divider:"or", loginText:"Already have an account?", loginLink:"Login" }
+    };
+    function setLanguage(lang){
+      const t = translations[lang] || translations.en;
+      $('#signup-title').innerText = t.title;
+      $('#signup-btn').innerText = t.btn;
+      $('#divider-text').innerText = t.divider;
+      $('#login-text').innerText = t.loginText;
+      $('#login-link').innerText = t.loginLink;
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      const lang = localStorage.getItem('selectedLanguage') || 'en';
+      setLanguage(lang);
     });
   </script>
 </body>
