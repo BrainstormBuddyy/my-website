@@ -81,6 +81,17 @@
       <button id="resend-btn" class="link-btn" type="button">Resend verification</button>
     </div>
 
+    <!-- Cloudflare Turnstile widget -->
+    <div id="ts-container">
+      <div class="cf-turnstile"
+           data-sitekey="YOUR_SITE_KEY"
+           data-callback="onTurnstileSuccess"
+           data-error-callback="onTurnstileError"
+           data-expired-callback="onTurnstileExpired">
+      </div>
+    </div>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
     <div class="divider" id="or-divider">or</div>
 
     <!-- Google Sign-In -->
@@ -119,23 +130,42 @@
       $('#verify-hint').style.display = show ? 'block' : 'none';
     }
 
+    // --- Turnstile token handling ---
+    let TURNSTILE_TOKEN = "";
+
+    function onTurnstileSuccess(token) {
+      TURNSTILE_TOKEN = token || "";
+      setMsg(""); // clear any previous error
+    }
+    function onTurnstileExpired() { TURNSTILE_TOKEN = ""; }
+    function onTurnstileError() {
+      TURNSTILE_TOKEN = "";
+      setMsg("Verification failed. Please try again.");
+    }
+    function getTurnstileTokenFromDom() {
+      const el = document.querySelector('input[name="cf-turnstile-response"]');
+      return el?.value || "";
+    }
+
     async function doPasswordLogin() {
       const email = $('#emailInput').value.trim().toLowerCase();
       const password = $('#passwordInput').value.trim();
       if (!email || !password) { setMsg("Please enter both email and password."); return; }
+
+      const tsToken = TURNSTILE_TOKEN || getTurnstileTokenFromDom();
+      if (!tsToken) { setMsg("Please complete the verification."); return; }
 
       setMsg(''); showVerifyHint(false); $('#login-btn').disabled = true;
       try {
         const res = await fetch(`${API_BASE}/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ email, password, turnstileToken: tsToken })
         });
         const data = await res.json();
 
         if (!res.ok) {
           const errMsg = data?.error || `HTTP ${res.status}`;
-          // If unverified, offer resend
           if (res.status === 403 && /not verified/i.test(errMsg)) {
             setMsg('Email not verified. We can resend the verification link.', 'error');
             showVerifyHint(true);
@@ -145,7 +175,6 @@
           return;
         }
 
-        // Success: persist session bits
         if (data.token) localStorage.setItem('token', data.token);
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('userEmail', email);
@@ -158,6 +187,8 @@
         setMsg(err.message || 'Login failed.');
       } finally {
         $('#login-btn').disabled = false;
+        try { window.turnstile?.reset?.(); } catch {}
+        TURNSTILE_TOKEN = "";
       }
     }
 
@@ -185,28 +216,28 @@
       }
     }
 
-    // Google Sign-In callback → send idToken to backend /google-login (auto-verified)
     async function handleCredentialResponse(resp) {
       try {
         setMsg(''); showVerifyHint(false);
         const idToken = resp?.credential;
         if (!idToken) { setMsg('Google sign-in failed.'); return; }
 
+        // Optional: also send Turnstile token here if you want protection for Google logins
+        const tsToken = TURNSTILE_TOKEN || getTurnstileTokenFromDom();
+
         const res = await fetch(`${API_BASE}/google-login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ idToken })
+          body: JSON.stringify({ idToken, turnstileToken: tsToken })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`);
 
-        // Save returned session bits
         if (data.token) localStorage.setItem('token', data.token);
         localStorage.setItem('isLoggedIn', 'true');
         if (data.profileImage) localStorage.setItem('profileImage', data.profileImage);
         if (data.stripeCustomerId) localStorage.setItem('stripeCustomerId', data.stripeCustomerId);
 
-        // Also store email from the Google token for convenience
         try {
           const payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
           if (payload?.email) localStorage.setItem('userEmail', payload.email.toLowerCase());
@@ -218,9 +249,8 @@
         setMsg(err.message || 'Google login failed.');
       }
     }
-    window.handleCredentialResponse = handleCredentialResponse; // expose for GSI
+    window.handleCredentialResponse = handleCredentialResponse;
 
-    // UI wiring
     $('#login-btn').addEventListener('click', doPasswordLogin);
     $('#resend-btn').addEventListener('click', resendVerification);
     ['emailInput','passwordInput'].forEach(id => {
@@ -229,7 +259,6 @@
       });
     });
 
-    // i18n (simple)
     const translations = {
       en: { loginTitle:"Login to Your Account", loginBtn:"Login", or:"or", signupText:"Don't have an account?", signupLink:"Sign up" }
     };
@@ -245,7 +274,6 @@
       const lang = localStorage.getItem('selectedLanguage') || 'en';
       setLanguage(lang);
 
-      // Pre-fill email if we have it from signup
       const savedEmail = localStorage.getItem('userEmail');
       if (savedEmail) $('#emailInput').value = savedEmail;
     });
