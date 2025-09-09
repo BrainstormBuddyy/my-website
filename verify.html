@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Verify your email</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: light; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(120deg, #f4f2ff, #ffffff);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+    }
+    .card {
+      background:#fff; padding:2rem; border-radius:1rem; width:100%; max-width:520px;
+      box-shadow:0 8px 30px rgba(0,0,0,.06); text-align:center;
+    }
+    h1 { margin:0 0 .5rem; font-size:1.5rem; color:#222; }
+    p { color:#555; margin:.25rem 0; }
+    .muted { color:#777; font-size:.95rem; }
+    .status { margin-top:.75rem; font-weight:700; min-height:1.25rem; }
+    .ok { color:#2e7d32; }
+    .error { color:#c0392b; }
+    .actions { margin-top:1rem; display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; }
+    .btn {
+      border:none; border-radius:.65rem; padding:.7rem 1rem; cursor:pointer; font-weight:700;
+    }
+    .btn-primary { background:#6c63ff; color:#fff; }
+    .btn-secondary { background:#eef; color:#333; }
+    .btn:disabled { opacity:.6; cursor:not-allowed; }
+    .email-chip {
+      display:inline-block; background:#eef; color:#333; border-radius:999px;
+      padding:.25rem .6rem; font-weight:700; margin-top:.25rem;
+    }
+    .spinner {
+      display:inline-block; width:20px; height:20px; border:3px solid #ddd; border-top-color:#6c63ff; border-radius:50%;
+      animation: spin 0.8s linear infinite; vertical-align:middle; margin-right:.5rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+
+  <!-- Global API base: dev -> localhost, prod -> Render -->
+  <script>
+    window.API_BASE ??= (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
+      ? 'http://127.0.0.1:5050'
+      : 'https://auth-backend-b1b6.onrender.com'; /* ← your Render URL */
+  </script>
+</head>
+<body>
+  <div class="card">
+    <h1>Email verification</h1>
+    <p class="muted">We’re confirming your email so you can log in safely.</p>
+    <p id="emailRow" style="display:none;">For: <span class="email-chip" id="emailChip"></span></p>
+
+    <p id="status" class="status"><span class="spinner"></span> Verifying…</p>
+
+    <div class="actions">
+      <button id="goLogin" class="btn btn-primary" style="display:none;">Go to login</button>
+      <button id="resend" class="btn btn-secondary" style="display:none;">Resend verification email</button>
+    </div>
+  </div>
+
+  <script>
+    const $ = s => document.querySelector(s);
+
+    // Decode JWT payload (no secret required to read)
+    function safeDecodeJwtEmail(token) {
+      try {
+        const payloadB64 = token.split('.')[1];
+        if (!payloadB64) return null;
+        const json = atob(payloadB64.replace(/-/g,'+').replace(/_/g,'/'));
+        const payload = JSON.parse(json);
+        return (payload && payload.email) ? String(payload.email).toLowerCase() : null;
+      } catch { return null; }
+    }
+
+    async function verifyNow(token) {
+      const statusEl = $('#status');
+      const goLogin = $('#goLogin');
+      const resend = $('#resend');
+
+      if (!token) {
+        statusEl.className = 'status error';
+        statusEl.textContent = 'Invalid link: missing token.';
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/verify-email?token=${encodeURIComponent(token)}`);
+        const data = await res.json();
+        if (!res.ok || data?.ok === false) throw new Error(data?.error || 'Verification failed');
+
+        statusEl.className = 'status ok';
+        statusEl.textContent = 'Email verified! Redirecting to login…';
+        goLogin.style.display = 'inline-block';
+
+        // Auto redirect
+        setTimeout(() => location.href = 'login.html', 1500);
+      } catch (e) {
+        statusEl.className = 'status error';
+        statusEl.textContent = e.message || 'Could not verify email. The link may be invalid or expired.';
+        resend.style.display = 'inline-block';
+      }
+    }
+
+    async function resendVerification(email) {
+      const statusEl = $('#status');
+      const resend = $('#resend');
+
+      if (!email) {
+        statusEl.className = 'status error';
+        statusEl.textContent = 'We couldn’t detect your email from this link. Please go to the login page and use “Resend verification”.';
+        return;
+      }
+
+      try {
+        resend.disabled = true;
+        const res = await fetch(`${API_BASE}/resend-verification`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (!res.ok || data?.ok === false) throw new Error(data?.error || 'Could not resend');
+        statusEl.className = 'status ok';
+        statusEl.textContent = 'Verification email sent. Please check your inbox.';
+      } catch (e) {
+        statusEl.className = 'status error';
+        statusEl.textContent = e.message || 'Could not resend verification email.';
+      } finally {
+        resend.disabled = false;
+      }
+    }
+
+    // Init
+    (function init(){
+      const params = new URLSearchParams(location.search);
+      const token = params.get('token') || '';
+      const email = safeDecodeJwtEmail(token) || localStorage.getItem('userEmail') || '';
+      if (email) {
+        $('#emailChip').textContent = email;
+        $('#emailRow').style.display = 'block';
+        // keep for convenience on login page
+        localStorage.setItem('userEmail', email);
+      }
+
+      verifyNow(token);
+
+      // Wire buttons
+      $('#goLogin').addEventListener('click', () => location.href = 'login.html');
+      $('#resend').addEventListener('click', () => resendVerification(email));
+    })();
+  </script>
+</body>
+</html>
