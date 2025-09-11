@@ -6,6 +6,9 @@
   <title>Create Account</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- Cloudflare Turnstile -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
   <style>
     :root { color-scheme: light; }
     body {
@@ -53,6 +56,7 @@
     .msg.ok { color:#2e7d32; }
     .note { font-size:.9rem; color:#666; margin-top:.25rem; }
     .hint { color:#555; font-size:.9rem; margin-top:.5rem; }
+    .turnstile-wrap { margin-top: .25rem; display:flex; justify-content:center; }
   </style>
 
   <!-- Global API base: dev -> localhost, prod -> Render -->
@@ -70,6 +74,20 @@
     <input type="text" placeholder="Full Name" id="name" autocomplete="name" />
     <input type="email" placeholder="Email" id="email" autocomplete="email" />
     <input type="password" placeholder="Password (min 8 characters)" id="password" autocomplete="new-password" />
+
+    <!-- Cloudflare Turnstile widget -->
+    <div class="turnstile-wrap">
+      <div
+        id="ts-signup-widget"
+        class="cf-turnstile"
+        data-sitekey="0x4AAAAAAB0Oj5mAjQCsrlI5"
+        data-callback="onTSCallback"
+        data-expired-callback="onTSExpired"
+        data-error-callback="onTSError"
+        data-theme="light">
+      </div>
+    </div>
+
     <button class="main-btn" id="signup-btn">Create Account</button>
     <div id="msg" class="msg" role="status" aria-live="polite"></div>
     <div class="hint" id="verify-hint" style="display:none;">
@@ -107,6 +125,18 @@
     const setMsg = (t, type) => { const el = $('#msg'); el.textContent = t || ''; el.className = 'msg ' + (type||''); };
     const isValidEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(e).trim());
 
+    // ===== Turnstile token handling =====
+    let tsToken = null;
+    const IS_LOCAL = location.hostname.includes('localhost') || location.hostname.startsWith('127.');
+    // Mirror server's dev bypass; if you're using TURNSTILE_BYPASS_DEV for local dev,
+    // this avoids blocking the UI locally.
+    const REQUIRE_TS = !IS_LOCAL;
+
+    window.onTSCallback = (token) => { tsToken = token; setMsg(''); };
+    window.onTSExpired = () => { tsToken = null; };
+    window.onTSError = () => { tsToken = null; setMsg('Human check failed. Please try again.', 'error'); };
+    function resetTS(){ try { if (window.turnstile) turnstile.reset(); } catch(e){} }
+
     // ===== Manual (email + password) signup -> /signup =====
     async function doSignup(){
       const name = $('#name').value.trim();
@@ -116,6 +146,7 @@
       if (!name || !email || !password) { setMsg("Please fill in all fields.", 'error'); return; }
       if (!isValidEmail(email)) { setMsg("Please enter a valid email.", 'error'); return; }
       if (password.length < 8) { setMsg("Password must be at least 8 characters.", 'error'); return; }
+      if (REQUIRE_TS && !tsToken) { setMsg("Please verify you’re human.", 'error'); return; }
 
       const btn = $('#signup-btn');
       setMsg(''); btn.disabled = true; btn.textContent = 'Creating…';
@@ -124,7 +155,7 @@
         const res = await fetch(`${API_BASE}/signup`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, password })
+          body: JSON.stringify({ name, email, password, turnstileToken: tsToken })
         });
         const data = await res.json();
         if (!res.ok || data?.error) throw new Error(data?.error || `HTTP ${res.status}`);
@@ -145,21 +176,23 @@
         console.error('[signup] error:', err);
         setMsg(err.message || 'Signup failed.', 'error');
       } finally {
+        resetTS();
         btn.disabled = false; btn.textContent = 'Create Account';
       }
     }
 
-    // ===== Google Sign-Up -> send idToken to /google-login (auto-verified) =====
+    // ===== Google Sign-Up -> send idToken + Turnstile token to /google-login =====
     async function handleCredentialResponse(resp){
       try {
         setMsg('');
         const idToken = resp?.credential;
         if (!idToken) { setMsg('Google sign-in failed.', 'error'); return; }
+        if (REQUIRE_TS && !tsToken) { setMsg('Please complete the verification first.', 'error'); return; }
 
         const res = await fetch(`${API_BASE}/google-login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ idToken })
+          body: JSON.stringify({ idToken, turnstileToken: tsToken })
         });
         const data = await res.json();
         if (!res.ok || data?.error) throw new Error(data?.error || `HTTP ${res.status}`);
@@ -181,6 +214,8 @@
       } catch (err) {
         console.error('[google-signup] error:', err);
         setMsg(err.message || 'Google signup failed.', 'error');
+      } finally {
+        resetTS();
       }
     }
     window.handleCredentialResponse = handleCredentialResponse; // expose for GSI
