@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     :root { color-scheme: light; }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -17,7 +18,7 @@
       min-height: 100vh;
     }
     .login-box {
-      background: white;
+      background: #fff;
       padding: 2.5rem;
       border-radius: 1rem;
       box-shadow: 0 8px 30px rgba(0,0,0,.06);
@@ -25,18 +26,18 @@
       max-width: 420px;
       text-align: center;
     }
-    .login-box h2 { margin-bottom: 0.75rem; color: #222; font-weight: 700; }
+    .login-box h2 { margin: 0 0 .5rem; color: #222; font-weight: 700; }
     .subtitle { color:#666; margin: 0 0 1.25rem; font-size:.95rem; }
     .login-box input {
-      width: 100%; padding: 0.9rem; margin: 0.5rem 0;
-      border-radius: 0.65rem; border: 1px solid #d9d9e3; font-size: 1rem;
+      width: 100%; padding: .9rem; margin: .5rem 0;
+      border-radius: .65rem; border: 1px solid #d9d9e3; font-size: 1rem;
       outline: none; transition: border-color .15s ease;
     }
     .login-box input:focus { border-color: #6c63ff; }
     .login-box button.main-btn {
-      width: 100%; background: #6c63ff; color: white; border: none;
-      padding: 0.9rem; font-size: 1rem; font-weight: 700;
-      border-radius: 0.65rem; margin-top: 0.75rem; cursor: pointer;
+      width: 100%; background: #6c63ff; color: #fff; border: none;
+      padding: .9rem; font-size: 1rem; font-weight: 700;
+      border-radius: .65rem; margin-top: .75rem; cursor: pointer;
       transition: transform .02s ease-in-out, opacity .2s;
     }
     .login-box button.main-btn:disabled { opacity: .6; cursor:not-allowed; }
@@ -50,20 +51,20 @@
     }
     .divider::before { left: 0; } .divider::after { right: 0; }
     .g_id_signin { margin: 1rem auto; }
-    .bottom-links { margin-top: 1rem; font-size: 0.95rem; text-align: center; }
-    .bottom-links a { color: #6c63ff; text-decoration: none; font-weight: 700; }
-    .forgot-password { margin-top: 0.25rem; }
+    .bottom-links { margin-top: 1rem; font-size: .95rem; text-align: center; }
+    .bottom-links a { color:#6c63ff; text-decoration: none; font-weight: 700; }
+    .forgot-password { margin-top: .25rem; }
     .msg { margin-top:.9rem; min-height:1.25rem; font-weight:600; }
     .msg.error { color:#c0392b; }
     .msg.ok { color:#2e7d32; }
     .hint { color:#555; font-size:.9rem; margin-top:.5rem; }
   </style>
 
-  <!-- Global API base: dev -> localhost, prod -> Render -->
+  <!-- API base: dev -> localhost, prod -> api subdomain -->
   <script>
-    window.API_BASE ??= (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
+    window.API_BASE = (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
       ? 'http://127.0.0.1:5050'
-      : 'https://auth-backend-b1b6.onrender.com'; /* ← your Render URL */
+      : 'https://api.brainstormbuddy.co.uk';
   </script>
 </head>
 <body>
@@ -71,8 +72,8 @@
     <h2 id="login-title">Login to Your Account</h2>
     <p class="subtitle">Welcome back to Brainstorm Buddy</p>
 
-    <input type="email" placeholder="Email" id="emailInput" autocomplete="email" />
-    <input type="password" placeholder="Password" id="passwordInput" autocomplete="current-password" />
+    <input type="email" placeholder="Email" id="emailInput" autocomplete="email"/>
+    <input type="password" placeholder="Password" id="passwordInput" autocomplete="current-password"/>
     <button class="main-btn" id="login-btn">Login</button>
     <div id="msg" class="msg" role="alert" aria-live="polite"></div>
 
@@ -81,8 +82,8 @@
       <button id="resend-btn" class="link-btn" type="button">Resend verification</button>
     </div>
 
-    <!-- Cloudflare Turnstile widget -->
-    <div id="ts-container">
+    <!-- Cloudflare Turnstile widget (replace sitekey if needed) -->
+    <div id="ts-container" style="margin-top:.75rem;">
       <div class="cf-turnstile"
            data-sitekey="0x4AAAAAAB0Oj5mAjQCsrlI5"
            data-callback="onTurnstileSuccess"
@@ -94,7 +95,7 @@
 
     <div class="divider" id="or-divider">or</div>
 
-    <!-- Google Sign-In -->
+    <!-- Google Sign-In (replace client_id if needed) -->
     <div id="g_id_onload"
          data-client_id="379118689427-db57bbdhsdf5qihl5eribu6gpod67v5j.apps.googleusercontent.com"
          data-context="signin"
@@ -126,26 +127,20 @@
     const $ = sel => document.querySelector(sel);
     const setMsg = (t, type='error') => { const el = $('#msg'); el.className = 'msg ' + (type||''); el.textContent = t || ''; };
 
-    function showVerifyHint(show) {
-      $('#verify-hint').style.display = show ? 'block' : 'none';
-    }
+    function showVerifyHint(show) { $('#verify-hint').style.display = show ? 'block' : 'none'; }
 
     // --- Turnstile token handling ---
     let TURNSTILE_TOKEN = "";
-
-    function onTurnstileSuccess(token) {
-      TURNSTILE_TOKEN = token || "";
-      setMsg(""); // clear any previous error
-    }
+    function onTurnstileSuccess(token) { TURNSTILE_TOKEN = token || ""; setMsg(""); }
     function onTurnstileExpired() { TURNSTILE_TOKEN = ""; }
-    function onTurnstileError() {
-      TURNSTILE_TOKEN = "";
-      setMsg("Verification failed. Please try again.");
-    }
+    function onTurnstileError() { TURNSTILE_TOKEN = ""; setMsg("Verification failed. Please try again."); }
     function getTurnstileTokenFromDom() {
       const el = document.querySelector('input[name="cf-turnstile-response"]');
       return el?.value || "";
     }
+    window.onTurnstileSuccess = onTurnstileSuccess;
+    window.onTurnstileExpired = onTurnstileExpired;
+    window.onTurnstileError = onTurnstileError;
 
     async function doPasswordLogin() {
       const email = $('#emailInput').value.trim().toLowerCase();
@@ -159,6 +154,7 @@
       try {
         const res = await fetch(`${API_BASE}/login`, {
           method: 'POST',
+          credentials: 'include',                // <— send/accept cookies
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password, turnstileToken: tsToken })
         });
@@ -166,7 +162,7 @@
 
         if (!res.ok) {
           const errMsg = data?.error || `HTTP ${res.status}`;
-          if (res.status === 403 && /not verified/i.test(errMsg)) {
+          if (res.status === 403 && /verify/i.test(errMsg)) {
             setMsg('Email not verified. We can resend the verification link.', 'error');
             showVerifyHint(true);
           } else {
@@ -175,12 +171,19 @@
           return;
         }
 
+        // Optional Bearer storage (cookie is what /me uses)
         if (data.token) localStorage.setItem('token', data.token);
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('userEmail', email);
         if (data.profileImage) localStorage.setItem('profileImage', data.profileImage);
         if (data.stripeCustomerId) localStorage.setItem('stripeCustomerId', data.stripeCustomerId);
 
+        // Sanity-check session cookie then go home
+        try {
+          const meRes = await fetch(`${API_BASE}/me`, { credentials: 'include' });
+          const me = await meRes.json();
+          if (!me?.ok) console.warn('Not signed in on /me yet:', me);
+        } catch {}
         window.location.href = 'index.html';
       } catch (err) {
         console.error('[login] password flow error:', err);
@@ -195,14 +198,12 @@
     async function resendVerification() {
       const email = $('#emailInput').value.trim().toLowerCase()
         || localStorage.getItem('userEmail') || '';
-      if (!email) {
-        setMsg('Enter your email above, then click “Resend verification”.');
-        return;
-      }
+      if (!email) { setMsg('Enter your email above, then click “Resend verification”.'); return; }
       try {
         $('#resend-btn').disabled = true;
         const res = await fetch(`${API_BASE}/resend-verification`, {
           method: 'POST',
+          credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email })
         });
@@ -222,11 +223,11 @@
         const idToken = resp?.credential;
         if (!idToken) { setMsg('Google sign-in failed.'); return; }
 
-        // Optional: also send Turnstile token here if you want protection for Google logins
         const tsToken = TURNSTILE_TOKEN || getTurnstileTokenFromDom();
 
         const res = await fetch(`${API_BASE}/google-login`, {
           method: 'POST',
+          credentials: 'include',              // <— send/accept cookies
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ idToken, turnstileToken: tsToken })
         });
@@ -243,10 +244,19 @@
           if (payload?.email) localStorage.setItem('userEmail', payload.email.toLowerCase());
         } catch {}
 
+        try {
+          const meRes = await fetch(`${API_BASE}/me`, { credentials: 'include' });
+          const me = await meRes.json();
+          if (!me?.ok) console.warn('Not signed in on /me yet:', me);
+        } catch {}
+
         window.location.href = 'index.html';
       } catch (err) {
         console.error('[login] google flow error:', err);
         setMsg(err.message || 'Google login failed.');
+      } finally {
+        try { window.turnstile?.reset?.(); } catch {}
+        TURNSTILE_TOKEN = "";
       }
     }
     window.handleCredentialResponse = handleCredentialResponse;
@@ -254,26 +264,25 @@
     $('#login-btn').addEventListener('click', doPasswordLogin);
     $('#resend-btn').addEventListener('click', resendVerification);
     ['emailInput','passwordInput'].forEach(id => {
-      document.getElementById(id).addEventListener('keydown', e => {
-        if (e.key === 'Enter') doPasswordLogin();
-      });
+      document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') doPasswordLogin(); });
     });
 
+    // Basic i18n hook
     const translations = {
       en: { loginTitle:"Login to Your Account", loginBtn:"Login", or:"or", signupText:"Don't have an account?", signupLink:"Sign up" }
     };
     function setLanguage(lang) {
       const t = translations[lang] || translations.en;
-      document.getElementById('login-title').innerText = t.loginTitle;
-      document.getElementById('login-btn').innerText = t.loginBtn;
-      document.getElementById('or-divider').innerText = t.or;
-      document.getElementById('signup-text').innerText = t.signupText;
-      document.getElementById('signup-link').innerText = t.signupLink;
+      $('#login-title').innerText = t.loginTitle;
+      $('#login-btn').innerText = t.loginBtn;
+      $('#or-divider').innerText = t.or;
+      $('#signup-text').innerText = t.signupText;
+      $('#signup-link').innerText = t.signupLink;
     }
+
     window.addEventListener('DOMContentLoaded', () => {
       const lang = localStorage.getItem('selectedLanguage') || 'en';
       setLanguage(lang);
-
       const savedEmail = localStorage.getItem('userEmail');
       if (savedEmail) $('#emailInput').value = savedEmail;
     });
