@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Brainstorm Buddy</title>
-
-  <!-- ✅ Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="smallicon.png">
-  <!-- Optional: Add ICO fallback (if you ever create one) -->
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
- 
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Brainstorm Buddy</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="smallicon.png">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --primary: #6c63ff;
@@ -31,7 +24,7 @@
       --white: #ffffff;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg-light); color: var(--text-light); transition: background 0.3s, color 0.3s; line-height: 1.;}
+    body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg-light); color: var(--text-light); transition: background 0.3s, color 0.3s; line-height: 1; }
     body.dark { background: var(--bg-dark); color: var(--text-dark); }
 
     header {
@@ -57,8 +50,10 @@
 
     main { text-align: center; padding: 3rem 1rem 2rem; max-width: 900px; margin: auto; }
     main img { width: 100px; margin-bottom: 1rem; cursor: pointer; }
-    main h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
-    main p { font-size: 1.2rem; color: var(--muted-light); max-width: 600px; margin: 0 auto; }
+    main h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.35rem; }
+    main p { font-size: 1.2rem; color: var(--muted-light); max-width: 700px; margin: 0.25rem auto 0; }
+    #welcome { margin-top: 0.25rem; font-weight: 600; }
+
     body.dark main p { color: var(--muted-dark); }
 
     section { padding: 2rem 1rem; max-width: 900px; margin: auto; }
@@ -79,6 +74,8 @@
     footer a:hover { text-decoration: underline; }
 
     .profile-container { margin-left: 1rem; }
+    .dropdown { display:none; position:absolute; right:0; top:2.5rem; background:white; color:#333; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.1); z-index:10; min-width:220px; }
+    .dropdown a, .dropdown div { display:block; padding:0.6rem 1rem; text-decoration:none; color:#333; }
 
     @media (max-width: 600px) {
       header { flex-direction: column; align-items: stretch; padding: 1rem; }
@@ -87,6 +84,14 @@
       .logo { margin-bottom: 0.5rem; }
     }
   </style>
+
+  <script>
+    // Global API base (prod -> your API domain)
+    window.API_BASE ??= (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
+      ? 'http://127.0.0.1:5050'
+      : 'https://api.brainstormbuddy.co.uk';
+    const API_BASE = window.API_BASE;
+  </script>
 </head>
 <body>
   <header>
@@ -99,7 +104,7 @@
       <button id="pricingBtn" class="btn outline">Pricing</button>
       <button id="aboutBtn" class="btn outline">About</button>
       <button class="switcher" onclick="toggleDarkMode()">🌙</button>
-      <select class="switcher" onchange="changeLanguage(this.value)">
+      <select class="switcher" id="langSelect">
         <option value="en">EN</option>
         <option value="es">ES</option>
         <option value="fr">FR</option>
@@ -114,6 +119,7 @@
     <img src="icon128.png" alt="Brainstorm Buddy Icon" onclick="location.href='index.html'" />
     <h1 id="headline">Boost Your Productivity</h1>
     <p id="subtext">Your favorite Chrome Extension for AI-powered brainstorming and smart note-taking.</p>
+    <p id="welcome"></p>
   </main>
 
   <section>
@@ -139,31 +145,31 @@
   <section>
     <h2 id="usecasesTitle">🎯 Perfect For</h2>
     <div class="use-cases-grid">
-  <div class="card">
-    <h3 id="studentTitle">🧑‍🎓 Students</h3>
-    <p id="studentDesc">Quickly brainstorm essay ideas, project outlines, and study notes.</p>
-  </div>
-  <div class="card">
-    <h3 id="writerTitle">✍️ Writers</h3>
-    <p id="writerDesc">Get past creative blocks and develop fresh story or content ideas.</p>
-  </div>
-  <div class="card">
-    <h3 id="entrepreneurTitle">💡 Entrepreneurs</h3>
-    <p id="entrepreneurDesc">Jot down business ideas, product features, and customer pain points.</p>
-  </div>
-  <div class="card">
-    <h3 id="professionalTitle">👔 Professionals & Employers</h3>
-    <p id="professionalDesc">Streamline reports, prep for meetings, draft emails, and generate ideas for team improvement.</p>
-  </div>
-  <div class="card">
-    <h3 id="marketerTitle">🛍️ Marketers & Content Creators</h3>
-    <p id="marketerDesc">Plan social media content, brainstorm campaigns, and draft blog post ideas effortlessly.</p>
-  </div>
-  <div class="card">
-    <h3 id="developerTitle">🧑‍💻 Developers & Techies</h3>
-    <p id="developerDesc">Jot down code snippets, write pseudocode, and log feature ideas or bugs during research or development.</p>
-  </div>
-</div>
+      <div class="card">
+        <h3 id="studentTitle">🧑‍🎓 Students</h3>
+        <p id="studentDesc">Quickly brainstorm essay ideas, project outlines, and study notes.</p>
+      </div>
+      <div class="card">
+        <h3 id="writerTitle">✍️ Writers</h3>
+        <p id="writerDesc">Get past creative blocks and develop fresh story or content ideas.</p>
+      </div>
+      <div class="card">
+        <h3 id="entrepreneurTitle">💡 Entrepreneurs</h3>
+        <p id="entrepreneurDesc">Jot down business ideas, product features, and customer pain points.</p>
+      </div>
+      <div class="card">
+        <h3 id="professionalTitle">👔 Professionals & Employers</h3>
+        <p id="professionalDesc">Streamline reports, prep for meetings, draft emails, and generate ideas for team improvement.</p>
+      </div>
+      <div class="card">
+        <h3 id="marketerTitle">🛍️ Marketers & Content Creators</h3>
+        <p id="marketerDesc">Plan social media content, brainstorm campaigns, and draft blog post ideas effortlessly.</p>
+      </div>
+      <div class="card">
+        <h3 id="developerTitle">🧑‍💻 Developers & Techies</h3>
+        <p id="developerDesc">Jot down code snippets, write pseudocode, and log feature ideas or bugs during research or development.</p>
+      </div>
+    </div>
   </section>
 
   <section class="cta">
@@ -180,173 +186,119 @@
   </footer>
 
   <script>
-    const API_BASE =
-  (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
-    ? 'http://127.0.0.1:5050'
-    : 'https://auth-backend-b1b6.onrender.com';
-
+    // ========= i18n =========
     const translations = {
       en: {
-        addBtn: "Add to Chrome",
-        loginBtn: "Login",
-        pricingBtn: "Pricing",
-        aboutBtn: "About",
-        headline: "Boost Your Productivity",
-        subtext: "Your favorite Chrome Extension for AI-powered brainstorming and smart note-taking.",
-        featuresTitle: "✨ Features",
-        feature1: "🧠 Instantly generate ideas using AI",
-        feature2: "📝 Write and organize your own notes",
-        feature3: "📁 Export or import your notes anytime",
-        feature4: "⚡ Super lightweight and fast in your browser",
-        howTitle: "📌 How It Works",
-        step1: "Install the extension on Chrome",
-        step2: "Click the Brainstorm Buddy icon",
-        step3: "Generate ideas with AI or write your own",
-        step4: "Save, export, or import your notes",
-        usecasesTitle: "🎯 Perfect For",
-        studentTitle: "🧑‍🎓 Students",
-        studentDesc: "Quickly brainstorm essay ideas, project outlines, and study notes.",
-        writerTitle: "✍️ Writers",
-        writerDesc: "Get past creative blocks and develop fresh story or content ideas.",
-        entrepreneurTitle: "💡 Entrepreneurs",
-        entrepreneurDesc: "Jot down business ideas, product features, and customer pain points.",
-        professionalTitle: "👔 Professionals & Employers",
-        professionalDesc: "Streamline reports, prep for meetings, draft emails, and generate ideas for team improvement.",
-       marketerTitle: "🛍️ Marketers & Content Creators",
-  marketerDesc: "Plan social media content, brainstorm campaigns, and draft blog post ideas effortlessly.",
-  developerTitle: "🧑‍💻 Developers & Techies",
-  developerDesc: "Jot down code snippets, write pseudocode, and log feature ideas or bugs during research or development.",
-        ctaTitle: "Ready to turn ideas into action?",
-        ctaDesc: "Install Brainstorm Buddy and start brainstorming smarter, not harder.",
-        footerPrivacy: "Privacy Policy",
-        footerTerms: "Terms of Service",
-        footerContact: "Contact Us",
-        footerSupport: "Support Us"
+        addBtn:"Add to Chrome", loginBtn:"Login", pricingBtn:"Pricing", aboutBtn:"About",
+        headline:"Boost Your Productivity", subtext:"Your favorite Chrome Extension for AI-powered brainstorming and smart note-taking.",
+        featuresTitle:"✨ Features", feature1:"🧠 Instantly generate ideas using AI", feature2:"📝 Write and organize your own notes",
+        feature3:"📁 Export or import your notes anytime", feature4:"⚡ Super lightweight and fast in your browser",
+        howTitle:"📌 How It Works", step1:"Install the extension on Chrome", step2:"Click the Brainstorm Buddy icon",
+        step3:"Generate ideas with AI or write your own", step4:"Save, export, or import your notes",
+        usecasesTitle:"🎯 Perfect For", studentTitle:"🧑‍🎓 Students", studentDesc:"Quickly brainstorm essay ideas, project outlines, and study notes.",
+        writerTitle:"✍️ Writers", writerDesc:"Get past creative blocks and develop fresh story or content ideas.",
+        entrepreneurTitle:"💡 Entrepreneurs", entrepreneurDesc:"Jot down business ideas, product features, and customer pain points.",
+        professionalTitle:"👔 Professionals & Employers", professionalDesc:"Streamline reports, prep for meetings, draft emails, and generate ideas for team improvement.",
+        marketerTitle:"🛍️ Marketers & Content Creators", marketerDesc:"Plan social media content, brainstorm campaigns, and draft blog post ideas effortlessly.",
+        developerTitle:"🧑‍💻 Developers & Techies", developerDesc:"Jot down code snippets, write pseudocode, and log feature ideas or bugs during research or development.",
+        ctaTitle:"Ready to turn ideas into action?", ctaDesc:"Install Brainstorm Buddy and start brainstorming smarter, not harder.",
+        footerPrivacy:"Privacy Policy", footerTerms:"Terms of Service", footerContact:"Contact Us", footerSupport:"Support Us"
       },
-      es: {
-        addBtn: "Agregar a Chrome", loginBtn: "Iniciar sesión", pricingBtn: "Precios", aboutBtn: "Acerca de",
-        headline: "Aumenta tu productividad", subtext: "Tu extensión favorita para lluvia de ideas con IA.",
-        featuresTitle: "✨ Funciones", feature1: "🧠 Genera ideas con IA", feature2: "📝 Escribe tus notas",
-        feature3: "📁 Exporta o importa tus notas", feature4: "⚡ Ligera y rápida",
-        howTitle: "📌 Cómo funciona", step1: "Instala la extensión", step2: "Haz clic en el icono",
-        step3: "Genera ideas o escribe", step4: "Guarda o exporta tus notas",
-        usecasesTitle: "🎯 Perfecto para", studentTitle: "🧑‍🎓 Estudiantes", studentDesc: "Ideas para ensayos y estudios",
-        writerTitle: "✍️ Escritores", writerDesc: "Supera bloqueos creativos", entrepreneurTitle: "💡 Emprendedores",
-        entrepreneurDesc: "Anota ideas y problemas de clientes",
-        professionalTitle: "👔 Profesionales y Empleadores",
-        professionalDesc: "Optimiza informes, prepara reuniones, redacta correos y genera ideas para mejorar el equipo.",
-       marketerTitle: "🛍️ Marketeros y Creadores de Contenido",
-  marketerDesc: "Planifica contenido en redes sociales, ideas de campañas y borradores de blogs fácilmente.",
-  developerTitle: "🧑‍💻 Desarrolladores y Técnicos",
-  developerDesc: "Anota fragmentos de código, escribe pseudocódigo y registra ideas o errores durante la investigación o el desarrollo.",
-        ctaTitle: "¿Listo para empezar?",
-        ctaDesc: "Instala Brainstorm Buddy ahora", footerPrivacy: "Política de privacidad",
-        footerTerms: "Términos del servicio", footerContact: "Contáctanos", footerSupport: "Apóyanos"
+      es:{addBtn:"Agregar a Chrome",loginBtn:"Iniciar sesión",pricingBtn:"Precios",aboutBtn:"Acerca de",
+        headline:"Aumenta tu productividad",subtext:"Tu extensión favorita para lluvia de ideas con IA.",
+        featuresTitle:"✨ Funciones",feature1:"🧠 Genera ideas con IA",feature2:"📝 Escribe tus notas",
+        feature3:"📁 Exporta o importa tus notas",feature4:"⚡ Ligera y rápida",
+        howTitle:"📌 Cómo funciona",step1:"Instala la extensión",step2:"Haz clic en el icono",step3:"Genera ideas o escribe",step4:"Guarda o exporta tus notas",
+        usecasesTitle:"🎯 Perfecto para",studentTitle:"🧑‍🎓 Estudiantes",studentDesc:"Ideas para ensayos y estudios",
+        writerTitle:"✍️ Escritores",writerDesc:"Supera bloqueos creativos",
+        entrepreneurTitle:"💡 Emprendedores",entrepreneurDesc:"Anota ideas y problemas de clientes",
+        professionalTitle:"👔 Profesionales y Empleadores",professionalDesc:"Optimiza informes, prepara reuniones, redacta correos y genera ideas para mejorar el equipo.",
+        marketerTitle:"🛍️ Marketeros y Creadores de Contenido",marketerDesc:"Planifica contenido en redes sociales, ideas de campañas y borradores de blogs fácilmente.",
+        developerTitle:"🧑‍💻 Desarrolladores y Técnicos",developerDesc:"Anota fragmentos de código, escribe pseudocódigo y registra ideas o errores.",
+        ctaTitle:"¿Listo para empezar?",ctaDesc:"Instala Brainstorm Buddy ahora",
+        footerPrivacy:"Política de privacidad",footerTerms:"Términos del servicio",footerContact:"Contáctanos",footerSupport:"Apóyanos"
       },
-      fr: {
-        addBtn: "Ajouter à Chrome", loginBtn: "Connexion", pricingBtn: "Tarifs", aboutBtn: "À propos",
-        headline: "Boostez votre productivité", subtext: "Extension Chrome pour prise de notes intelligente.",
-        featuresTitle: "✨ Fonctionnalités", feature1: "🧠 Générez des idées avec l'IA", feature2: "📝 Organisez vos notes",
-        feature3: "📁 Exportez ou importez vos notes", feature4: "⚡ Rapide et légère",
-        howTitle: "📌 Comment ça marche", step1: "Installez l'extension", step2: "Cliquez sur l'icône",
-        step3: "Générez ou écrivez", step4: "Sauvegardez vos notes",
-        usecasesTitle: "🎯 Idéal pour", studentTitle: "🧑‍🎓 Étudiants", studentDesc: "Idées de projets et études",
-        writerTitle: "✍️ Écrivains", writerDesc: "Débloquez votre créativité", entrepreneurTitle: "💡 Entrepreneurs",
-        professionalTitle: "👔 Professionnels et Employeurs",
-        professionalDesc: "Simplifiez les rapports, préparez les réunions, rédigez des e-mails et trouvez des idées pour améliorer l’équipe.",
-        entrepreneurDesc: "Notez vos idées de produits", ctaTitle: "Prêt à agir ?", ctaDesc: "Installez Brainstorm Buddy",
-       marketerTitle: "🛍️ Marketeurs & Créateurs de contenu",
-  marketerDesc: "Planifiez du contenu social, imaginez des campagnes et rédigez des brouillons de blogs facilement.",
-  developerTitle: "🧑‍💻 Développeurs & Technophiles",
-  developerDesc: "Notez des extraits de code, écrivez du pseudocode et consignez des idées ou bugs pendant vos recherches ou développements.",
-        footerPrivacy: "Politique de confidentialité", footerTerms: "Conditions d'utilisation", footerContact: "Contactez-nous", footerSupport: "Soutenez-nous"
+      fr:{addBtn:"Ajouter à Chrome",loginBtn:"Connexion",pricingBtn:"Tarifs",aboutBtn:"À propos",
+        headline:"Boostez votre productivité",subtext:"Extension Chrome pour prise de notes intelligente.",
+        featuresTitle:"✨ Fonctionnalités",feature1:"🧠 Générez des idées avec l'IA",feature2:"📝 Organisez vos notes",
+        feature3:"📁 Exportez ou importez vos notes",feature4:"⚡ Rapide et légère",
+        howTitle:"📌 Comment ça marche",step1:"Installez l'extension",step2:"Cliquez sur l'icône",step3:"Générez ou écrivez",step4:"Sauvegardez vos notes",
+        usecasesTitle:"🎯 Idéal pour",studentTitle:"🧑‍🎓 Étudiants",studentDesc:"Idées de projets et études",
+        writerTitle:"✍️ Écrivains",writerDesc:"Débloquez votre créativité",entrepreneurTitle:"💡 Entrepreneurs",entrepreneurDesc:"Notez vos idées de produits",
+        professionalTitle:"👔 Professionnels et Employeurs",professionalDesc:"Simplifiez les rapports, préparez les réunions, rédigez des e-mails et trouvez des idées.",
+        marketerTitle:"🛍️ Marketeurs & Créateurs de contenu",marketerDesc:"Planifiez du contenu social, imaginez des campagnes et des brouillons de blogs.",
+        developerTitle:"🧑‍💻 Développeurs & Technophiles",developerDesc:"Notez des extraits de code, écrivez du pseudocode et consignez des idées ou bugs.",
+        ctaTitle:"Prêt à agir ?",ctaDesc:"Installez Brainstorm Buddy",footerPrivacy:"Politique de confidentialité",
+        footerTerms:"Conditions d'utilisation",footerContact:"Contactez-nous",footerSupport:"Soutenez-nous"
       },
-      ru: {
-        addBtn: "Добавить в Chrome", loginBtn: "Войти", pricingBtn: "Цены", aboutBtn: "О нас",
-        headline: "Повышайте продуктивность", subtext: "Ваш помощник для мозгового штурма",
-        featuresTitle: "✨ Функции", feature1: "🧠 Генерация идей с ИИ", feature2: "📝 Организуйте свои заметки",
-        feature3: "📁 Экспорт и импорт", feature4: "⚡ Быстрая работа",
-        howTitle: "📌 Как это работает", step1: "Установите расширение", step2: "Нажмите на иконку",
-        step3: "Создайте или напишите", step4: "Сохраните заметки",
-        usecasesTitle: "🎯 Идеально для", studentTitle: "🧑‍🎓 Студенты", studentDesc: "Идеи и заметки для учебы",
-        writerTitle: "✍️ Писатели", writerDesc: "Преодолейте творческие блоки", entrepreneurTitle: "💡 Предприниматели",
-        professionalTitle: "👔 Профессионалы и Работодатели",
-        professionalDesc: "Упрощайте отчёты, готовьтесь к встречам, пишите письма и генерируйте идеи для улучшения команды.",
-        entrepreneurDesc: "Записывайте идеи и фичи", ctaTitle: "Готовы начать?", ctaDesc: "Установите Brainstorm Buddy",
-       marketerTitle: "🛍️ Маркетологи и Контент-криэйторы",
-  marketerDesc: "Планируйте контент для соцсетей, придумывайте кампании и черновики статей без усилий.",
-  developerTitle: "🧑‍💻 Разработчики и Техники",
-  developerDesc: "Записывайте сниппеты кода, пишите псевдокод и фиксируйте идеи или баги во время работы и исследований.",
-        footerPrivacy: "Политика конфиденциальности", footerTerms: "Условия использования", footerContact: "Связаться с нами", footerSupport: "Поддержать нас"
+      ru:{addBtn:"Добавить в Chrome",loginBtn:"Войти",pricingBtn:"Цены",aboutBtn:"О нас",
+        headline:"Повышайте продуктивность",subtext:"Ваш помощник для мозгового штурма",
+        featuresTitle:"✨ Функции",feature1:"🧠 Генерация идей с ИИ",feature2:"📝 Организуйте свои заметки",
+        feature3:"📁 Экспорт и импорт",feature4:"⚡ Быстрая работа",
+        howTitle:"📌 Как это работает",step1:"Установите расширение",step2:"Нажмите на иконку",step3:"Создайте или напишите",step4:"Сохраните заметки",
+        usecasesTitle:"🎯 Идеально для",studentTitle:"🧑‍🎓 Студенты",studentDesc:"Идеи и заметки для учебы",
+        writerTitle:"✍️ Писатели",writerDesc:"Преодолейте творческие блоки",
+        entrepreneurTitle:"💡 Предприниматели",entrepreneurDesc:"Записывайте идеи и фичи",
+        professionalTitle:"👔 Профессионалы и Работодатели",professionalDesc:"Отчёты, встречи, письма и идеи для команды.",
+        marketerTitle:"🛍️ Маркетологи и Контент-криэйторы",marketerDesc:"Планируйте контент, кампании и черновики статей.",
+        developerTitle:"🧑‍💻 Разработчики и Техники",developerDesc:"Сниппеты кода, псевдокод и заметки о багах.",
+        ctaTitle:"Готовы начать?",ctaDesc:"Установите Brainstorm Buddy",
+        footerPrivacy:"Политика конфиденциальности",footerTerms:"Условия использования",footerContact:"Связаться с нами",footerSupport:"Поддержать нас"
       },
-      it: {
-        addBtn: "Aggiungi a Chrome", loginBtn: "Accedi", pricingBtn: "Prezzi", aboutBtn: "Chi siamo",
-        headline: "Aumenta la produttività", subtext: "Estensione per brainstorming intelligente",
-        featuresTitle: "✨ Caratteristiche", feature1: "🧠 Genera idee con l'IA", feature2: "📝 Organizza le tue note",
-        feature3: "📁 Esporta o importa", feature4: "⚡ Veloce e leggera",
-        howTitle: "📌 Come funziona", step1: "Installa l'estensione", step2: "Clicca sull'icona",
-        step3: "Genera o scrivi", step4: "Salva le note",
-        usecasesTitle: "🎯 Perfetto per", studentTitle: "🧑‍🎓 Studenti", studentDesc: "Appunti e idee per lo studio",
-        writerTitle: "✍️ Scrittori", writerDesc: "Supera i blocchi creativi", entrepreneurTitle: "💡 Imprenditori",
-        professionalTitle: "👔 Professionisti e Datori di lavoro",
-        professionalDesc: "Snellisci i report, prepara riunioni, scrivi email e genera idee per migliorare il team.",
-        entrepreneurDesc: "Scrivi idee di business", ctaTitle: "Pronto ad agire?", ctaDesc: "Installa Brainstorm Buddy",
-        marketerTitle: "🛍️ Marketer e Creatori di Contenuti",
-  marketerDesc: "Pianifica post social, idee di campagne e bozze di blog senza sforzo.",
-  developerTitle: "🧑‍💻 Sviluppatori & Tecnici",
-  developerDesc: "Annota snippet di codice, scrivi pseudocodice e registra idee o bug durante la ricerca o lo sviluppo.",
-        footerPrivacy: "Privacy", footerTerms: "Termini", footerContact: "Contattaci", footerSupport: "Sostienici"
+      it:{addBtn:"Aggiungi a Chrome",loginBtn:"Accedi",pricingBtn:"Prezzi",aboutBtn:"Chi siamo",
+        headline:"Aumenta la produttività",subtext:"Estensione per brainstorming intelligente",
+        featuresTitle:"✨ Caratteristiche",feature1:"🧠 Genera idee con l'IA",feature2:"📝 Organizza le tue note",
+        feature3:"📁 Esporta o importa",feature4:"⚡ Veloce e leggera",
+        howTitle:"📌 Come funziona",step1:"Installa l'estensione",step2:"Clicca sull'icona",step3:"Genera o scrivi",step4:"Salva le note",
+        usecasesTitle:"🎯 Perfetto per",studentTitle:"🧑‍🎓 Studenti",studentDesc:"Appunti e idee per lo studio",
+        writerTitle:"✍️ Scrittori",writerDesc:"Supera i blocchi creativi",
+        entrepreneurTitle:"💡 Imprenditori",entrepreneurDesc:"Scrivi idee di business",
+        professionalTitle:"👔 Professionisti e Datori di lavoro",professionalDesc:"Report, riunioni, e-mail e idee per il team.",
+        marketerTitle:"🛍️ Marketer e Creatori di Contenuti",marketerDesc:"Post social, campagne e bozze di blog.",
+        developerTitle:"🧑‍💻 Sviluppatori & Tecnici",developerDesc:"Snippet di codice, pseudocodice e idee/bug.",
+        ctaTitle:"Pronto ad agire?",ctaDesc:"Installa Brainstorm Buddy",
+        footerPrivacy:"Privacy",footerTerms:"Termini",footerContact:"Contattaci",footerSupport:"Sostienici"
       },
-      pt: {
-        addBtn: "Adicionar ao Chrome", loginBtn: "Entrar", pricingBtn: "Preços", aboutBtn: "Sobre",
-        headline: "Aumente sua produtividade", subtext: "Extensão de anotações inteligentes com IA.",
-        featuresTitle: "✨ Recursos", feature1: "🧠 Geração de ideias com IA", feature2: "📝 Organize suas notas",
-        feature3: "📁 Exporte ou importe", feature4: "⚡ Rápida e leve",
-        howTitle: "📌 Como funciona", step1: "Instale a extensão", step2: "Clique no ícone",
-        step3: "Gere ou escreva ideias", step4: "Salve suas anotações",
-        usecasesTitle: "🎯 Perfeito para", studentTitle: "🧑‍🎓 Estudantes", studentDesc: "Ideias e resumos",
-        writerTitle: "✍️ Escritores", writerDesc: "Supere bloqueios criativos", entrepreneurTitle: "💡 Empreendedores",
-        professionalTitle: "👔 Profissionais e Empregadores",
-        professionalDesc: "Otimize relatórios, prepare reuniões, escreva e-mails e gere ideias para melhorar a equipe.",
-        entrepreneurDesc: "Anote ideias de negócios", ctaTitle: "Pronto para agir?", ctaDesc: "Instale agora",
-        marketerTitle: "🛍️ Profissionais de Marketing & Criadores de Conteúdo",
-  marketerDesc: "Planeje posts para redes sociais, campanhas e rascunhos de blogs com facilidade.",
-  developerTitle: "🧑‍💻 Desenvolvedores & Técnicos",
-  developerDesc: "Anote trechos de código, escreva pseudocódigo e registre ideias ou bugs durante pesquisas ou desenvolvimento.",
-        footerPrivacy: "Política de Privacidade", footerTerms: "Termos de Uso", footerContact: "Contato", footerSupport: "Apoie-nos"
+      pt:{addBtn:"Adicionar ao Chrome",loginBtn:"Entrar",pricingBtn:"Preços",aboutBtn:"Sobre",
+        headline:"Aumente sua produtividade",subtext:"Extensão de anotações inteligentes com IA.",
+        featuresTitle:"✨ Recursos",feature1:"🧠 Ideias com IA",feature2:"📝 Organize suas notas",
+        feature3:"📁 Exporte ou importe",feature4:"⚡ Rápida e leve",
+        howTitle:"📌 Como funciona",step1:"Instale a extensão",step2:"Clique no ícone",step3:"Gere ou escreva ideias",step4:"Salve suas anotações",
+        usecasesTitle:"🎯 Perfeito para",studentTitle:"🧑‍🎓 Estudantes",studentDesc:"Ideias e resumos",
+        writerTitle:"✍️ Escritores",writerDesc:"Supere bloqueios criativos",entrepreneurTitle:"💡 Empreendedores",entrepreneurDesc:"Anote ideias de negócios",
+        professionalTitle:"👔 Profissionais e Empregadores",professionalDesc:"Relatórios, reuniões, e-mails e ideias para o time.",
+        marketerTitle:"🛍️ Marketing & Criadores",marketerDesc:"Posts sociais, campanhas e rascunhos.",
+        developerTitle:"🧑‍💻 Desenvolvedores & Técnicos",developerDesc:"Trechos de código, pseudocódigo e ideias/bugs.",
+        ctaTitle:"Pronto para agir?",ctaDesc:"Instale agora",
+        footerPrivacy:"Política de Privacidade",footerTerms:"Termos de Uso",footerContact:"Contato",footerSupport:"Apoie-nos"
       }
     };
 
     function changeLanguage(lang) {
-      const t = translations[lang];
-      if (t) {
-        for (const key in t) {
-          const el = document.getElementById(key);
-          if (el) el.textContent = t[key];
-        }
+      const t = translations[lang] || translations.en;
+      for (const key in t) {
+        const el = document.getElementById(key);
+        if (el) el.textContent = t[key];
       }
       localStorage.setItem('selectedLanguage', lang);
+      document.getElementById('langSelect').value = lang;
     }
 
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark');
-    }
+    function toggleDarkMode() { document.body.classList.toggle('dark'); }
 
     function toggleProfileMenu() {
       const menu = document.getElementById("profile-dropdown");
       if (menu) menu.style.display = menu.style.display === "block" ? "none" : "block";
     }
 
-    function logout() {
-      localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem("profileImage");
-      localStorage.removeItem("userPlan");
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("token");
-      location.reload();
+    async function logout() {
+      try {
+        await fetch(`${API_BASE}/logout`, { method: 'POST', credentials: 'include' });
+      } catch {}
+      localStorage.clear();
+      location.href = 'login.html';
     }
 
-    // Format plan coming from /api/subscription-status
     function formatPlan(plan){
       const p = String(plan || '').toLowerCase();
       if (!p || p === 'free') return 'Free';
@@ -355,33 +307,83 @@
 
     async function fetchCurrentPlan(email){
       try{
-        const res = await fetch(`${API_BASE}/api/subscription-status?email=${encodeURIComponent(email)}`);
+        const res = await fetch(`${API_BASE}/api/subscription-status?email=${encodeURIComponent(email)}`, { credentials:'include' });
         if(!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         return formatPlan(data?.plan || 'Free');
-      }catch(err){
-        console.warn('Plan fetch failed:', err);
+      }catch{
         return 'Free';
       }
     }
 
-    // Update the dropdown “Plan: ...” and any #current-plan on the page
-    async function refreshHeaderPlan(){
-      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-      const email = localStorage.getItem('userEmail') || '';
-      if(!isLoggedIn || !email) return;
+    function insertProfileUI({ name, profileImage, plan }) {
+      const navRight = document.querySelector(".nav-right");
+      if (document.getElementById('profile-dropdown')) return; // already inserted
 
-      const plan = await fetchCurrentPlan(email);
-      localStorage.setItem('userPlan', plan);
-      document.querySelectorAll('.plan-label span, #current-plan').forEach(el => el.textContent = plan);
+      const loginBtn = document.getElementById("loginBtn");
+      if (loginBtn) loginBtn.style.display = "none";
+
+      const profileDiv = document.createElement("div");
+      profileDiv.className = "profile-container";
+      profileDiv.innerHTML = `
+        <div style="position: relative;">
+          <button class="profile-trigger" onclick="toggleProfileMenu()" style="border: none; background: none;">
+            <img id="profile-img" src="${profileImage || 'default-avatar.png'}" alt="Profile" style="width: 32px; height: 32px; border-radius: 50%;">
+          </button>
+          <div class="dropdown" id="profile-dropdown">
+            <div><strong>${name ? name : 'Account'}</strong></div>
+            <div class="plan-label">Plan: <span id="plan-span">${formatPlan(plan)}</span></div>
+            <a href="billing.html">Billing & Plan</a>
+            <a href="#" onclick="logout()">Logout</a>
+          </div>
+        </div>
+      `;
+      navRight.appendChild(profileDiv);
     }
 
-    document.addEventListener("DOMContentLoaded", async function () {
-      // Language setup
+    async function checkSessionAndRender() {
+      try {
+        const res = await fetch(`${API_BASE}/me`, { credentials: 'include' });
+        const data = await res.json();
+
+        if (res.ok && data.ok) {
+          // Persist a bit for other pages
+          localStorage.setItem('isLoggedIn','true');
+          if (data.email) localStorage.setItem('userEmail', data.email);
+          if (data.profileImage) localStorage.setItem('profileImage', data.profileImage);
+
+          // UI: welcome + avatar
+          document.getElementById('welcome').textContent = `Welcome, ${data.name || data.email}!`;
+          insertProfileUI({ name: data.name || data.email, profileImage: data.profileImage, plan: data.plan });
+
+          // Refresh plan label from server (authoritative)
+          const plan = await fetchCurrentPlan(data.email);
+          localStorage.setItem('userPlan', plan);
+          const span = document.getElementById('plan-span');
+          if (span) span.textContent = plan;
+        } else {
+          // Not signed in
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('userEmail');
+          localStorage.removeItem('profileImage');
+          localStorage.removeItem('userPlan');
+          document.getElementById('welcome').textContent = '';
+          // show Login button (already visible by default)
+        }
+      } catch (e) {
+        // Network or CORS issue — leave page usable
+        console.warn('Session check failed:', e);
+      }
+    }
+
+    // ====== Boot ======
+    document.addEventListener("DOMContentLoaded", () => {
+      // Language
       const lang = localStorage.getItem('selectedLanguage') || 'en';
       changeLanguage(lang);
+      document.getElementById('langSelect').addEventListener('change', e => changeLanguage(e.target.value));
 
-      // Buttons
+      // Nav buttons
       document.getElementById("addBtn")?.addEventListener("click", () => {
         window.open("https://chromewebstore.google.com/", "_blank");
       });
@@ -389,44 +391,22 @@
       document.getElementById("pricingBtn")?.addEventListener("click", () => { location.href = "pricing.html"; });
       document.getElementById("aboutBtn")?.addEventListener("click", () => { location.href = "about.html"; });
 
-      // Login state & header avatar
-      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-      const profileImage = localStorage.getItem("profileImage") || "default-avatar.png";
-      const cachedPlan = localStorage.getItem("userPlan") || "Free";
-
-      if (isLoggedIn) {
-        // Hide login button
-        const loginBtn = document.getElementById("loginBtn");
-        if (loginBtn) loginBtn.style.display = "none";
-
-        // Insert profile avatar with cached plan first
-        const navRight = document.querySelector(".nav-right");
-        const profileDiv = document.createElement("div");
-        profileDiv.className = "profile-container";
-        profileDiv.innerHTML = `
-          <div style="position: relative;">
-            <button class="profile-trigger" onclick="toggleProfileMenu()" style="border: none; background: none;">
-              <img id="profile-img" src="${profileImage}" alt="Profile" style="width: 32px; height: 32px; border-radius: 50%;">
-            </button>
-            <div class="profile-dropdown-content" id="profile-dropdown" style="display: none; position: absolute; right: 0; top: 2.5rem; background: white; color: #333; border-radius: 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 10; min-width: 200px;">
-              <div class="plan-label" style="padding: 0.6rem 1rem;">
-                Plan: <span>${cachedPlan}</span>
-              </div>
-              <a href="billing.html" style="display:block; padding:0.6rem 1rem; text-decoration:none; color:#333;">Billing & Plan</a>
-              <a href="#" onclick="logout()" style="display:block; padding:0.6rem 1rem; text-decoration:none; color:#333;">Logout</a>
-            </div>
-          </div>
-        `;
-        navRight.appendChild(profileDiv);
-
-        // Now fetch & update with the authoritative plan from the server
-        await refreshHeaderPlan();
-      }
+      // Initial session check
+      checkSessionAndRender();
     });
 
-    // Keep plan fresh when returning to the page/tab
-    window.addEventListener('focus', refreshHeaderPlan);
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshHeaderPlan(); });
+    // Keep plan fresh when returning
+    window.addEventListener('focus', async () => {
+      const email = localStorage.getItem('userEmail');
+      if (email) {
+        const plan = await fetchCurrentPlan(email);
+        localStorage.setItem('userPlan', plan);
+        const span = document.getElementById('plan-span');
+        if (span) span.textContent = plan;
+      } else {
+        checkSessionAndRender();
+      }
+    });
 
     // Close dropdown when clicking outside
     window.addEventListener("click", function (e) {
