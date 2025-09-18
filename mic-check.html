@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Microphone Check • Brainstorm Buddy</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0f172a; --card:#111827; --fg:#e5e7eb; --muted:#94a3b8;
+      --ok:#16a34a; --warn:#f59e0b; --bad:#ef4444; --pri:#6366f1; --border:#243143;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,#0b1220 0%, #0f172a 100%); color:var(--fg);
+      min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+    .card{
+      width:min(760px,100%); background:var(--card); border:1px solid var(--border);
+      border-radius:16px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    h1{margin:0 0 8px; font-size:22px}
+    p{margin:8px 0; color:var(--muted)}
+    .row{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between}
+    .btn{
+      appearance:none; border:none; border-radius:10px; padding:10px 14px; font-weight:700;
+      background:var(--pri); color:white; cursor:pointer;
+    }
+    .btn:disabled{opacity:.7; cursor:not-allowed}
+    .btn.secondary{background:transparent; border:1px solid var(--border); color:var(--fg)}
+    .status{
+      display:inline-flex; align-items:center; gap:8px; font-weight:600;
+      padding:6px 10px; border-radius:999px; border:1px solid var(--border);
+      background:#0b1425;
+    }
+    .dot{width:10px; height:10px; border-radius:50%}
+    .ok{background:var(--ok)} .warn{background:var(--warn)} .bad{background:var(--bad)}
+    .panel{
+      margin-top:14px; padding:12px; border:1px dashed var(--border); border-radius:12px;
+      background:#0c1628;
+    }
+    .meter-wrap{
+      margin-top:10px; background:#091020; border:1px solid var(--border);
+      height:10px; border-radius:999px; overflow:hidden;
+    }
+    .meter{height:100%; width:0%}
+    .meter.ok{background:linear-gradient(90deg,#22c55e,#84cc16)}
+    .meter.mid{background:linear-gradient(90deg,#f59e0b,#f97316)}
+    .meter.bad{background:linear-gradient(90deg,#ef4444,#f43f5e)}
+    ul{padding-left:18px; margin:8px 0}
+    code{background:#0b1425; border:1px solid var(--border); padding:2px 6px; border-radius:6px}
+    .devices{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+    .chip{padding:6px 10px; border:1px solid var(--border); border-radius:999px; background:#0b1425; font-size:12px}
+    .foot{margin-top:14px; text-align:center; color:var(--muted); font-size:12px}
+    a{color:#c7d2fe}
+    label.toggle{display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--muted)}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="row">
+      <div>
+        <h1>🎤 Microphone Check</h1>
+        <p>Grant mic access for Brainstorm Buddy’s “Record Note”. You should see the volume meter moving once granted.</p>
+      </div>
+      <div class="status" id="permStatus">
+        <span class="dot warn" id="permDot"></span>
+        <span id="permText">Permission: unknown</span>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="requestBtn">Request microphone access</button>
+      <label class="toggle"><input type="checkbox" id="monitorAudio"> Play live mic to speakers (monitor)</label>
+      <button class="btn secondary" id="stopBtn" disabled>Stop</button>
+    </div>
+
+    <div class="panel">
+      <strong>Live level</strong>
+      <div class="meter-wrap">
+        <div class="meter" id="meter"></div>
+      </div>
+      <div class="devices" id="devices"></div>
+    </div>
+
+    <div class="panel">
+      <strong>Troubleshooting</strong>
+      <ul>
+        <li>When Chrome prompts “Use your microphone?”, click <b>Allow</b>.</li>
+        <li>If blocked, open <code>chrome://settings/content/microphone</code> and allow this site.</li>
+        <li>Also check your OS privacy settings to allow microphone access for Chrome.</li>
+        <li>You can then return to the extension and tap <b>🎤 Record Note</b> again.</li>
+      </ul>
+    </div>
+
+    <p class="foot">Having trouble? Contact <a href="https://www.brainstormbuddy.co.uk/support.html" target="_blank" rel="noreferrer">support</a>.</p>
+
+    <audio id="monitor" autoplay playsinline style="display:none"></audio>
+  </main>
+
+  <script>
+    // Elements
+    const requestBtn = document.getElementById('requestBtn');
+    const stopBtn    = document.getElementById('stopBtn');
+    const permDot    = document.getElementById('permDot');
+    const permText   = document.getElementById('permText');
+    const devicesEl  = document.getElementById('devices');
+    const meterEl    = document.getElementById('meter');
+    const monitor    = document.getElementById('monitor');
+    const monitorToggle = document.getElementById('monitorAudio');
+
+    let stream = null;
+    let audioCtx = null;
+    let analyser = null;
+    let rafId = null;
+
+    function setPerm(status) {
+      let cls = 'warn', text = 'Permission: prompt';
+      if (status === 'granted') { cls = 'ok'; text = 'Permission: granted'; }
+      if (status === 'denied')  { cls = 'bad'; text = 'Permission: denied'; }
+      permDot.className = 'dot ' + cls;
+      permText.textContent = text;
+    }
+
+    async function queryPermission() {
+      try {
+        if (!navigator.permissions || !navigator.permissions.query) return;
+        const st = await navigator.permissions.query({ name: 'microphone' });
+        setPerm(st.state);
+        st.onchange = () => setPerm(st.state);
+      } catch {
+        // not supported; show prompt state
+        setPerm('prompt');
+      }
+    }
+
+    function listDevices() {
+      if (!navigator.mediaDevices?.enumerateDevices) return;
+      navigator.mediaDevices.enumerateDevices().then(list => {
+        const inputs = list.filter(d => d.kind === 'audioinput');
+        devicesEl.innerHTML = inputs.length
+          ? inputs.map(d => `<span class="chip">${d.label || 'Microphone'}</span>`).join('')
+          : `<span class="chip">No microphones detected</span>`;
+      }).catch(() => {
+        devicesEl.innerHTML = `<span class="chip">Device list unavailable</span>`;
+      });
+    }
+
+    function stopAudio() {
+      try { if (rafId) cancelAnimationFrame(rafId); } catch {}
+      rafId = null;
+      if (analyser?.disconnect) try { analyser.disconnect(); } catch {}
+      if (audioCtx?.close) try { audioCtx.close(); } catch {}
+      audioCtx = null; analyser = null;
+
+      if (stream) {
+        try { stream.getTracks().forEach(t => t.stop()); } catch {}
+      }
+      stream = null;
+      monitor.srcObject = null;
+      stopBtn.disabled = true;
+      meterEl.style.width = '0%';
+      meterEl.className = 'meter';
+    }
+
+    function startMeter() {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const source = audioCtx.createMediaStreamSource(stream);
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 1024;
+      source.connect(analyser);
+
+      const data = new Uint8Array(analyser.frequencyBinCount);
+      function tick() {
+        analyser.getByteTimeDomainData(data);
+        // Compute RMS quickly
+        let sum = 0;
+        for (let i=0;i<data.length;i++) {
+          const v = (data[i]-128)/128;
+          sum += v*v;
+        }
+        const rms = Math.sqrt(sum / data.length); // 0..1
+        const pct = Math.min(100, Math.max(0, Math.round(rms * 140))); // scale a bit
+        meterEl.style.width = pct + '%';
+        meterEl.className = 'meter ' + (pct < 33 ? 'ok' : pct < 66 ? 'mid' : 'bad');
+        rafId = requestAnimationFrame(tick);
+      }
+      tick();
+    }
+
+    async function requestMic() {
+      requestBtn.disabled = true;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        setPerm('granted');
+        listDevices();
+        if (monitorToggle.checked) {
+          monitor.srcObject = stream;
+          monitor.muted = false;
+          monitor.volume = 1.0;
+        } else {
+          monitor.srcObject = null;
+        }
+        startMeter();
+        stopBtn.disabled = false;
+      } catch (e) {
+        const msg = (e && e.name) ? e.name : 'UnknownError';
+        setPerm('denied');
+        alert(
+          "Microphone access failed (" + msg + ").\n\n" +
+          "Tips:\n• When prompted, click Allow\n" +
+          "• Open chrome://settings/content/microphone and allow this site\n" +
+          "• Check OS Privacy settings for microphone"
+        );
+      } finally {
+        requestBtn.disabled = false;
+      }
+    }
+
+    requestBtn.addEventListener('click', requestMic);
+    stopBtn.addEventListener('click', stopAudio);
+    monitorToggle.addEventListener('change', () => {
+      if (!stream) return;
+      if (monitorToggle.checked) {
+        monitor.srcObject = stream;
+        monitor.muted = false;
+      } else {
+        monitor.srcObject = null;
+      }
+    });
+
+    window.addEventListener('beforeunload', stopAudio);
+
+    (async function init() {
+      await queryPermission();
+      listDevices();
+    })();
+  </script>
+</body>
+</html>
