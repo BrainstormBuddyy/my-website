@@ -45,7 +45,13 @@
     body.dark .enterprise-btn:hover{background:#f4f0ff}
     @media (max-width:768px){.pricing-container{flex-direction:column;align-items:center}}
     .pricing-card.nudge { transform: scale(1.02); }
-  </style>
+
+.toggle-switch { align-items: center; gap: .25rem; }
+.toggle-switch .sep { user-select: none; opacity: .8; padding: 0 .25rem; }
+.toggle-switch .save { font-weight: 700; white-space: nowrap; }
+body.dark .toggle-switch .sep { color: #ccc; }
+
+</style>
 
   <!-- Global API base: dev -> localhost, prod -> Render -->
   <script>
@@ -70,10 +76,12 @@
 
   <div class="pricing-header">
     <h1 id="pricingTitle">Choose Your Plan</h1>
-    <div class="toggle-switch">
-      <button id="toggle-yearly" class="active">Yearly</button>
-      <button id="toggle-monthly">Monthly</button>
-    </div>
+   <div class="toggle-switch">
+  <button id="toggle-monthly" class="active">Monthly</button>
+  <span class="sep">·</span>
+  <button id="toggle-yearly">Yearly <span class="save">(save 40%)</span></button>
+</div>
+
   </div>
 
   <div class="user-info">
@@ -209,7 +217,7 @@
       $('emailLabel').textContent=t.emailLabel;
       $('enterpriseBtn').textContent=t.enterpriseBtn;
       // translated toggles
-      $('toggle-yearly').textContent  = t.toggleYearly;
+      $('toggle-yearly').textContent  = `${t.toggleYearly} <span class="save">(save 40%)</span>`;
       $('toggle-monthly').textContent = t.toggleMonthly;
     }
 
