@@ -47,7 +47,7 @@
 </head>
 <body>
   <div class="container">
-    <select id="lang-select">
+    <select id="lang-select" aria-label="Language">
       <option value="en">English</option>
       <option value="es">Español</option>
       <option value="fr">Français</option>
@@ -57,179 +57,411 @@
     </select>
 
     <h1 id="title">Privacy Policy</h1>
-    <p id="effective-date">Effective Date: July 6, 2025</p>
+    <p id="effective-date">Effective date: July 6, 2025</p>
+    <p id="last-updated">Last updated: September 19, 2025</p>
 
-    <h2 id="intro-heading">1. Introduction</h2>
-    <p id="intro-text">This Privacy Policy describes how Brainstorm Buddy collects, uses, and protects your personal data.</p>
+    <h2 id="intro-heading">1) Who we are (Controller)</h2>
+    <p id="intro-text">
+      <strong>Controller:</strong> Brainstorm Buddy<br>
+      <strong>Postal address:</strong> 167–169 Great Portland Street, 5th Floor, London, W1W 5PF, United Kingdom<br>
+      <strong>Contact:</strong> <a href="mailto:brainstormbuddyy@gmail.com">brainstormbuddyy@gmail.com</a><br><br>
+      We are established in the UK and act as the controller for the personal data described in this notice.
+    </p>
 
-    <h2 id="data-heading">2. Data We Collect</h2>
+    <h2 id="data-heading">2) What data we collect</h2>
     <ul>
-      <li id="data-login">Login credentials (email, authentication tokens)</li>
-      <li id="data-usage">Usage data (features used, time spent, preferences)</li>
-      <li id="data-device">Device information (browser, operating system, IP address)</li>
+      <li id="data-account"><strong>Account data:</strong> email address; authentication identifiers/tokens.</li>
+      <li id="data-usage"><strong>Usage data:</strong> features used, session timestamps, in-product preferences, extension version.</li>
+      <li id="data-device"><strong>Device data:</strong> browser and operating system details.</li>
+      <li id="data-payment"><strong>Payment data:</strong> processed by Stripe. We do not collect or store full card numbers.</li>
+      <li id="data-special"><strong>Special-category data:</strong> we do not intentionally collect this.</li>
+      <li id="data-ip"><strong>No IP addresses:</strong> We do not collect or store IP addresses. (Our infrastructure providers may transiently process IPs to route traffic; we do not access or retain them.)</li>
+      <li id="data-sources"><strong>Sources:</strong> you (when you sign in/use the extension) and automatic collection via the extension/website.</li>
     </ul>
 
-    <h2 id="use-heading">3. How We Use Data</h2>
+    <h2 id="use-heading">3) Why we use your data &amp; legal bases (UK GDPR Art. 6)</h2>
     <ul>
-      <li id="use-personalize">To personalize your experience</li>
-      <li id="use-improve">To improve the extension and add new features</li>
-      <li id="use-legal">To comply with legal obligations</li>
+      <li id="use-contract">Provide and operate Brainstorm Buddy (authentication, core features, support) — <em>Contract</em> (Art. 6(1)(b)).</li>
+      <li id="use-li">Personalise and improve the extension; diagnostics; abuse prevention — <em>Legitimate interests</em> (Art. 6(1)(f): running, securing, and improving our service). You can object at any time (§9).</li>
+      <li id="use-payments">Payments via Stripe — <em>Contract</em> and <em>Legitimate interests</em> (fraud prevention).</li>
+      <li id="use-legal">Legal and compliance (tax, accounting, responding to lawful requests) — <em>Legal obligation</em> (Art. 6(1)(c)).</li>
+      <li id="use-consent">Non-essential analytics/marketing technologies (if we use them) — <em>Consent</em> (Art. 6(1)(a)); you can withdraw any time (§8/§9).</li>
     </ul>
 
-    <h2 id="storage-heading">4. Data Storage</h2>
-    <p id="storage-text">Data is stored securely on our servers and with third-party services such as Google and Firebase.</p>
+    <h2 id="cookies-heading">4) Cookies &amp; similar tech (PECR)</h2>
+    <p id="cookies-text">We use only essential technologies needed for sign-in and security. If we introduce non-essential analytics/marketing cookies or SDKs, we will request your consent first and provide a way to change your choices at any time.</p>
 
-    <h2 id="sharing-heading">5. Sharing Data</h2>
-    <p id="sharing-text">We do not sell your personal data. We may share it with service providers necessary to operate Brainstorm Buddy.</p>
-
-    <h2 id="rights-heading">6. Your Rights</h2>
+    <h2 id="sharing-heading">5) Sharing your data (recipients)</h2>
+    <p id="sharing-text">
+      We do not sell personal data. We share limited data with service providers to run Brainstorm Buddy:
+    </p>
     <ul>
-      <li id="rights-access">Access your data</li>
-      <li id="rights-update">Request corrections</li>
-      <li id="rights-delete">Request deletion of your data</li>
+      <li id="share-stripe"><strong>Stripe</strong> (payments, fraud prevention). Stripe receives payment information you submit at checkout and uses it under its own terms as an independent controller for some activities.</li>
+      <li id="share-render"><strong>Render</strong> (application hosting and related infrastructure services).</li>
+      <li id="share-email"><strong>Email service</strong> (Google/Gmail) for support communications you send to us.</li>
     </ul>
+    <p id="sharing-contracts">All providers are bound by appropriate contracts. They may only process your data for our documented purposes unless they act independently (e.g., Stripe for regulatory obligations).</p>
 
-    <h2 id="gdpr-heading">7. GDPR Compliance</h2>
-    <p id="gdpr-text">If you're in the UK or EU, we comply with GDPR regulations regarding consent and data control.</p>
+    <h2 id="transfers-heading">6) International transfers</h2>
+    <p id="transfers-text">Some providers may process data outside the UK. Where transfers occur, we use approved safeguards such as the UK International Data Transfer Agreement (IDTA) or the UK Addendum to the EU SCCs, plus supplementary measures where appropriate. You can request a copy of the relevant safeguards.</p>
 
-    <h2 id="contact-heading">8. Contact</h2>
-    <p id="contact-text">For privacy questions, contact us at <a href="mailto:brainstormbuddyy@gmail.com">brainstormbuddyy@gmail.com</a>.</p>
+    <h2 id="retention-heading">7) How long we keep data (retention)</h2>
+    <ul>
+      <li id="retention-account"><strong>Account data:</strong> kept while your account is active; deleted within 30 days after you close your account, unless we must keep it longer for legal reasons.</li>
+      <li id="retention-usage"><strong>Usage/diagnostic data:</strong> retained for 12 months, then deleted or anonymised.</li>
+      <li id="retention-payment"><strong>Payment records:</strong> retained for 6 years to meet tax/accounting/legal requirements.</li>
+    </ul>
+    <p id="retention-claims">We may retain information longer if needed to establish, exercise, or defend legal claims.</p>
+
+    <h2 id="security-heading">8) Security</h2>
+    <p id="security-text">We apply technical and organisational measures such as encryption in transit, access controls, and audit logging. No method is perfectly secure, but we work to protect your information against unauthorised access, alteration, or loss.</p>
+
+    <h2 id="rights-heading">9) Your rights</h2>
+    <p id="rights-intro">You can access, rectify, erase, restrict processing, object to processing based on legitimate interests, and port your data. Where we rely on consent, you may withdraw it at any time.</p>
+    <p id="rights-contact">To exercise these rights, email <a href="mailto:brainstormbuddyy@gmail.com">brainstormbuddyy@gmail.com</a>. We may ask for information to verify your identity.</p>
+    <p id="rights-ico">You also have the right to complain to the UK Information Commissioner’s Office (ICO) at <a href="https://ico.org.uk/">ico.org.uk</a>. We’d appreciate the chance to address your concerns first.</p>
+
+    <h2 id="automated-heading">10) Automated decision-making</h2>
+    <p id="automated-text">We do not make decisions producing legal or similarly significant effects based solely on automated processing (including profiling).</p>
+
+    <h2 id="children-heading">11) Children</h2>
+    <p id="children-text">Brainstorm Buddy is intended for users aged 13+ and is not directed to children under 13. We do not knowingly collect data from children.</p>
+
+    <h2 id="changes-heading">12) Changes to this notice</h2>
+    <p id="changes-text">We may update this policy from time to time. If changes are material, we’ll notify you in-product or by email and update the “Last updated” date above.</p>
+
+    <h2 id="contact-heading">Contact</h2>
+    <p id="contact-text">
+      Email: <a href="mailto:brainstormbuddyy@gmail.com">brainstormbuddyy@gmail.com</a><br>
+      Postal: 167–169 Great Portland Street, 5th Floor, London, W1W 5PF, United Kingdom
+    </p>
 
     <footer>&copy; 2025 Brainstorm Buddy. All rights reserved.</footer>
   </div>
 
   <script>
     const translations = {
+      // English is captured dynamically from the DOM
       en: { ...document.querySelectorAll('[id]').length && Object.fromEntries([...document.querySelectorAll('[id]')].map(el => [el.id, el.innerHTML])) },
+
       es: {
         "title": "Política de Privacidad",
         "effective-date": "Fecha de vigencia: 6 de julio de 2025",
-        "intro-heading": "1. Introducción",
-        "intro-text": "Esta Política describe cómo Brainstorm Buddy recopila, utiliza y protege tus datos personales.",
-        "data-heading": "2. Datos que Recopilamos",
-        "data-login": "Credenciales de inicio de sesión (correo electrónico, tokens de autenticación)",
-        "data-usage": "Datos de uso (funciones utilizadas, tiempo, preferencias)",
-        "data-device": "Información del dispositivo (navegador, sistema operativo, dirección IP)",
-        "use-heading": "3. Cómo Usamos los Datos",
-        "use-personalize": "Para personalizar tu experiencia",
-        "use-improve": "Para mejorar la extensión y agregar funciones",
-        "use-legal": "Para cumplir con obligaciones legales",
-        "storage-heading": "4. Almacenamiento de Datos",
-        "storage-text": "Los datos se almacenan de forma segura en nuestros servidores y en servicios como Google y Firebase.",
-        "sharing-heading": "5. Compartir Datos",
-        "sharing-text": "No vendemos tus datos. Podemos compartirlos con proveedores necesarios para operar Brainstorm Buddy.",
-        "rights-heading": "6. Tus Derechos",
-        "rights-access": "Accede a tus datos",
-        "rights-update": "Solicita correcciones",
-        "rights-delete": "Solicita eliminación de tus datos",
-        "gdpr-heading": "7. Cumplimiento del RGPD",
-        "gdpr-text": "Cumplimos con el RGPD si estás en Reino Unido o la UE.",
-        "contact-heading": "8. Contacto",
-        "contact-text": "Si tienes preguntas, contáctanos en <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>."
+        "last-updated": "Última actualización: 19 de septiembre de 2025",
+
+        "intro-heading": "1) Quiénes somos (Responsable)",
+        "intro-text": "<strong>Responsable:</strong> Brainstorm Buddy<br><strong>Dirección postal:</strong> 167–169 Great Portland Street, 5.º piso, Londres, W1W 5PF, Reino Unido<br><strong>Contacto:</strong> <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a><br><br>Estamos establecidos en el Reino Unido y actuamos como responsables del tratamiento de los datos personales descritos en este aviso.",
+
+        "data-heading": "2) Datos que recopilamos",
+        "data-account": "<strong>Datos de cuenta:</strong> correo electrónico; identificadores/tokens de autenticación.",
+        "data-usage": "<strong>Datos de uso:</strong> funciones utilizadas, marcas de tiempo de sesión, preferencias en el producto, versión de la extensión.",
+        "data-device": "<strong>Datos del dispositivo:</strong> detalles del navegador y del sistema operativo.",
+        "data-payment": "<strong>Datos de pago:</strong> gestionados por Stripe. No recopilamos ni almacenamos números completos de tarjeta.",
+        "data-special": "<strong>Datos especiales:</strong> no los recopilamos intencionalmente.",
+        "data-ip": "<strong>Sin direcciones IP:</strong> no recopilamos ni almacenamos IPs. (Nuestros proveedores pueden procesarlas de forma transitoria para enrutar el tráfico; no accedemos ni las conservamos.)",
+        "data-sources": "<strong>Fuentes:</strong> tú (cuando inicias sesión/uses la extensión) y recopilación automática a través de la extensión/sitio web.",
+
+        "use-heading": "3) Por qué usamos tus datos y bases legales (RGPD Reino Unido art. 6)",
+        "use-contract": "Prestar y operar Brainstorm Buddy (autenticación, funciones básicas, soporte) — <em>Contrato</em> (art. 6(1)(b)).",
+        "use-li": "Personalizar y mejorar; diagnóstico; prevención de abuso — <em>Intereses legítimos</em> (art. 6(1)(f)). Puedes oponerte en cualquier momento (§9).",
+        "use-payments": "Pagos con Stripe — <em>Contrato</em> e <em>Intereses legítimos</em> (prevención del fraude).",
+        "use-legal": "Obligaciones legales (tributarias, contables, solicitudes lícitas) — <em>Obligación legal</em> (art. 6(1)(c)).",
+        "use-consent": "Tecnologías de analítica/marketing no esenciales (si se usan) — <em>Consentimiento</em> (art. 6(1)(a)); puedes retirarlo en cualquier momento (§8/§9).",
+
+        "cookies-heading": "4) Cookies y tecnologías similares (PECR)",
+        "cookies-text": "Solo usamos tecnologías esenciales para el inicio de sesión y la seguridad. Si introducimos cookies o SDKs no esenciales, solicitaremos tu consentimiento y podrás cambiarlo en cualquier momento.",
+
+        "sharing-heading": "5) Con quién compartimos tus datos (destinatarios)",
+        "sharing-text": "No vendemos datos personales. Compartimos datos limitados con proveedores para operar Brainstorm Buddy:",
+        "share-stripe": "<strong>Stripe</strong> (pagos, prevención de fraude). Stripe recibe la información de pago y actúa como responsable independiente en algunas actividades.",
+        "share-render": "<strong>Render</strong> (alojamiento de la aplicación e infraestructura).",
+        "share-email": "<strong>Servicio de correo</strong> (Google/Gmail) para comunicaciones de soporte.",
+        "sharing-contracts": "Todos los proveedores están sometidos a contratos adecuados. Solo procesan tus datos para nuestros fines documentados salvo que actúen de forma independiente (p. ej., Stripe por obligaciones regulatorias).",
+
+        "transfers-heading": "6) Transferencias internacionales",
+        "transfers-text": "Algunos proveedores pueden tratar datos fuera del Reino Unido. Cuando ocurra, usamos salvaguardas aprobadas (IDTA del Reino Unido o Anexo del Reino Unido a las SCC de la UE), además de medidas complementarias cuando corresponda.",
+
+        "retention-heading": "7) Plazos de conservación",
+        "retention-account": "<strong>Cuenta:</strong> mientras esté activa; se elimina en 30 días tras el cierre salvo obligación legal.",
+        "retention-usage": "<strong>Uso/diagnóstico:</strong> 12 meses y luego se elimina o anonimiza.",
+        "retention-payment": "<strong>Pagos:</strong> 6 años por requisitos fiscales/contables/legales.",
+        "retention-claims": "Podemos conservar datos por más tiempo para establecer, ejercer o defender reclamaciones legales.",
+
+        "security-heading": "8) Seguridad",
+        "security-text": "Aplicamos medidas técnicas y organizativas (cifrado en tránsito, controles de acceso, registros de auditoría).",
+
+        "rights-heading": "9) Tus derechos",
+        "rights-intro": "Acceso, rectificación, supresión, restricción, oposición (intereses legítimos) y portabilidad. Cuando se base en consentimiento, puedes retirarlo en cualquier momento.",
+        "rights-contact": "Para ejercerlos, escribe a <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>. Podemos solicitar verificación de identidad.",
+        "rights-ico": "También puedes reclamar ante la ICO del Reino Unido en <a href=\"https://ico.org.uk/\">ico.org.uk</a>.",
+
+        "automated-heading": "10) Decisiones automatizadas",
+        "automated-text": "No realizamos decisiones con efectos legales o similares basadas únicamente en tratamiento automatizado (incluido perfilado).",
+
+        "children-heading": "11) Menores",
+        "children-text": "Brainstorm Buddy está dirigido a personas de 13+ y no a menores de 13. No recopilamos datos de niños conscientemente.",
+
+        "changes-heading": "12) Cambios a este aviso",
+        "changes-text": "Podemos actualizar la política. Si los cambios son materiales, lo notificaremos e indicaremos la nueva fecha de “Última actualización”.",
+
+        "contact-heading": "Contacto",
+        "contact-text": "Correo: <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a><br>Dirección: 167–169 Great Portland Street, 5.º piso, Londres, W1W 5PF, Reino Unido"
       },
+
       fr: {
         "title": "Politique de Confidentialité",
         "effective-date": "Date d'effet : 6 juillet 2025",
-        "intro-heading": "1. Introduction",
-        "intro-text": "Cette politique décrit comment Brainstorm Buddy collecte, utilise et protège vos données personnelles.",
-        "data-heading": "2. Données que Nous Collectons",
-        "data-login": "Identifiants de connexion (email, jetons d'authentification)",
-        "data-usage": "Données d'utilisation (fonctionnalités utilisées, temps passé, préférences)",
-        "data-device": "Informations sur l'appareil (navigateur, système d'exploitation, IP)",
-        "use-heading": "3. Utilisation des Données",
-        "use-personalize": "Pour personnaliser votre expérience",
-        "use-improve": "Pour améliorer l’extension et ajouter des fonctionnalités",
-        "use-legal": "Pour respecter les obligations légales",
-        "storage-heading": "4. Stockage des Données",
-        "storage-text": "Les données sont stockées en toute sécurité sur nos serveurs et ceux de Google ou Firebase.",
-        "sharing-heading": "5. Partage des Données",
-        "sharing-text": "Nous ne vendons pas vos données. Elles peuvent être partagées avec les prestataires techniques.",
-        "rights-heading": "6. Vos Droits",
-        "rights-access": "Accéder à vos données",
-        "rights-update": "Demander des corrections",
-        "rights-delete": "Demander la suppression",
-        "gdpr-heading": "7. Conformité au RGPD",
-        "gdpr-text": "Nous respectons le RGPD si vous êtes au Royaume-Uni ou en UE.",
-        "contact-heading": "8. Contact",
-        "contact-text": "Pour toute question, contactez-nous à <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>."
+        "last-updated": "Dernière mise à jour : 19 septembre 2025",
+
+        "intro-heading": "1) Qui nous sommes (Responsable)",
+        "intro-text": "<strong>Responsable :</strong> Brainstorm Buddy<br><strong>Adresse postale :</strong> 167–169 Great Portland Street, 5e étage, Londres, W1W 5PF, Royaume-Uni<br><strong>Contact :</strong> <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a><br><br>Nous sommes établis au Royaume-Uni et agissons en tant que responsable du traitement pour les données décrites ici.",
+
+        "data-heading": "2) Données que nous collectons",
+        "data-account": "<strong>Données de compte :</strong> e-mail ; identifiants/jetons d’authentification.",
+        "data-usage": "<strong>Données d’usage :</strong> fonctionnalités utilisées, horodatages de session, préférences, version de l’extension.",
+        "data-device": "<strong>Données appareil :</strong> navigateur et système d’exploitation.",
+        "data-payment": "<strong>Données de paiement :</strong> traitées par Stripe. Nous ne stockons pas les numéros complets de carte.",
+        "data-special": "<strong>Données sensibles :</strong> nous ne les collectons pas intentionnellement.",
+        "data-ip": "<strong>Pas d’adresses IP :</strong> nous ne collectons ni ne stockons d’IP. (Nos prestataires peuvent les traiter transitoirement pour l’acheminement ; nous n’y accédons pas et ne les conservons pas.)",
+        "data-sources": "<strong>Sources :</strong> vous (lorsque vous vous connectez/utilisez l’extension) et collecte automatique via l’extension/le site.",
+
+        "use-heading": "3) Finalités et bases légales (RGPD RU art. 6)",
+        "use-contract": "Fournir et exploiter Brainstorm Buddy — <em>Contrat</em> (art. 6(1)(b)).",
+        "use-li": "Personnalisation, amélioration, diagnostics, prévention des abus — <em>Intérêts légitimes</em> (art. 6(1)(f)). Opposition possible à tout moment (§9).",
+        "use-payments": "Paiements via Stripe — <em>Contrat</em> et <em>Intérêts légitimes</em> (lutte contre la fraude).",
+        "use-legal": "Obligations légales (fiscalité, comptabilité, demandes légales) — <em>Obligation légale</em> (art. 6(1)(c)).",
+        "use-consent": "Technologies non essentielles d’analytique/marketing (le cas échéant) — <em>Consentement</em> (art. 6(1)(a)).",
+
+        "cookies-heading": "4) Cookies et technologies similaires (PECR)",
+        "cookies-text": "Nous utilisons uniquement les technologies essentielles pour la connexion et la sécurité. Si nous introduisons des cookies/SDKs non essentiels, votre consentement sera demandé et pourra être modifié à tout moment.",
+
+        "sharing-heading": "5) Partage de vos données (destinataires)",
+        "sharing-text": "Nous ne vendons pas vos données. Nous partageons des données limitées avec des prestataires pour faire fonctionner Brainstorm Buddy :",
+        "share-stripe": "<strong>Stripe</strong> (paiements, antifraude). Stripe reçoit vos informations de paiement et agit parfois en responsable indépendant.",
+        "share-render": "<strong>Render</strong> (hébergement et infrastructure).",
+        "share-email": "<strong>Service e-mail</strong> (Google/Gmail) pour le support.",
+        "sharing-contracts": "Des contrats appropriés s’appliquent. Les prestataires ne traitent vos données que pour nos finalités documentées, sauf lorsqu’ils agissent indépendamment (ex. Stripe pour ses obligations réglementaires).",
+
+        "transfers-heading": "6) Transferts internationaux",
+        "transfers-text": "Certains prestataires peuvent traiter hors du Royaume-Uni. Nous utilisons l’IDTA du RU ou l’Addendum RU aux CCT de l’UE et, si besoin, des mesures supplémentaires.",
+
+        "retention-heading": "7) Durées de conservation",
+        "retention-account": "<strong>Compte :</strong> pendant l’activité ; suppression sous 30 jours après fermeture, sauf obligation légale.",
+        "retention-usage": "<strong>Usage/diagnostic :</strong> 12 mois puis suppression ou anonymisation.",
+        "retention-payment": "<strong>Paiements :</strong> 6 ans pour les obligations fiscales/comptables/légales.",
+        "retention-claims": "Conservation plus longue possible pour la constatation, l’exercice ou la défense de droits.",
+
+        "security-heading": "8) Sécurité",
+        "security-text": "Mesures techniques et organisationnelles (chiffrement en transit, contrôles d’accès, journalisation).",
+
+        "rights-heading": "9) Vos droits",
+        "rights-intro": "Accès, rectification, effacement, limitation, opposition (intérêts légitimes) et portabilité. Retrait du consentement possible à tout moment.",
+        "rights-contact": "Exercez vos droits via <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>. Une vérification d’identité peut être demandée.",
+        "rights-ico": "Plainte possible auprès de l’ICO : <a href=\"https://ico.org.uk/\">ico.org.uk</a>.",
+
+        "automated-heading": "10) Décisions automatisées",
+        "automated-text": "Aucune décision produisant des effets juridiques ou similaires fondée uniquement sur un traitement automatisé (y compris le profilage).",
+
+        "children-heading": "11) Enfants",
+        "children-text": "Service destiné aux utilisateurs de 13 ans et plus ; non destiné aux moins de 13 ans.",
+
+        "changes-heading": "12) Modifications",
+        "changes-text": "Nous pouvons mettre à jour la politique. En cas de changement important, nous vous en informerons et mettrons à jour la date « Dernière mise à jour ».",
+
+        "contact-heading": "Contact",
+        "contact-text": "E-mail : <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a><br>Adresse : 167–169 Great Portland Street, 5e étage, Londres, W1W 5PF, Royaume-Uni"
       },
+
       ru: {
         "title": "Политика конфиденциальности",
         "effective-date": "Дата вступления в силу: 6 июля 2025 г.",
-        "intro-heading": "1. Введение",
-        "intro-text": "Эта политика описывает, как Brainstorm Buddy собирает, использует и защищает ваши данные.",
-        "data-heading": "2. Какие данные мы собираем",
-        "data-login": "Учетные данные (email, токены)",
-        "data-usage": "Данные об использовании (функции, предпочтения, время)",
-        "data-device": "Информация об устройстве (браузер, ОС, IP)",
-        "use-heading": "3. Как мы используем данные",
-        "use-personalize": "Для персонализации",
-        "use-improve": "Для улучшения расширения",
-        "use-legal": "Для соблюдения законодательства",
-        "storage-heading": "4. Хранение данных",
-        "storage-text": "Данные надежно хранятся на наших серверах и сервисах, как Google и Firebase.",
-        "sharing-heading": "5. Передача данных",
-        "sharing-text": "Мы не продаем ваши данные. Они могут быть переданы партнерам.",
-        "rights-heading": "6. Ваши права",
-        "rights-access": "Получить доступ к данным",
-        "rights-update": "Запросить изменения",
-        "rights-delete": "Удалить ваши данные",
-        "gdpr-heading": "7. Соответствие GDPR",
-        "gdpr-text": "Мы соблюдаем GDPR в Великобритании и ЕС.",
-        "contact-heading": "8. Контакты",
-        "contact-text": "По вопросам пишите на <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>."
+        "last-updated": "Последнее обновление: 19 сентября 2025 г.",
+
+        "intro-heading": "1) Кто мы (Контролер)",
+        "intro-text": "<strong>Контролер:</strong> Brainstorm Buddy<br><strong>Почтовый адрес:</strong> 167–169 Great Portland Street, 5-й этаж, Лондон, W1W 5PF, Великобритания<br><strong>Контакт:</strong> <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a><br><br>Мы зарегистрированы в Великобритании и выступаем контролером данных, описанных в этом уведомлении.",
+
+        "data-heading": "2) Какие данные мы собираем",
+        "data-account": "<strong>Данные аккаунта:</strong> e-mail; идентификаторы/токены аутентификации.",
+        "data-usage": "<strong>Данные использования:</strong> используемые функции, метки времени сеансов, настройки в продукте, версия расширения.",
+        "data-device": "<strong>Данные устройства:</strong> сведения о браузере и ОС.",
+        "data-payment": "<strong>Платежные данные:</strong> обрабатываются Stripe. Мы не храним полные номера карт.",
+        "data-special": "<strong>Специальные категории:</strong> намеренно не собираем.",
+        "data-ip": "<strong>Без IP-адресов:</strong> мы не собираем и не храним IP. (Провайдеры могут временно обрабатывать их для маршрутизации; мы не получаем доступ и не храним.)",
+        "data-sources": "<strong>Источники:</strong> вы (вход/использование) и автоматический сбор через расширение/сайт.",
+
+        "use-heading": "3) Зачем используем данные и правовые основания (UK GDPR ст. 6)",
+        "use-contract": "Предоставление и работа сервиса — <em>договор</em> (ст. 6(1)(b)).",
+        "use-li": "Персонализация, улучшение, диагностика, предотвращение злоупотреблений — <em>законные интересы</em> (ст. 6(1)(f)). Право возражать в любое время (§9).",
+        "use-payments": "Платежи через Stripe — <em>договор</em> и <em>законные интересы</em> (борьба с мошенничеством).",
+        "use-legal": "Юридические и регуляторные обязанности — <em>правовая обязанность</em> (ст. 6(1)(c)).",
+        "use-consent": "Необязательная аналитика/маркетинг — <em>согласие</em> (ст. 6(1)(a)).",
+
+        "cookies-heading": "4) Файлы cookie и подобные технологии (PECR)",
+        "cookies-text": "Мы используем только необходимые технологии для входа и безопасности. Если появятся необязательные cookie/SDK, мы предварительно запросим согласие и дадим возможность изменить выбор.",
+
+        "sharing-heading": "5) Передача данных (получатели)",
+        "sharing-text": "Мы не продаём персональные данные. Делимся ограниченными данными с поставщиками для работы сервиса:",
+        "share-stripe": "<strong>Stripe</strong> (платежи, борьба с мошенничеством). Stripe получает ваши платежные данные и в некоторых случаях действует как независимый контролер.",
+        "share-render": "<strong>Render</strong> (хостинг и инфраструктура).",
+        "share-email": "<strong>Почтовый сервис</strong> (Google/Gmail) для поддержки.",
+        "sharing-contracts": "С поставщиками заключены соответствующие договоры. Они обрабатывают данные по нашим документированным целям, кроме случаев их независимых обязанностей (например, Stripe).",
+
+        "transfers-heading": "6) Международные передачи",
+        "transfers-text": "Возможна обработка вне Великобритании. Используем IDTA или UK Addendum к SCC ЕС и при необходимости дополнительные меры.",
+
+        "retention-heading": "7) Сроки хранения",
+        "retention-account": "<strong>Аккаунт:</strong> пока активен; удаление в течение 30 дней после закрытия, если нет обязанностей хранить дольше.",
+        "retention-usage": "<strong>Использование/диагностика:</strong> 12 месяцев, затем удаление или обезличивание.",
+        "retention-payment": "<strong>Платежи:</strong> 6 лет для налоговых/учетных/правовых целей.",
+        "retention-claims": "Дольше — при необходимости для защиты прав.",
+
+        "security-heading": "8) Безопасность",
+        "security-text": "Применяем технические и организационные меры (шифрование при передаче, контроль доступа, аудит-логи).",
+
+        "rights-heading": "9) Ваши права",
+        "rights-intro": "Доступ, исправление, удаление, ограничение, возражение (законные интересы), переносимость. Согласие можно отозвать.",
+        "rights-contact": "Пишите на <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>. Может потребоваться проверка личности.",
+        "rights-ico": "Жалоба в ICO: <a href=\"https://ico.org.uk/\">ico.org.uk</a>.",
+
+        "automated-heading": "10) Автоматизированные решения",
+        "automated-text": "Мы не принимаем решения с юридическими или аналогичными последствиями исключительно на основе автоматизированной обработки.",
+
+        "children-heading": "11) Дети",
+        "children-text": "Сервис предназначен для пользователей 13+. Мы не собираем данные детей сознательно.",
+
+        "changes-heading": "12) Изменения",
+        "changes-text": "Политика может обновляться. О существенных изменениях сообщим и обновим дату «Последнее обновление».",
+
+        "contact-heading": "Контакты",
+        "contact-text": "E-mail: <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a><br>Адрес: 167–169 Great Portland Street, 5-й этаж, Лондон, W1W 5PF, Великобритания"
       },
+
       it: {
         "title": "Informativa sulla Privacy",
         "effective-date": "Data di entrata in vigore: 6 luglio 2025",
-        "intro-heading": "1. Introduzione",
-        "intro-text": "Questa informativa descrive come Brainstorm Buddy raccoglie, usa e protegge i tuoi dati personali.",
-        "data-heading": "2. Dati Raccolti",
-        "data-login": "Credenziali di accesso (email, token)",
-        "data-usage": "Dati di utilizzo (funzioni, tempo, preferenze)",
-        "data-device": "Info dispositivo (browser, sistema operativo, IP)",
-        "use-heading": "3. Come usiamo i dati",
-        "use-personalize": "Per personalizzare l’esperienza",
-        "use-improve": "Per migliorare l'estensione",
-        "use-legal": "Per rispettare obblighi legali",
-        "storage-heading": "4. Archiviazione Dati",
-        "storage-text": "I dati sono archiviati su server sicuri e servizi come Google o Firebase.",
-        "sharing-heading": "5. Condivisione dei Dati",
-        "sharing-text": "Non vendiamo i tuoi dati. Possiamo condividerli con fornitori tecnici.",
-        "rights-heading": "6. I tuoi diritti",
-        "rights-access": "Accedere ai tuoi dati",
-        "rights-update": "Richiedere correzioni",
-        "rights-delete": "Chiedere eliminazione",
-        "gdpr-heading": "7. Conformità GDPR",
-        "gdpr-text": "Rispettiamo il GDPR per utenti nel Regno Unito o UE.",
-        "contact-heading": "8. Contatti",
-        "contact-text": "Contattaci a <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>."
+        "last-updated": "Ultimo aggiornamento: 19 settembre 2025",
+
+        "intro-heading": "1) Chi siamo (Titolare)",
+        "intro-text": "<strong>Titolare:</strong> Brainstorm Buddy<br><strong>Indirizzo:</strong> 167–169 Great Portland Street, 5º piano, Londra, W1W 5PF, Regno Unito<br><strong>Contatto:</strong> <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a><br><br>Siamo stabiliti nel Regno Unito e agiamo come titolare del trattamento per i dati descritti.",
+
+        "data-heading": "2) Dati che raccogliamo",
+        "data-account": "<strong>Dati account:</strong> e-mail; identificatori/token di autenticazione.",
+        "data-usage": "<strong>Dati d’uso:</strong> funzionalità utilizzate, timestamp di sessione, preferenze in-product, versione dell’estensione.",
+        "data-device": "<strong>Dati dispositivo:</strong> dettagli del browser e del sistema operativo.",
+        "data-payment": "<strong>Dati di pagamento:</strong> gestiti da Stripe. Non archiviamo i numeri completi della carta.",
+        "data-special": "<strong>Dati particolari:</strong> non raccolti intenzionalmente.",
+        "data-ip": "<strong>Nessun indirizzo IP:</strong> non raccogliamo o archiviamo IP (i provider possono elaborarli transitoriamente per instradare il traffico).",
+        "data-sources": "<strong>Fonti:</strong> tu (quando accedi/usi l’estensione) e raccolta automatica tramite estensione/sito.",
+
+        "use-heading": "3) Perché usiamo i dati e basi giuridiche (UK GDPR art. 6)",
+        "use-contract": "Fornire e gestire Brainstorm Buddy — <em>Contratto</em> (art. 6(1)(b)).",
+        "use-li": "Personalizzazione e miglioramenti; diagnostica; prevenzione abusi — <em>Interessi legittimi</em> (art. 6(1)(f)).",
+        "use-payments": "Pagamenti con Stripe — <em>Contratto</em> e <em>Interessi legittimi</em> (antifrode).",
+        "use-legal": "Obblighi legali (fiscali, contabili, richieste lecite) — <em>Obbligo legale</em> (art. 6(1)(c)).",
+        "use-consent": "Tecnologie non essenziali di analitica/marketing — <em>Consenso</em> (art. 6(1)(a)).",
+
+        "cookies-heading": "4) Cookie e tecnologie simili (PECR)",
+        "cookies-text": "Usiamo solo tecnologie essenziali per accesso e sicurezza. Se introduciamo cookie/SDK non essenziali, chiederemo prima il consenso e potrai modificarlo in ogni momento.",
+
+        "sharing-heading": "5) Condivisione dei dati (destinatari)",
+        "sharing-text": "Non vendiamo dati personali. Condividiamo dati limitati con fornitori per far funzionare Brainstorm Buddy:",
+        "share-stripe": "<strong>Stripe</strong> (pagamenti, antifrode) — in parte come titolare indipendente.",
+        "share-render": "<strong>Render</strong> (hosting e infrastruttura).",
+        "share-email": "<strong>Servizio e-mail</strong> (Google/Gmail) per il supporto.",
+        "sharing-contracts": "Fornitori vincolati da contratti idonei; elaborazione solo per finalità documentate salvo attività indipendenti (es. Stripe).",
+
+        "transfers-heading": "6) Trasferimenti internazionali",
+        "transfers-text": "Possibile trattamento fuori dal Regno Unito con garanzie approvate (IDTA UK o Addendum UK alle SCC UE) e misure supplementari se opportuno.",
+
+        "retention-heading": "7) Conservazione",
+        "retention-account": "<strong>Dati account:</strong> finché l’account è attivo; eliminazione entro 30 giorni dalla chiusura salvo obblighi legali.",
+        "retention-usage": "<strong>Uso/diagnostica:</strong> 12 mesi, poi eliminazione o anonimizzazione.",
+        "retention-payment": "<strong>Pagamenti:</strong> 6 anni per obblighi fiscali/contabili/legali.",
+        "retention-claims": "Conservazione più lunga possibile per azioni legali.",
+
+        "security-heading": "8) Sicurezza",
+        "security-text": "Misure tecniche e organizzative (crittografia in transito, controlli di accesso, log di audit).",
+
+        "rights-heading": "9) I tuoi diritti",
+        "rights-intro": "Accesso, rettifica, cancellazione, limitazione, opposizione (interessi legittimi), portabilità. Il consenso può essere revocato.",
+        "rights-contact": "Per esercitare i diritti: <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>. Possibile verifica d’identità.",
+        "rights-ico": "Reclamo all’ICO: <a href=\"https://ico.org.uk/\">ico.org.uk</a>.",
+
+        "automated-heading": "10) Decisioni automatizzate",
+        "automated-text": "Nessuna decisione con effetti legali o simili basata unicamente su trattamenti automatizzati (profilazione inclusa).",
+
+        "children-heading": "11) Minori",
+        "children-text": "Destinato a utenti di 13+; non rivolto a minori di 13 anni.",
+
+        "changes-heading": "12) Modifiche",
+        "changes-text": "Aggiorniamo la presente informativa se necessario; in caso di modifiche sostanziali forniremo una notifica e aggiorneremo la data.",
+
+        "contact-heading": "Contatti",
+        "contact-text": "E-mail: <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a><br>Posta: 167–169 Great Portland Street, 5º piano, Londra, W1W 5PF, Regno Unito"
       },
+
       pt: {
         "title": "Política de Privacidade",
         "effective-date": "Data de vigência: 6 de julho de 2025",
-        "intro-heading": "1. Introdução",
-        "intro-text": "Esta política descreve como o Brainstorm Buddy coleta, usa e protege seus dados.",
-        "data-heading": "2. Dados que Coletamos",
-        "data-login": "Credenciais de login (email, tokens)",
-        "data-usage": "Dados de uso (funções, tempo, preferências)",
-        "data-device": "Informações do dispositivo (navegador, sistema, IP)",
-        "use-heading": "3. Como Usamos os Dados",
-        "use-personalize": "Para personalizar sua experiência",
-        "use-improve": "Para melhorar a extensão",
-        "use-legal": "Para cumprir obrigações legais",
-        "storage-heading": "4. Armazenamento de Dados",
-        "storage-text": "Os dados são armazenados com segurança com Google, Firebase e nossos servidores.",
-        "sharing-heading": "5. Compartilhamento",
-        "sharing-text": "Não vendemos seus dados. Compartilhamos apenas com serviços necessários.",
-        "rights-heading": "6. Seus Direitos",
-        "rights-access": "Acessar seus dados",
-        "rights-update": "Corrigir informações",
-        "rights-delete": "Excluir dados",
-        "gdpr-heading": "7. Conformidade com o GDPR",
-        "gdpr-text": "Cumprimos o GDPR no Reino Unido e na UE.",
-        "contact-heading": "8. Contato",
-        "contact-text": "Fale conosco: <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>."
+        "last-updated": "Última atualização: 19 de setembro de 2025",
+
+        "intro-heading": "1) Quem somos (Controlador)",
+        "intro-text": "<strong>Controlador:</strong> Brainstorm Buddy<br><strong>Endereço:</strong> 167–169 Great Portland Street, 5º andar, Londres, W1W 5PF, Reino Unido<br><strong>Contato:</strong> <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a><br><br>Atuamos como controlador dos dados pessoais descritos neste aviso.",
+
+        "data-heading": "2) Quais dados coletamos",
+        "data-account": "<strong>Conta:</strong> e-mail; identificadores/tokens de autenticação.",
+        "data-usage": "<strong>Uso:</strong> recursos utilizados, carimbos de sessão, preferências no produto, versão da extensão.",
+        "data-device": "<strong>Dispositivo:</strong> detalhes do navegador e do sistema operacional.",
+        "data-payment": "<strong>Pagamento:</strong> processado pela Stripe. Não coletamos/armazenamos números completos do cartão.",
+        "data-special": "<strong>Dados sensíveis:</strong> não coletamos intencionalmente.",
+        "data-ip": "<strong>Sem endereços IP:</strong> não coletamos nem armazenamos IPs (fornecedores podem processá-los de forma transitória para roteamento).",
+        "data-sources": "<strong>Fontes:</strong> você (ao entrar/usar) e coleta automática pela extensão/site.",
+
+        "use-heading": "3) Por que usamos seus dados e bases legais (UK GDPR art. 6)",
+        "use-contract": "Fornecer/operar o Brainstorm Buddy — <em>Contrato</em> (art. 6(1)(b)).",
+        "use-li": "Personalização e melhorias; diagnóstico; prevenção de abusos — <em>Interesses legítimos</em> (art. 6(1)(f)).",
+        "use-payments": "Pagamentos com Stripe — <em>Contrato</em> e <em>Interesses legítimos</em> (fraude).",
+        "use-legal": "Obrigações legais (tributárias, contábeis, solicitações legais) — <em>Obrigação legal</em> (art. 6(1)(c)).",
+        "use-consent": "Tecnologias não essenciais de análise/marketing — <em>Consentimento</em> (art. 6(1)(a)).",
+
+        "cookies-heading": "4) Cookies e tecnologias similares (PECR)",
+        "cookies-text": "Usamos apenas tecnologias essenciais para login e segurança. Se introduzirmos cookies/SDKs não essenciais, pediremos seu consentimento e permitiremos alterar suas escolhas.",
+
+        "sharing-heading": "5) Compartilhamento de dados (destinatários)",
+        "sharing-text": "Não vendemos dados pessoais. Compartilhamos dados limitados com provedores para operar o Brainstorm Buddy:",
+        "share-stripe": "<strong>Stripe</strong> (pagamentos, prevenção de fraude) — atua como controlador independente em algumas atividades.",
+        "share-render": "<strong>Render</strong> (hospedagem e infraestrutura).",
+        "share-email": "<strong>Serviço de e-mail</strong> (Google/Gmail) para suporte.",
+        "sharing-contracts": "Provedores vinculados por contratos adequados; processamento apenas para finalidades documentadas.",
+
+        "transfers-heading": "6) Transferências internacionais",
+        "transfers-text": "Podem ocorrer fora do Reino Unido; utilizamos salvaguardas aprovadas (IDTA do Reino Unido ou Adendo do Reino Unido às SCC da UE) e medidas adicionais quando apropriado.",
+
+        "retention-heading": "7) Retenção",
+        "retention-account": "<strong>Conta:</strong> enquanto ativa; exclusão em até 30 dias após o encerramento, salvo obrigação legal.",
+        "retention-usage": "<strong>Uso/diagnóstico:</strong> 12 meses e depois exclusão/anonimização.",
+        "retention-payment": "<strong>Pagamentos:</strong> 6 anos por exigências fiscais/contábeis/legais.",
+        "retention-claims": "Possível retenção por mais tempo para ações judiciais.",
+
+        "security-heading": "8) Segurança",
+        "security-text": "Medidas técnicas e organizacionais (criptografia em trânsito, controles de acesso, logs de auditoria).",
+
+        "rights-heading": "9) Seus direitos",
+        "rights-intro": "Acesso, retificação, exclusão, restrição, objeção (interesses legítimos) e portabilidade. O consentimento pode ser retirado a qualquer momento.",
+        "rights-contact": "Para exercer, escreva para <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a>. Podemos solicitar verificação de identidade.",
+        "rights-ico": "Reclamação à ICO: <a href=\"https://ico.org.uk/\">ico.org.uk</a>.",
+
+        "automated-heading": "10) Decisões automatizadas",
+        "automated-text": "Não realizamos decisões com efeitos legais ou similares baseadas apenas em processamento automatizado.",
+
+        "children-heading": "11) Crianças",
+        "children-text": "Indicado para maiores de 13 anos; não direcionado a menores de 13.",
+
+        "changes-heading": "12) Alterações",
+        "changes-text": "Podemos atualizar a política; mudanças materiais serão notificadas e a data será atualizada.",
+
+        "contact-heading": "Contato",
+        "contact-text": "E-mail: <a href=\"mailto:brainstormbuddyy@gmail.com\">brainstormbuddyy@gmail.com</a><br>Endereço: 167–169 Great Portland Street, 5º andar, Londres, W1W 5PF, Reino Unido"
       }
     };
 

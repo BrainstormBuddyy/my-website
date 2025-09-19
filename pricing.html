@@ -93,7 +93,7 @@
         pricingTitle:"Choose Your Plan",
         planLabel:"Current Plan:", emailLabel:"Email:",
         subscribeNow:"Subscribe Now", loginToSubscribe:"Login to Subscribe",
-        basic:"Basic", unlimited:"Unlimited", pro:"Pro",
+        basic:"Basic", elite:"Elite", pro:"Pro",
         perMonth:"/mo", perYearSuffix:"/year",
         saveAnnual:a=>`Save ${a} with annual plan`,
         aroundPerDay:a=>`Around ${a}/day`,
@@ -104,7 +104,7 @@
         pricingTitle:"Elige tu plan",
         planLabel:"Plan actual:", emailLabel:"Correo electrónico:",
         subscribeNow:"Suscribirse ahora", loginToSubscribe:"Iniciar sesión para suscribirse",
-        basic:"Básico", unlimited:"Ilimitado", pro:"Pro",
+        basic:"Básico", elite:"élite", pro:"Pro",
         perMonth:"/mes", perYearSuffix:"/año",
         saveAnnual:a=>`Ahorra ${a} con el plan anual`,
         aroundPerDay:a=>`Alrededor de ${a}/día`,
@@ -115,7 +115,7 @@
         pricingTitle:"Choisissez votre plan",
         planLabel:"Plan actuel:", emailLabel:"Email:",
         subscribeNow:"S'abonner", loginToSubscribe:"Se connecter pour s'abonner",
-        basic:"Basique", unlimited:"Illimité", pro:"Pro",
+        basic:"Basique", elite:"élite", pro:"Pro",
         perMonth:"/mois", perYearSuffix:"/an",
         saveAnnual:a=>`Économisez ${a} avec le plan annuel`,
         aroundPerDay:a=>`Environ ${a}/jour`,
@@ -126,7 +126,7 @@
         pricingTitle:"Выберите план",
         planLabel:"Текущий план:", emailLabel:"Электронная почта:",
         subscribeNow:"Подписаться", loginToSubscribe:"Войти, чтобы подписаться",
-        basic:"Базовый", unlimited:"Безлимитный", pro:"Про",
+        basic:"Базовый", elite:"элита", pro:"Про",
         perMonth:"/мес", perYearSuffix:"/год",
         saveAnnual:a=>`Сэкономьте ${a} с годовым планом`,
         aroundPerDay:a=>`Примерно ${a}/день`,
@@ -137,7 +137,7 @@
         pricingTitle:"Scegli il tuo piano",
         planLabel:"Piano attuale:", emailLabel:"Email:",
         subscribeNow:"Abbonati ora", loginToSubscribe:"Accedi per abbonarti",
-        basic:"Base", unlimited:"Illimitato", pro:"Pro",
+        basic:"Base", elite:"élite", pro:"Pro",
         perMonth:"/mese", perYearSuffix:"/anno",
         saveAnnual:a=>`Risparmia ${a} con il piano annuale`,
         aroundPerDay:a=>`Circa ${a}/giorno`,
@@ -148,7 +148,7 @@
         pricingTitle:"Escolha seu plano",
         planLabel:"Plano atual:", emailLabel:"Email:",
         subscribeNow:"Assinar agora", loginToSubscribe:"Entrar para assinar",
-        basic:"Básico", unlimited:"Ilimitado", pro:"Pro",
+        basic:"Básico", elite:"elite", pro:"Pro",
         perMonth:"/mês", perYearSuffix:"/ano",
         saveAnnual:a=>`Economize ${a} com o plano anual`,
         aroundPerDay:a=>`Cerca de ${a}/dia`,
@@ -181,12 +181,12 @@
     const pricingData = {
       yearly: [
         { key:'basic', title:'Basic', price:'US$ 6',  detail:'US$ 72/year',  save:'Save US$ 48 with annual plan', url:'https://buy.stripe.com/dRmfZg8qrggeafD1XQ2Ry08', features:["✅ 120 AI idea generations/month","✅ Voice to note"] },
-        { key:'unlimited', title:'Unlimited', price:'US$ 24', detail:'US$ 288/year', save:'Save US$ 192 with annual plan', url:'https://buy.stripe.com/fZu6oG9uvfcacnLcCu2Ry0a', features:["✅ 700 AI idea generations/month","✅ All Pro features","✅ Priority support","✅ Early access to new features"] },
+        { key:'elite', title:'Elite', price:'US$ 24', detail:'US$ 288/year', save:'Save US$ 192 with annual plan', url:'https://buy.stripe.com/fZu6oG9uvfcacnLcCu2Ry0a', features:["✅ 700 AI idea generations/month","✅ All Pro features","✅ Priority support","✅ Early access to new features"] },
         { key:'pro', title:'Pro', price:'US$ 12', detail:'US$ 144/year', save:'Save US$ 96 with annual plan', url:'https://buy.stripe.com/9B6eVc2232po9bzfOG2Ry09', features:["✅ 300 AI idea generations/month","✅ Voice to note"] }
       ],
       monthly: [
         { key:'basic', title:'Basic', price:'US$ 10', detail:'Around US$ 0.33/day', save:'Save US$ 48 with annual plan', url:'https://buy.stripe.com/8x228qcGH0hg87v1XQ2Ry03', features:["✅ 120 AI idea generations/month","✅ Voice to note"] },
-        { key:'unlimited', title:'Unlimited', price:'US$ 40', detail:'Around US$ 1.33/day', save:'Save US$ 192 with annual plan', url:'https://buy.stripe.com/fZu9AS7mn2po1J7fOG2Ry01', features:["✅ 700 AI idea generations/month","✅ All Pro features","✅ Priority support","✅ Early access to new features"] },
+        { key:'elite', title:'Elite', price:'US$ 40', detail:'Around US$ 1.33/day', save:'Save US$ 192 with annual plan', url:'https://buy.stripe.com/fZu9AS7mn2po1J7fOG2Ry01', features:["✅ 700 AI idea generations/month","✅ All Pro features","✅ Priority support","✅ Early access to new features"] },
         { key:'pro', title:'Pro', price:'US$ 20', detail:'Around US$ 0.66/day', save:'Save US$ 96 with annual plan', url:'https://buy.stripe.com/4gMaEWayz5BA1J7gSK2Ry02', features:["✅ 300 AI idea generations/month","✅ Voice to note"] }
       ]
     };
@@ -256,7 +256,7 @@ $('toggle-yearly').textContent = t.toggleYearly;
         const card = document.createElement('div');
         card.className='pricing-card';
         card.setAttribute('data-plan-key', plan.key);
-        if(plan.title==='Unlimited') card.classList.add('highlight');
+        if(plan.title==='Elite') card.classList.add('highlight');
 
         const translatedTitle = t[plan.title.toLowerCase()] || plan.title;
         const detail = priceDetail(lang, mode, plan.detail);
