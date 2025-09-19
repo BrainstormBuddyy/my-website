@@ -47,7 +47,7 @@
     .pricing-card.nudge { transform: scale(1.02); }
   </style>
 
-  <!-- Global API base: dev -> localhost, prod -> Render -->
+  
   <script>
     window.API_BASE ??= (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
       ? 'http://127.0.0.1:5050'
@@ -98,7 +98,7 @@
         saveAnnual:a=>`Save ${a} with annual plan`,
         aroundPerDay:a=>`Around ${a}/day`,
         enterpriseBtn:"Enterprise Contact Us",
-        toggleYearly:"Yearly", toggleMonthly:"Monthly"
+        toggleYearly:"Yearly (Save 40%)", toggleMonthly:"Monthly"
       },
       es:{
         pricingTitle:"Elige tu plan",
@@ -109,7 +109,7 @@
         saveAnnual:a=>`Ahorra ${a} con el plan anual`,
         aroundPerDay:a=>`Alrededor de ${a}/día`,
         enterpriseBtn:"Contacto empresarial",
-        toggleYearly:"Anual", toggleMonthly:"Mensual"
+        toggleYearly:"Anual (ahorra un 40%)", toggleMonthly:"Mensual"
       },
       fr:{
         pricingTitle:"Choisissez votre plan",
@@ -120,7 +120,7 @@
         saveAnnual:a=>`Économisez ${a} avec le plan annuel`,
         aroundPerDay:a=>`Environ ${a}/jour`,
         enterpriseBtn:"Contact entreprise",
-        toggleYearly:"Annuel", toggleMonthly:"Mensuel"
+        toggleYearly:"Annuel (économisez 40%)", toggleMonthly:"Mensuel"
       },
       ru:{
         pricingTitle:"Выберите план",
@@ -131,7 +131,7 @@
         saveAnnual:a=>`Сэкономьте ${a} с годовым планом`,
         aroundPerDay:a=>`Примерно ${a}/день`,
         enterpriseBtn:"Связаться с отделом продаж",
-        toggleYearly:"Годовой", toggleMonthly:"Ежемесячно"
+        toggleYearly:"Годовой (сэкономьте 40%)", toggleMonthly:"Ежемесячно"
       },
       it:{
         pricingTitle:"Scegli il tuo piano",
@@ -142,7 +142,7 @@
         saveAnnual:a=>`Risparmia ${a} con il piano annuale`,
         aroundPerDay:a=>`Circa ${a}/giorno`,
         enterpriseBtn:"Contatto aziendale",
-        toggleYearly:"Annuale", toggleMonthly:"Mensile"
+        toggleYearly:"Annuale (risparmia il 40%)", toggleMonthly:"Mensile"
       },
       pt:{
         pricingTitle:"Escolha seu plano",
@@ -153,7 +153,7 @@
         saveAnnual:a=>`Economize ${a} com o plano anual`,
         aroundPerDay:a=>`Cerca de ${a}/dia`,
         enterpriseBtn:"Contato corporativo",
-        toggleYearly:"Anual", toggleMonthly:"Mensal"
+        toggleYearly:"Anual (economize 40%)", toggleMonthly:"Mensal"
       }
     };
 
@@ -177,7 +177,7 @@
       return f;
     }
 
-    /* Your Stripe Payment Links (URL form). We append prefilled_email + client_reference_id (base64url). */
+    
     const pricingData = {
       yearly: [
         { key:'basic', title:'Basic', price:'US$ 6',  detail:'US$ 72/year',  save:'Save US$ 48 with annual plan', url:'https://buy.stripe.com/dRmfZg8qrggeafD1XQ2Ry08', features:["✅ 120 AI idea generations/month","✅ Voice to note"] },
@@ -209,8 +209,9 @@
       $('emailLabel').textContent=t.emailLabel;
       $('enterpriseBtn').textContent=t.enterpriseBtn;
       // translated toggles
-      $('toggle-yearly').textContent  = t.toggleYearly;
-      $('toggle-monthly').textContent = t.toggleMonthly;
+ $('toggle-monthly').textContent = t.toggleMonthly;         
+$('toggle-yearly').textContent = t.toggleYearly; 
+
     }
 
     function priceDetail(lang,mode,raw){
