@@ -9,40 +9,33 @@
   gtag('js', new Date());
   gtag('config', 'AW-17611666437');
 </script>
-<script>
-  gtag('event', 'conversion', {
-    'send_to': 'AW-17611666437/Cg3GCNqb56kbEIXo8s1B',
-    'value': 1.0,
-    'currency': 'GBP'
-  });
-</script>
 
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <!-- ── SEO ── -->
-  <meta name="description" content="View and manage your Brainstorm Buddy subscription, billing details, next payment date and plan. Upgrade, downgrade or cancel anytime."/>
-  <meta name="keywords" content="brainstorm buddy billing, manage subscription, cancel plan, stripe billing"/>
+  <meta name="description" content="Submit a refund request for your Brainstorm Buddy subscription. Yearly plans eligible within 14 days of purchase. Processed within 5–10 business days."/>
+  <meta name="keywords" content="brainstorm buddy refund, subscription refund, cancel brainstorm buddy"/>
   <meta name="author" content="Brainstorm Buddy"/>
   <meta name="robots" content="noindex, nofollow"/>
-  <link rel="canonical" href="https://www.brainstormbuddy.co.uk/billing.html"/>
+  <link rel="canonical" href="https://www.brainstormbuddy.co.uk/requestrefund.html"/>
 
   <!-- Open Graph -->
   <meta property="og:type" content="website"/>
-  <meta property="og:title" content="Billing — Brainstorm Buddy"/>
-  <meta property="og:description" content="Manage your Brainstorm Buddy plan, billing details and subscription settings."/>
-  <meta property="og:url" content="https://www.brainstormbuddy.co.uk/billing.html"/>
-  <meta property="og:image" content="https://www.brainstormbuddy.co.uk/icon128.png"/>
-  <meta property="og:image:width" content="128"/>
-  <meta property="og:image:height" content="128"/>
+  <meta property="og:title" content="Request a Refund — Brainstorm Buddy"/>
+  <meta property="og:description" content="Submit a refund request for your Brainstorm Buddy subscription."/>
+  <meta property="og:url" content="https://www.brainstormbuddy.co.uk/requestrefund.html"/>
+  <meta property="og:image" content="https://www.brainstormbuddy.co.uk/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
   <meta property="og:site_name" content="Brainstorm Buddy"/>
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Billing — Brainstorm Buddy"/>
-  <meta name="twitter:description" content="Manage your Brainstorm Buddy plan, billing details and subscription settings."/>
-  <meta name="twitter:image" content="https://www.brainstormbuddy.co.uk/icon128.png"/>
+  <meta name="twitter:title" content="Request a Refund — Brainstorm Buddy"/>
+  <meta name="twitter:description" content="Submit a refund request for your Brainstorm Buddy subscription."/>
+  <meta name="twitter:image" content="https://www.brainstormbuddy.co.uk/og-image.png"/>
 
-<title>Billing — Manage Your Brainstorm Buddy Subscription</title>
+<title>Request a Refund — Brainstorm Buddy</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
 <style>
@@ -50,7 +43,7 @@
 
 :root{
   --p:#5b5cf6;--p2:#818cf8;--p3:#4338ca;
-  --ok:#10b981;--warn:#f59e0b;--bad:#ef4444;
+  --ok:#10b981;--bad:#ef4444;--warn:#f59e0b;
   --bg:#f8f8fc;--bg2:#f0f0fa;--card:#fff;--card2:#f5f5ff;
   --border:#e8e8f0;--fg:#0a0a14;--fg2:#4b5563;--fg3:#9ca3af;
   --shadow:0 4px 24px rgba(91,92,246,.08),0 1px 4px rgba(0,0,0,.06);
@@ -111,15 +104,15 @@ body.dark nav{background:rgba(9,9,15,.85);}
 main{
   flex:1;position:relative;z-index:1;
   padding:56px 24px 80px;
-  max-width:720px;margin:0 auto;width:100%;
+  max-width:640px;margin:0 auto;width:100%;
 }
 
 /* ── PAGE HEADER ── */
 .page-badge{
   display:inline-flex;align-items:center;gap:7px;
   padding:5px 14px;border-radius:99px;
-  background:rgba(91,92,246,.1);border:1px solid rgba(91,92,246,.25);
-  font-family:'DM Mono',monospace;font-size:11px;color:var(--p);
+  background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--bad);
   letter-spacing:.05em;margin-bottom:16px;
 }
 .page-title{
@@ -131,158 +124,141 @@ main{
   background:linear-gradient(135deg,var(--p),var(--p2));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.page-sub{font-size:15px;color:var(--fg2);font-weight:300;margin-bottom:36px;}
+.page-sub{font-size:15px;color:var(--fg2);font-weight:300;margin-bottom:28px;line-height:1.65;}
 
-/* ── PLAN HERO CARD ── */
-.plan-hero{
-  background:linear-gradient(135deg,var(--p) 0%,var(--p3) 100%);
-  border-radius:var(--r);padding:28px 32px;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:16px;flex-wrap:wrap;
-  margin-bottom:20px;
-  box-shadow:0 8px 28px rgba(91,92,246,.35);
-  position:relative;overflow:hidden;
+/* ── POLICY CARDS ── */
+.policy-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  margin-bottom:28px;
 }
-.plan-hero::before{
-  content:'';position:absolute;inset:0;
-  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;
-}
-.plan-hero-left{position:relative;}
-.plan-hero-label{
-  font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.6);
-  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;
-}
-.plan-hero-name{
-  font-family:'Syne',sans-serif;font-size:32px;font-weight:800;
-  color:#fff;letter-spacing:-.03em;line-height:1;
-}
-.plan-hero-right{position:relative;}
-.plan-hero-btn{
-  padding:11px 22px;border-radius:10px;border:none;
-  background:rgba(255,255,255,.15);color:#fff;
-  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
-  cursor:pointer;backdrop-filter:blur(4px);
-  border:1.5px solid rgba(255,255,255,.25);
-  transition:background var(--t) var(--e);
-}
-.plan-hero-btn:hover{background:rgba(255,255,255,.25);}
-
-/* ── INFO CARDS GRID ── */
-.info-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;margin-bottom:20px;
-}
-.info-card{
+.policy-card{
   background:var(--card);border:1.5px solid var(--border);
-  border-radius:var(--rs);padding:20px;
-  box-shadow:var(--shadow);transition:border-color var(--t);
-}
-.info-card:hover{border-color:rgba(91,92,246,.25);}
-.info-card-label{
-  font-family:'DM Mono',monospace;font-size:10.5px;
-  color:var(--fg3);letter-spacing:.08em;text-transform:uppercase;
-  margin-bottom:8px;
-}
-.info-card-value{
-  font-family:'Syne',sans-serif;font-size:16px;font-weight:700;
-  color:var(--fg);letter-spacing:-.2px;line-height:1.3;
-  word-break:break-all;
-}
-.info-card-value.mono{
-  font-family:'DM Mono',monospace;font-size:13px;font-weight:400;
-}
-.status-dot{
-  display:inline-block;width:8px;height:8px;border-radius:50%;
-  margin-right:6px;background:var(--fg3);
-}
-.status-dot.active{background:var(--ok);}
-.status-dot.warn{background:var(--warn);}
-.status-dot.bad{background:var(--bad);}
-
-/* ── CANCEL NOTE ── */
-.cancel-banner{
-  display:none;
-  background:rgba(245,158,11,.08);border:1.5px solid rgba(245,158,11,.3);
-  border-radius:var(--rs);padding:14px 16px;
-  font-size:13.5px;color:var(--warn);font-weight:500;
-  margin-bottom:20px;
-  align-items:center;gap:10px;
-}
-.cancel-banner.show{display:flex;}
-
-/* ── ACTIONS ── */
-.actions{
-  display:flex;flex-direction:column;gap:10px;
-  margin-bottom:20px;
-}
-.action-btn{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 20px;border-radius:var(--rs);
-  border:1.5px solid var(--border);background:var(--card);
-  cursor:pointer;transition:all var(--t) var(--e);
+  border-radius:var(--rs);padding:16px 18px;
   box-shadow:var(--shadow);
-  font-family:'DM Sans',sans-serif;
 }
-.action-btn:hover{border-color:rgba(91,92,246,.35);transform:translateX(3px);}
-.action-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-.action-btn.danger:hover{border-color:rgba(239,68,68,.35);}
-.action-left{display:flex;align-items:center;gap:12px;}
-.action-ico{
-  width:38px;height:38px;border-radius:9px;
-  display:grid;place-items:center;font-size:18px;flex-shrink:0;
+.policy-card-icon{font-size:20px;margin-bottom:8px;}
+.policy-card-title{
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  color:var(--fg);margin-bottom:4px;letter-spacing:-.1px;
 }
-.action-ico.purple{background:rgba(91,92,246,.1);border:1px solid rgba(91,92,246,.15);}
-.action-ico.green{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.15);}
-.action-ico.red{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);}
-.action-title{
-  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
-  color:var(--fg);margin-bottom:2px;letter-spacing:-.1px;
-}
-.action-desc{font-size:12px;color:var(--fg3);}
-.action-arrow{color:var(--fg3);font-size:16px;transition:transform var(--t);}
-.action-btn:hover .action-arrow{transform:translateX(3px);color:var(--p);}
-.action-btn.danger:hover .action-arrow{color:var(--bad);}
+.policy-card-desc{font-size:12.5px;color:var(--fg2);line-height:1.55;font-weight:300;}
+.policy-card.green{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.04);}
+.policy-card.red{border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.04);}
+.policy-card.warn{border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.04);}
+.policy-card.blue{border-color:rgba(91,92,246,.2);background:rgba(91,92,246,.04);}
 
-/* ── MSG ── */
+/* ── FORM CARD ── */
+.form-card{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:32px;
+  box-shadow:var(--shadow-lg);
+  margin-bottom:20px;
+}
+
+.form-row{margin-bottom:20px;}
+.form-label{
+  display:block;
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  color:var(--fg);margin-bottom:7px;letter-spacing:-.1px;
+}
+.form-label span{
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:400;
+  color:var(--bad);margin-left:4px;
+}
+
+.form-input,
+.form-select,
+.form-textarea{
+  width:100%;padding:11px 14px;
+  border-radius:9px;border:1.5px solid var(--border);
+  background:var(--bg2);color:var(--fg);
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;
+  transition:border-color var(--t) var(--e),background var(--t) var(--e);
+  outline:none;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus{
+  border-color:var(--p);
+  background:var(--card);
+  box-shadow:0 0 0 3px rgba(91,92,246,.1);
+}
+.form-input::placeholder,
+.form-textarea::placeholder{color:var(--fg3);}
+
+.form-textarea{
+  resize:vertical;min-height:120px;line-height:1.6;
+}
+
+.form-select option{background:var(--card);color:var(--fg);}
+
+/* char counter */
+.char-counter{
+  display:flex;justify-content:flex-end;
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--fg3);margin-top:5px;
+  transition:color var(--t);
+}
+.char-counter.warn{color:var(--warn);}
+.char-counter.over{color:var(--bad);}
+
+/* ── SUBMIT BTN ── */
+.submit-btn{
+  width:100%;padding:14px;border-radius:11px;border:none;
+  background:linear-gradient(135deg,var(--p),var(--p3));
+  color:#fff;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(91,92,246,.35);
+  transition:transform var(--t) var(--e),box-shadow var(--t) var(--e),opacity var(--t);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(91,92,246,.45);}
+.submit-btn:active{transform:translateY(0);}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* ── MSG BOX ── */
 .msg-box{
-  display:none;
-  border-radius:var(--rs);padding:14px 16px;
-  font-size:13.5px;font-weight:500;margin-bottom:16px;
-  align-items:center;gap:9px;
+  display:none;border-radius:var(--rs);padding:16px 18px;
+  font-size:14px;font-weight:500;margin-bottom:20px;
+  align-items:flex-start;gap:10px;
 }
 .msg-box.show{display:flex;}
 .msg-box.ok{background:rgba(16,185,129,.08);border:1.5px solid rgba(16,185,129,.25);color:var(--ok);}
 .msg-box.error{background:rgba(239,68,68,.08);border:1.5px solid rgba(239,68,68,.25);color:var(--bad);}
+.msg-ico{font-size:18px;flex-shrink:0;margin-top:1px;}
 
-/* ── HELP TEXT ── */
-.help-text{
+/* ── SUCCESS STATE ── */
+.success-screen{
+  display:none;text-align:center;padding:48px 24px;
+}
+.success-screen.show{display:block;}
+.success-ico{
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(16,185,129,.1);border:2px solid rgba(16,185,129,.3);
+  display:grid;place-items:center;font-size:32px;
+  margin:0 auto 20px;
+}
+.success-title{
+  font-family:'Syne',sans-serif;font-size:24px;font-weight:800;
+  color:var(--fg);margin-bottom:10px;letter-spacing:-.03em;
+}
+.success-desc{font-size:15px;color:var(--fg2);font-weight:300;line-height:1.65;max-width:400px;margin:0 auto 28px;}
+.success-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 24px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--p),var(--p3));
+  color:#fff;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;box-shadow:0 4px 14px rgba(91,92,246,.3);
+  transition:transform var(--t),box-shadow var(--t);
+}
+.success-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(91,92,246,.4);}
+
+/* ── HELP ROW ── */
+.help-row{
   font-size:12.5px;color:var(--fg3);text-align:center;line-height:1.6;
 }
-.help-text a{color:var(--p);text-decoration:none;}
-.help-text a:hover{text-decoration:underline;}
-
-/* ── OVERLAY ── */
-.overlay{
-  position:fixed;inset:0;display:none;
-  align-items:center;justify-content:center;
-  background:rgba(0,0,0,.5);
-  backdrop-filter:blur(6px);z-index:200;
-  flex-direction:column;gap:16px;
-}
-.overlay.show{display:flex;}
-.spinner{
-  width:44px;height:44px;
-  border:3px solid rgba(255,255,255,.15);
-  border-top-color:var(--p);
-  border-radius:50%;animation:spin .8s linear infinite;
-}
-.overlay-text{
-  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
-  color:rgba(255,255,255,.8);letter-spacing:-.1px;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
+.help-row a{color:var(--p);text-decoration:none;}
+.help-row a:hover{text-decoration:underline;}
 
 /* ── FOOTER ── */
 footer{
@@ -300,9 +276,8 @@ footer{
 @media(max-width:600px){
   nav{padding:0 16px;}
   main{padding:40px 16px 60px;}
-  .info-grid{grid-template-columns:1fr;}
-  .plan-hero{padding:22px 20px;}
-  .plan-hero-name{font-size:24px;}
+  .policy-grid{grid-template-columns:1fr;}
+  .form-card{padding:22px 18px;}
 }
 </style>
 </head>
@@ -316,103 +291,107 @@ footer{
   </div>
   <div class="nav-right">
     <button class="ibtn" id="darkToggle" onclick="toggleDarkMode()" title="Toggle theme">☀️</button>
-    <button class="btn-back" onclick="location.href='index.html'">← Home</button>
+    <button class="btn-back" onclick="location.href='billing.html'">← Billing</button>
   </div>
 </nav>
 
 <!-- ── MAIN ── -->
 <main>
-  <div class="page-badge">💳 Subscription & billing</div>
-  <h1 class="page-title">Your <span class="grad">Billing</span></h1>
-  <p class="page-sub">Manage your plan, view billing details, and update your subscription.</p>
+  <div class="page-badge">💸 Refund request</div>
+  <h1 class="page-title">Request a <span class="grad">Refund</span></h1>
+  <p class="page-sub">Please read our refund policy below before submitting. We aim to process all requests within 5–10 business days.</p>
 
-  <!-- plan hero -->
-  <div class="plan-hero">
-    <div class="plan-hero-left">
-      <div class="plan-hero-label">Current Plan</div>
-      <div class="plan-hero-name" id="user-plan">Free</div>
+  <!-- policy cards -->
+  <div class="policy-grid">
+    <div class="policy-card green">
+      <div class="policy-card-icon">✅</div>
+      <div class="policy-card-title">Yearly Plans</div>
+      <div class="policy-card-desc">Eligible for a refund within <strong>14 days</strong> of purchase.</div>
     </div>
-    <div class="plan-hero-right">
-      <button class="plan-hero-btn" onclick="location.href='pricing.html'">Upgrade Plan →</button>
+    <div class="policy-card red">
+      <div class="policy-card-icon">🚫</div>
+      <div class="policy-card-title">Monthly Plans</div>
+      <div class="policy-card-desc">Monthly subscriptions are <strong>non-refundable</strong> once charged.</div>
+    </div>
+    <div class="policy-card warn">
+      <div class="policy-card-icon">⚠️</div>
+      <div class="policy-card-title">Refund Limits</div>
+      <div class="policy-card-desc">Maximum of <strong>2 refunds</strong> per account or payment method.</div>
+    </div>
+    <div class="policy-card blue">
+      <div class="policy-card-icon">⏱️</div>
+      <div class="policy-card-title">Processing Time</div>
+      <div class="policy-card-desc">Approved refunds processed within <strong>5–10 business days</strong>.</div>
     </div>
   </div>
 
-  <!-- info grid -->
-  <div class="info-grid">
-    <div class="info-card">
-      <div class="info-card-label">Email</div>
-      <div class="info-card-value mono" id="user-email">—</div>
-    </div>
-    <div class="info-card">
-      <div class="info-card-label">Subscription Status</div>
-      <div class="info-card-value" id="status">
-        <span class="status-dot" id="status-dot"></span><span id="status-text">Loading…</span>
-      </div>
-    </div>
-    <div class="info-card">
-      <div class="info-card-label">Next Billing Date</div>
-      <div class="info-card-value mono" id="billing-date">Loading…</div>
-    </div>
-    <div class="info-card">
-      <div class="info-card-label">Billing Cycle</div>
-      <div class="info-card-value" id="billing-cycle">—</div>
-    </div>
-  </div>
-
-  <!-- cancellation warning banner -->
-  <div class="cancel-banner" id="cancel-note">
-    ⚠️ <span id="cancel-note-text"></span>
-  </div>
-
-  <!-- message box -->
+  <!-- msg box -->
   <div class="msg-box" id="msg-box">
-    <span id="msg-icon"></span>
-    <span id="msg"></span>
+    <span class="msg-ico" id="msg-ico"></span>
+    <span id="msg-text"></span>
   </div>
 
-  <!-- actions -->
-  <div class="actions">
+  <!-- form card -->
+  <div class="form-card" id="form-card">
+    <form id="refund-form" action="https://formspree.io/f/xjkowdod" method="POST">
+      <input type="hidden" name="_subject" value="Refund Request — Brainstorm Buddy"/>
 
-    <button class="action-btn" onclick="location.href='pricing.html'">
-      <div class="action-left">
-        <div class="action-ico purple">⚡</div>
-        <div>
-          <div class="action-title">Manage Plan</div>
-          <div class="action-desc">Upgrade, downgrade or switch billing cycle</div>
-        </div>
+      <div class="form-row">
+        <label class="form-label" for="name">Full Name <span>*</span></label>
+        <input class="form-input" type="text" id="name" name="name"
+               placeholder="Jane Smith" required autocomplete="name"/>
       </div>
-      <span class="action-arrow">›</span>
-    </button>
 
-    <button class="action-btn" id="portal-btn" onclick="openCustomerPortal()">
-      <div class="action-left">
-        <div class="action-ico green">🔧</div>
-        <div>
-          <div class="action-title">Stripe Customer Portal</div>
-          <div class="action-desc">Update payment method, download invoices</div>
-        </div>
+      <div class="form-row">
+        <label class="form-label" for="email">Email Address <span>*</span></label>
+        <input class="form-input" type="email" id="email" name="email"
+               placeholder="jane@example.com" required autocomplete="email"/>
       </div>
-      <span class="action-arrow">›</span>
-    </button>
 
-    <button class="action-btn danger" id="cancel-btn" onclick="cancelSubscription()" style="display:none;">
-      <div class="action-left">
-        <div class="action-ico red">🚫</div>
-        <div>
-          <div class="action-title">Cancel Subscription</div>
-          <div class="action-desc">Access continues until the end of your billing period</div>
-        </div>
+      <div class="form-row">
+        <label class="form-label" for="plan">Plan Purchased <span>*</span></label>
+        <select class="form-select" id="plan" name="plan" required>
+          <option value="" disabled selected>Select your plan…</option>
+          <option value="Basic Yearly">Basic — Yearly</option>
+          <option value="Pro Yearly">Pro — Yearly</option>
+          <option value="Elite Yearly">Elite — Yearly</option>
+          <option value="Basic Monthly">Basic — Monthly</option>
+          <option value="Pro Monthly">Pro — Monthly</option>
+          <option value="Elite Monthly">Elite — Monthly</option>
+          <option value="Other">Other / Not sure</option>
+        </select>
       </div>
-      <span class="action-arrow" style="color:var(--bad);">›</span>
-    </button>
 
+      <div class="form-row">
+        <label class="form-label" for="purchase-date">Approximate Purchase Date <span>*</span></label>
+        <input class="form-input" type="date" id="purchase-date" name="purchase_date" required/>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label" for="reason">Reason for Refund <span>*</span></label>
+        <textarea class="form-textarea" id="reason" name="message"
+                  placeholder="Please describe why you're requesting a refund…"
+                  maxlength="1000" required></textarea>
+        <div class="char-counter" id="char-counter">0 / 1000</div>
+      </div>
+
+      <button class="submit-btn" type="submit" id="submit-btn">
+        <span id="submit-label">📨 Submit Refund Request</span>
+      </button>
+    </form>
   </div>
 
-  <p class="help-text">
-    Need help? <a href="contact.html">Contact support</a> · 
-    <a href="requestrefund.html">Request a refund</a> · 
-    <a href="privacy.html">Privacy Policy</a>
-  </p>
+  <!-- success screen (hidden until submission) -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-ico">✓</div>
+    <div class="success-title">Request Submitted</div>
+    <p class="success-desc">We've received your refund request and will review it within 5–10 business days. You'll hear from us at the email you provided.</p>
+    <button class="success-btn" onclick="location.href='index.html'">← Back to Home</button>
+  </div>
+
+  <div class="help-row" style="margin-top:16px;">
+    Questions? <a href="contact.html">Contact support</a> · <a href="billing.html">Back to Billing</a> · <a href="about.html#faq">Refund Policy</a>
+  </div>
 </main>
 
 <!-- ── FOOTER ── -->
@@ -426,240 +405,24 @@ footer{
   <span style="font-size:13px;color:var(--fg3);">© 2025 Brainstorm Buddy</span>
 </footer>
 
-<!-- ── OVERLAY ── -->
-<div class="overlay" id="overlay" aria-hidden="true">
-  <div class="spinner" role="status" aria-live="polite"></div>
-  <div class="overlay-text" id="overlay-text">Loading…</div>
-</div>
-
 <script>
-// ── API ──────────────────────────────────────────────────────────────────────
-const API_BASE = location.hostname.includes('localhost') || location.hostname.startsWith('127.')
-  ? 'http://localhost:5050'
-  : 'https://auth-backend-b1b6.onrender.com';
-
-const GENERIC_PORTAL_LOGIN = 'https://billing.stripe.com/p/login/28E3cu5ef1lk0F3gSK2Ry00';
-
-const DEBUG = new URLSearchParams(location.search).get('debug') === '1';
-const dlog = (...a) => { if(DEBUG) console.log('[billing]',...a); };
-
-// ── DARK MODE ────────────────────────────────────────────────────────────────
+// ── DARK MODE ──────────────────────────────────────────────────────────────
 function toggleDarkMode(){
   const d = document.body.classList.toggle('dark');
   document.getElementById('darkToggle').textContent = d ? '☀️' : '🌙';
   localStorage.setItem('darkMode', d ? '1' : '0');
 }
 
-// ── HELPERS ──────────────────────────────────────────────────────────────────
-function showOverlay(show, text){
-  const o = document.getElementById('overlay');
-  o.classList.toggle('show', !!show);
-  o.setAttribute('aria-hidden', show ? 'false' : 'true');
-  if(text) document.getElementById('overlay-text').textContent = text;
-}
+// ── CHAR COUNTER ──────────────────────────────────────────────────────────
+const textarea = document.getElementById('reason');
+const counter  = document.getElementById('char-counter');
+textarea.addEventListener('input', ()=>{
+  const len = textarea.value.length;
+  counter.textContent = `${len} / 1000`;
+  counter.className = 'char-counter' + (len > 900 ? ' over' : len > 700 ? ' warn' : '');
+});
 
-function setMsg(text, type){
-  const box = document.getElementById('msg-box');
-  const msg = document.getElementById('msg');
-  const ico = document.getElementById('msg-icon');
-  if(!text){ box.classList.remove('show','ok','error'); return; }
-  msg.textContent = text;
-  ico.textContent = type === 'ok' ? '✓' : '✕';
-  box.className = 'msg-box show ' + (type || '');
-  box.scrollIntoView({behavior:'smooth', block:'nearest'});
-}
-
-function setButtonLoading(id, loading, loadingText, defaultText){
-  const b = document.getElementById(id);
-  if(!b) return;
-  b.disabled = !!loading;
-  const titleEl = b.querySelector('.action-title');
-  if(titleEl) titleEl.textContent = loading ? (loadingText||'Working…') : defaultText;
-}
-
-function formatDateTime(iso){
-  return new Date(iso).toLocaleString(undefined, {
-    weekday:'short', year:'numeric', month:'short', day:'numeric',
-    hour:'2-digit', minute:'2-digit'
-  });
-}
-
-async function safeJson(res){ try{ return await res.json(); }catch{ return null; } }
-const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
-
-function setStatusDot(state){
-  // state: 'active' | 'warn' | 'bad' | ''
-  const dot = document.getElementById('status-dot');
-  dot.className = 'status-dot' + (state ? ' ' + state : '');
-}
-
-// ── LOAD PLAN ────────────────────────────────────────────────────────────────
-async function loadPlan(){
-  const email = localStorage.getItem('userEmail');
-  if(!email){ document.getElementById('user-plan').textContent = 'Free'; return; }
-  try{
-    const res = await fetch(`${API_BASE}/api/subscription-status?email=${encodeURIComponent(email)}`);
-    const data = await res.json();
-    dlog('plan data:', data);
-    const plan = data.plan || 'free';
-    document.getElementById('user-plan').textContent = cap(plan);
-    if(data.oneTime && plan !== 'free'){
-      document.getElementById('status-text').textContent = 'One-time purchase · No renewal';
-      setStatusDot('active');
-    }
-  }catch(e){ console.warn('[billing] loadPlan failed:', e); }
-}
-
-// ── LOAD BILLING DATE ────────────────────────────────────────────────────────
-async function loadBillingDate(){
-  const email = localStorage.getItem('userEmail');
-  const billingEl = document.getElementById('billing-date');
-  const statusText = document.getElementById('status-text');
-  const cancelBtn = document.getElementById('cancel-btn');
-  const cancelBanner = document.getElementById('cancel-note');
-  const cancelNoteText = document.getElementById('cancel-note-text');
-  const cycleEl = document.getElementById('billing-cycle');
-
-  if(!email){
-    billingEl.textContent = 'Not available';
-    statusText.textContent = 'No account';
-    setStatusDot('');
-    cancelBtn.style.display = 'none';
-    return;
-  }
-
-  try{
-    const res = await fetch(`${API_BASE}/get-billing-date`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email})
-    });
-
-    if(!res.ok){
-      const maybe = await safeJson(res);
-      const msg = maybe?.error || `HTTP ${res.status}`;
-      billingEl.textContent = 'Not available';
-      if(!statusText.textContent.includes('One-time')){
-        statusText.textContent = msg.includes('Stripe not configured') ? 'Stripe not configured' : 'Unknown';
-        setStatusDot('');
-      }
-      cancelBtn.style.display = 'none';
-      return;
-    }
-
-    const data = await res.json();
-    dlog('billing data:', data);
-
-    // cancellation banner
-    if(data.cancelAtPeriodEnd){
-      cancelNoteText.textContent = data.cancelAt
-        ? `Cancellation scheduled — access ends ${formatDateTime(data.cancelAt)}`
-        : 'Cancellation scheduled at period end';
-      cancelBanner.classList.add('show');
-      cancelBtn.style.display = 'none';
-    } else {
-      cancelBanner.classList.remove('show');
-    }
-
-    // billing cycle detection
-    if(data.interval){
-      cycleEl.textContent = cap(data.interval) + 'ly';
-    } else if(data.priceNickname){
-      const lc = data.priceNickname.toLowerCase();
-      cycleEl.textContent = lc.includes('year') ? 'Yearly' : lc.includes('month') ? 'Monthly' : data.priceNickname;
-    } else {
-      cycleEl.textContent = '—';
-    }
-
-    const isSub = !!data.nextBillingDate || ['trialing','active','past_due','unpaid'].includes(data.status);
-    cancelBtn.style.display = isSub && !data.cancelAtPeriodEnd ? 'flex' : 'none';
-
-    if(!data.nextBillingDate){
-      billingEl.textContent = 'Not available';
-      if(!statusText.textContent.includes('One-time')){
-        const noSub = ['no_subscription','no_active_sub','no_account'].includes(data.status);
-        statusText.textContent = noSub ? 'Free — No active subscription' : (data.status || 'Unknown');
-        setStatusDot(noSub ? '' : 'warn');
-      }
-      return;
-    }
-
-    billingEl.textContent = formatDateTime(data.nextBillingDate);
-
-    if(!statusText.textContent.includes('One-time')){
-      statusText.textContent = data.priceNickname
-        ? `${data.status} · ${data.priceNickname}`
-        : (data.status || '—');
-      const s = (data.status||'').toLowerCase();
-      setStatusDot(s === 'active' || s === 'trialing' ? 'active' : s === 'past_due' || s === 'unpaid' ? 'bad' : 'warn');
-    }
-
-  }catch(err){
-    console.error('[billing] loadBillingDate error:', err);
-    billingEl.textContent = 'Not available';
-    if(!statusText.textContent.includes('One-time')){
-      statusText.textContent = 'Unknown'; setStatusDot('');
-    }
-    cancelBtn.style.display = 'none';
-  }
-}
-
-// ── STRIPE PORTAL ────────────────────────────────────────────────────────────
-async function openCustomerPortal(){
-  const email = localStorage.getItem('userEmail');
-  if(!email){ alert('You must be logged in to manage your subscription.'); return; }
-  setMsg('','');
-  setButtonLoading('portal-btn', true, 'Opening Portal…', 'Stripe Customer Portal');
-  showOverlay(true, 'Opening Stripe Portal…');
-  try{
-    const res = await fetch(`${API_BASE}/create-portal-session`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email, returnUrl: window.location.href})
-    });
-    if(!res.ok){ const e = await safeJson(res); throw new Error(e?.error || `HTTP ${res.status}`); }
-    const data = await res.json();
-    if(data?.url){ window.location.href = data.url; return; }
-    throw new Error('No portal URL in response.');
-  }catch(err){
-    console.error('[billing] portal error:', err);
-    setMsg('Could not open a personalised portal session. Redirecting to secure portal login…', 'error');
-    setTimeout(()=>{ window.location.href = GENERIC_PORTAL_LOGIN; }, 2000);
-  }finally{
-    setButtonLoading('portal-btn', false, '', 'Stripe Customer Portal');
-    showOverlay(false);
-  }
-}
-
-// ── CANCEL SUBSCRIPTION ──────────────────────────────────────────────────────
-async function cancelSubscription(){
-  const email = localStorage.getItem('userEmail');
-  if(!email){ alert('You must be logged in.'); return; }
-  if(!confirm('Cancel your subscription at the end of the current period?\n\nYou will keep access until your billing date.')) return;
-
-  setMsg('','');
-  setButtonLoading('cancel-btn', true, 'Scheduling cancellation…', 'Cancel Subscription');
-  showOverlay(true, 'Scheduling cancellation…');
-  try{
-    const res = await fetch(`${API_BASE}/cancel-subscription`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email})
-    });
-    const data = await safeJson(res);
-    if(!res.ok || !data?.success) throw new Error(data?.message || `HTTP ${res.status}`);
-    setMsg('Cancellation scheduled. You will retain access until the end of your current billing period.', 'ok');
-    await loadBillingDate();
-  }catch(err){
-    console.error('[billing] cancel error:', err);
-    setMsg('Could not schedule cancellation. Please try again, or use the Stripe Customer Portal.', 'error');
-  }finally{
-    setButtonLoading('cancel-btn', false, '', 'Cancel Subscription');
-    showOverlay(false);
-  }
-}
-
-// ── BOOT ─────────────────────────────────────────────────────────────────────
+// ── AUTO-FILL EMAIL ────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', ()=>{
   // dark mode default dark
   const saved = localStorage.getItem('darkMode');
@@ -671,17 +434,92 @@ document.addEventListener('DOMContentLoaded', ()=>{
     document.getElementById('darkToggle').textContent = '☀️';
   }
 
-  const email = (localStorage.getItem('userEmail') || '').trim();
-  document.getElementById('user-email').textContent = email || 'Not logged in';
+  // pre-fill email from localStorage if logged in
+  const savedEmail = localStorage.getItem('userEmail');
+  if(savedEmail){
+    const emailField = document.getElementById('email');
+    if(emailField && !emailField.value) emailField.value = savedEmail;
+  }
 
-  loadPlan();
-  loadBillingDate();
+  // set today's date as default for purchase date
+  const dateField = document.getElementById('purchase-date');
+  if(dateField){
+    const today = new Date().toISOString().split('T')[0];
+    dateField.max = today; // can't pick future date
+  }
 });
 
-window.addEventListener('focus', ()=>{ loadPlan(); loadBillingDate(); });
-document.addEventListener('visibilitychange', ()=>{ if(!document.hidden){ loadPlan(); loadBillingDate(); } });
-</script>
+// ── FORM SUBMISSION ────────────────────────────────────────────────────────
+const form = document.getElementById('refund-form');
+const submitBtn = document.getElementById('submit-btn');
+const submitLabel = document.getElementById('submit-label');
+const msgBox = document.getElementById('msg-box');
+const msgIco = document.getElementById('msg-ico');
+const msgText = document.getElementById('msg-text');
+const formCard = document.getElementById('form-card');
+const successScreen = document.getElementById('success-screen');
 
-<script src="stripe-server.js"></script>
+function showMsg(text, type){
+  msgText.textContent = text;
+  msgIco.textContent = type === 'ok' ? '✓' : '✕';
+  msgBox.className = 'msg-box show ' + type;
+  msgBox.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function clearMsg(){
+  msgBox.className = 'msg-box';
+}
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  clearMsg();
+
+  // client-side validation
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const plan = document.getElementById('plan').value;
+  const purchaseDate = document.getElementById('purchase-date').value;
+  const reason = textarea.value.trim();
+
+  if(!name || !email || !plan || !purchaseDate || !reason){
+    showMsg('Please fill in all required fields.', 'error');
+    return;
+  }
+  if(reason.length < 20){
+    showMsg('Please provide a more detailed reason (at least 20 characters).', 'error');
+    return;
+  }
+
+  // loading state
+  submitBtn.disabled = true;
+  submitLabel.textContent = '⏳ Submitting…';
+
+  try{
+    const data = new FormData(form);
+    const res = await fetch(form.action, {
+      method:'POST',
+      body: data,
+      headers:{ 'Accept': 'application/json' }
+    });
+
+    if(res.ok){
+      // show success screen
+      formCard.style.display = 'none';
+      successScreen.classList.add('show');
+      window.scrollTo({top:0, behavior:'smooth'});
+    } else {
+      const json = await res.json().catch(()=>({}));
+      const errMsg = json?.errors?.[0]?.message || 'Submission failed. Please try again.';
+      showMsg(errMsg, 'error');
+      submitBtn.disabled = false;
+      submitLabel.textContent = '📨 Submit Refund Request';
+    }
+  }catch(err){
+    showMsg('Network error — please check your connection and try again.', 'error');
+    submitBtn.disabled = false;
+    submitLabel.textContent = '📨 Submit Refund Request';
+  }
+});
+</script>
 </body>
 </html>
