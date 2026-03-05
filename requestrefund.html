@@ -1,158 +1,502 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17611666437"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'AW-17611666437');
 </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Request a Refund - Brainstorm Buddy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #6c63ff;
-      --accent: #a259ff;
-      --bg: #f5f4fa;
-      --dark-bg: #1a1a1a;
-      --text: #333;
-      --text-dark: #f0f0f0;
-    }
 
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Request a Refund — Brainstorm Buddy</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
-    body.dark {
-      background: var(--dark-bg);
-      color: var(--text-dark);
-    }
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-    header {
-      background: linear-gradient(to right, var(--accent), var(--primary));
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+:root{
+  --p:#5b5cf6;--p2:#818cf8;--p3:#4338ca;
+  --ok:#10b981;--bad:#ef4444;--warn:#f59e0b;
+  --bg:#f8f8fc;--bg2:#f0f0fa;--card:#fff;--card2:#f5f5ff;
+  --border:#e8e8f0;--fg:#0a0a14;--fg2:#4b5563;--fg3:#9ca3af;
+  --shadow:0 4px 24px rgba(91,92,246,.08),0 1px 4px rgba(0,0,0,.06);
+  --shadow-lg:0 16px 48px rgba(91,92,246,.14),0 4px 12px rgba(0,0,0,.08);
+  --r:16px;--rs:10px;--t:.18s;--e:cubic-bezier(.4,0,.2,1);
+}
+body.dark{
+  --bg:#09090f;--bg2:#111118;--card:#14141e;--card2:#1a1a28;
+  --border:#2a2a3a;--fg:#f0f0ff;--fg2:#a0a0c0;--fg3:#555570;
+  --shadow:0 4px 24px rgba(0,0,0,.4),0 1px 4px rgba(0,0,0,.3);
+  --shadow-lg:0 16px 48px rgba(0,0,0,.5);
+}
 
-    .nav-left img {
-      width: 40px;
-      cursor: pointer;
-    }
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);color:var(--fg);
+  line-height:1.6;min-height:100vh;
+  transition:background var(--t) var(--e),color var(--t) var(--e);
+  display:flex;flex-direction:column;
+}
 
-    .btn {
-      background: white;
-      color: var(--primary);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
-    }
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.5;
+}
 
-    .btn:hover {
-      background: #eae8ff;
-    }
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:64px;
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:background var(--t) var(--e),border-color var(--t) var(--e);
+}
+body.dark nav{background:rgba(9,9,15,.85);}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;}
+.nav-logo{width:36px;height:36px;border-radius:10px;object-fit:cover;}
+.nav-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--fg);letter-spacing:-.3px;}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.ibtn{
+  width:36px;height:36px;border-radius:9px;border:1px solid var(--border);
+  background:var(--card);color:var(--fg2);font-size:15px;
+  display:grid;place-items:center;cursor:pointer;transition:all var(--t) var(--e);
+}
+.ibtn:hover{border-color:var(--p);color:var(--p);background:rgba(91,92,246,.06);}
+.btn-back{
+  padding:8px 16px;border-radius:9px;border:1.5px solid var(--border);
+  background:var(--card);color:var(--fg);font-family:'DM Sans',sans-serif;
+  font-size:13px;font-weight:500;cursor:pointer;transition:all var(--t) var(--e);
+}
+.btn-back:hover{border-color:var(--p);color:var(--p);}
 
-    main {
-      max-width: 600px;
-      margin: auto;
-      padding: 2rem 1rem;
-    }
+/* ── MAIN ── */
+main{
+  flex:1;position:relative;z-index:1;
+  padding:56px 24px 80px;
+  max-width:640px;margin:0 auto;width:100%;
+}
 
-    h1 {
-      text-align: center;
-      color: var(--primary);
-    }
+/* ── PAGE HEADER ── */
+.page-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 14px;border-radius:99px;
+  background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--bad);
+  letter-spacing:.05em;margin-bottom:16px;
+}
+.page-title{
+  font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,40px);
+  font-weight:800;letter-spacing:-.04em;color:var(--fg);
+  margin-bottom:6px;line-height:1.05;
+}
+.page-title .grad{
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.page-sub{font-size:15px;color:var(--fg2);font-weight:300;margin-bottom:28px;line-height:1.65;}
 
-    form {
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
+/* ── POLICY CARDS ── */
+.policy-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  margin-bottom:28px;
+}
+.policy-card{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--rs);padding:16px 18px;
+  box-shadow:var(--shadow);
+}
+.policy-card-icon{font-size:20px;margin-bottom:8px;}
+.policy-card-title{
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  color:var(--fg);margin-bottom:4px;letter-spacing:-.1px;
+}
+.policy-card-desc{font-size:12.5px;color:var(--fg2);line-height:1.55;font-weight:300;}
+.policy-card.green{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.04);}
+.policy-card.red{border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.04);}
+.policy-card.warn{border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.04);}
+.policy-card.blue{border-color:rgba(91,92,246,.2);background:rgba(91,92,246,.04);}
 
-    body.dark form {
-      background: #2a2a2a;
-    }
+/* ── FORM CARD ── */
+.form-card{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:32px;
+  box-shadow:var(--shadow-lg);
+  margin-bottom:20px;
+}
 
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
+.form-row{margin-bottom:20px;}
+.form-label{
+  display:block;
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  color:var(--fg);margin-bottom:7px;letter-spacing:-.1px;
+}
+.form-label span{
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:400;
+  color:var(--bad);margin-left:4px;
+}
 
-    input, textarea {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-    }
+.form-input,
+.form-select,
+.form-textarea{
+  width:100%;padding:11px 14px;
+  border-radius:9px;border:1.5px solid var(--border);
+  background:var(--bg2);color:var(--fg);
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;
+  transition:border-color var(--t) var(--e),background var(--t) var(--e);
+  outline:none;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus{
+  border-color:var(--p);
+  background:var(--card);
+  box-shadow:0 0 0 3px rgba(91,92,246,.1);
+}
+.form-input::placeholder,
+.form-textarea::placeholder{color:var(--fg3);}
 
-    textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
+.form-textarea{
+  resize:vertical;min-height:120px;line-height:1.6;
+}
 
-    input[type="submit"] {
-      background: var(--primary);
-      color: white;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+.form-select option{background:var(--card);color:var(--fg);}
 
-    input[type="submit"]:hover {
-      background: #554cf2;
-    }
+/* char counter */
+.char-counter{
+  display:flex;justify-content:flex-end;
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--fg3);margin-top:5px;
+  transition:color var(--t);
+}
+.char-counter.warn{color:var(--warn);}
+.char-counter.over{color:var(--bad);}
 
-    p.note {
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-  </style>
+/* ── SUBMIT BTN ── */
+.submit-btn{
+  width:100%;padding:14px;border-radius:11px;border:none;
+  background:linear-gradient(135deg,var(--p),var(--p3));
+  color:#fff;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(91,92,246,.35);
+  transition:transform var(--t) var(--e),box-shadow var(--t) var(--e),opacity var(--t);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(91,92,246,.45);}
+.submit-btn:active{transform:translateY(0);}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* ── MSG BOX ── */
+.msg-box{
+  display:none;border-radius:var(--rs);padding:16px 18px;
+  font-size:14px;font-weight:500;margin-bottom:20px;
+  align-items:flex-start;gap:10px;
+}
+.msg-box.show{display:flex;}
+.msg-box.ok{background:rgba(16,185,129,.08);border:1.5px solid rgba(16,185,129,.25);color:var(--ok);}
+.msg-box.error{background:rgba(239,68,68,.08);border:1.5px solid rgba(239,68,68,.25);color:var(--bad);}
+.msg-ico{font-size:18px;flex-shrink:0;margin-top:1px;}
+
+/* ── SUCCESS STATE ── */
+.success-screen{
+  display:none;text-align:center;padding:48px 24px;
+}
+.success-screen.show{display:block;}
+.success-ico{
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(16,185,129,.1);border:2px solid rgba(16,185,129,.3);
+  display:grid;place-items:center;font-size:32px;
+  margin:0 auto 20px;
+}
+.success-title{
+  font-family:'Syne',sans-serif;font-size:24px;font-weight:800;
+  color:var(--fg);margin-bottom:10px;letter-spacing:-.03em;
+}
+.success-desc{font-size:15px;color:var(--fg2);font-weight:300;line-height:1.65;max-width:400px;margin:0 auto 28px;}
+.success-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 24px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--p),var(--p3));
+  color:#fff;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;box-shadow:0 4px 14px rgba(91,92,246,.3);
+  transition:transform var(--t),box-shadow var(--t);
+}
+.success-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(91,92,246,.4);}
+
+/* ── HELP ROW ── */
+.help-row{
+  font-size:12.5px;color:var(--fg3);text-align:center;line-height:1.6;
+}
+.help-row a{color:var(--p);text-decoration:none;}
+.help-row a:hover{text-decoration:underline;}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:24px 32px;display:flex;align-items:center;justify-content:center;
+  gap:16px;flex-wrap:wrap;position:relative;z-index:1;
+}
+.footer-link{
+  font-size:13px;color:var(--fg3);text-decoration:none;
+  padding:4px 8px;border-radius:6px;transition:color var(--t),background var(--t);
+}
+.footer-link:hover{color:var(--p);background:rgba(91,92,246,.07);}
+.footer-sep{color:var(--border);}
+
+@media(max-width:600px){
+  nav{padding:0 16px;}
+  main{padding:40px 16px 60px;}
+  .policy-grid{grid-template-columns:1fr;}
+  .form-card{padding:22px 18px;}
+}
+</style>
 </head>
-<body>
-  <header>
-    <div class="nav-left">
-      <img src="icon128.png" alt="Logo" onclick="location.href='index.html'">
-      <button class="btn" onclick="location.href='index.html'">Home</button>
+<body class="dark">
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-brand" onclick="location.href='index.html'">
+    <img src="icon128.png" alt="Logo" class="nav-logo"/>
+    <span class="nav-name">Brainstorm Buddy</span>
+  </div>
+  <div class="nav-right">
+    <button class="ibtn" id="darkToggle" onclick="toggleDarkMode()" title="Toggle theme">☀️</button>
+    <button class="btn-back" onclick="location.href='billing.html'">← Billing</button>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+  <div class="page-badge">💸 Refund request</div>
+  <h1 class="page-title">Request a <span class="grad">Refund</span></h1>
+  <p class="page-sub">Please read our refund policy below before submitting. We aim to process all requests within 5–10 business days.</p>
+
+  <!-- policy cards -->
+  <div class="policy-grid">
+    <div class="policy-card green">
+      <div class="policy-card-icon">✅</div>
+      <div class="policy-card-title">Yearly Plans</div>
+      <div class="policy-card-desc">Eligible for a refund within <strong>14 days</strong> of purchase.</div>
     </div>
-  </header>
+    <div class="policy-card red">
+      <div class="policy-card-icon">🚫</div>
+      <div class="policy-card-title">Monthly Plans</div>
+      <div class="policy-card-desc">Monthly subscriptions are <strong>non-refundable</strong> once charged.</div>
+    </div>
+    <div class="policy-card warn">
+      <div class="policy-card-icon">⚠️</div>
+      <div class="policy-card-title">Refund Limits</div>
+      <div class="policy-card-desc">Maximum of <strong>2 refunds</strong> per account or payment method.</div>
+    </div>
+    <div class="policy-card blue">
+      <div class="policy-card-icon">⏱️</div>
+      <div class="policy-card-title">Processing Time</div>
+      <div class="policy-card-desc">Approved refunds processed within <strong>5–10 business days</strong>.</div>
+    </div>
+  </div>
 
-  <main>
-    <h1>Request a Refund</h1>
-    <p class="note">Refunds are only available within 7 days for yearly plans. Monthly payments are non-refundable.</p>
+  <!-- msg box -->
+  <div class="msg-box" id="msg-box">
+    <span class="msg-ico" id="msg-ico"></span>
+    <span id="msg-text"></span>
+  </div>
 
-    <form action="https://formspree.io/f/xjkowdod" method="POST">
-      <!-- Force subject line of the email -->
-      <input type="hidden" name="_subject" value="Refund">
+  <!-- form card -->
+  <div class="form-card" id="form-card">
+    <form id="refund-form" action="https://formspree.io/f/xjkowdod" method="POST">
+      <input type="hidden" name="_subject" value="Refund Request — Brainstorm Buddy"/>
 
-      <label for="name">Full Name</label>
-      <input type="text" id="name" name="name" required />
+      <div class="form-row">
+        <label class="form-label" for="name">Full Name <span>*</span></label>
+        <input class="form-input" type="text" id="name" name="name"
+               placeholder="Jane Smith" required autocomplete="name"/>
+      </div>
 
-      <label for="email">Email Address</label>
-      <input type="email" id="email" name="email" required />
+      <div class="form-row">
+        <label class="form-label" for="email">Email Address <span>*</span></label>
+        <input class="form-input" type="email" id="email" name="email"
+               placeholder="jane@example.com" required autocomplete="email"/>
+      </div>
 
-      <label for="reason">Reason for Refund</label>
-      <textarea id="reason" name="message" required></textarea>
+      <div class="form-row">
+        <label class="form-label" for="plan">Plan Purchased <span>*</span></label>
+        <select class="form-select" id="plan" name="plan" required>
+          <option value="" disabled selected>Select your plan…</option>
+          <option value="Basic Yearly">Basic — Yearly</option>
+          <option value="Pro Yearly">Pro — Yearly</option>
+          <option value="Elite Yearly">Elite — Yearly</option>
+          <option value="Basic Monthly">Basic — Monthly</option>
+          <option value="Pro Monthly">Pro — Monthly</option>
+          <option value="Elite Monthly">Elite — Monthly</option>
+          <option value="Other">Other / Not sure</option>
+        </select>
+      </div>
 
-      <input type="submit" value="Submit Refund Request" />
+      <div class="form-row">
+        <label class="form-label" for="purchase-date">Approximate Purchase Date <span>*</span></label>
+        <input class="form-input" type="date" id="purchase-date" name="purchase_date" required/>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label" for="reason">Reason for Refund <span>*</span></label>
+        <textarea class="form-textarea" id="reason" name="message"
+                  placeholder="Please describe why you're requesting a refund…"
+                  maxlength="1000" required></textarea>
+        <div class="char-counter" id="char-counter">0 / 1000</div>
+      </div>
+
+      <button class="submit-btn" type="submit" id="submit-btn">
+        <span id="submit-label">📨 Submit Refund Request</span>
+      </button>
     </form>
-  </main>
+  </div>
+
+  <!-- success screen (hidden until submission) -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-ico">✓</div>
+    <div class="success-title">Request Submitted</div>
+    <p class="success-desc">We've received your refund request and will review it within 5–10 business days. You'll hear from us at the email you provided.</p>
+    <button class="success-btn" onclick="location.href='index.html'">← Back to Home</button>
+  </div>
+
+  <div class="help-row" style="margin-top:16px;">
+    Questions? <a href="contact.html">Contact support</a> · <a href="billing.html">Back to Billing</a> · <a href="about.html#faq">Refund Policy</a>
+  </div>
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <a class="footer-link" href="privacy.html">Privacy Policy</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="terms.html">Terms of Service</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="contact.html">Contact</a>
+  <span class="footer-sep">·</span>
+  <span style="font-size:13px;color:var(--fg3);">© 2025 Brainstorm Buddy</span>
+</footer>
+
+<script>
+// ── DARK MODE ──────────────────────────────────────────────────────────────
+function toggleDarkMode(){
+  const d = document.body.classList.toggle('dark');
+  document.getElementById('darkToggle').textContent = d ? '☀️' : '🌙';
+  localStorage.setItem('darkMode', d ? '1' : '0');
+}
+
+// ── CHAR COUNTER ──────────────────────────────────────────────────────────
+const textarea = document.getElementById('reason');
+const counter  = document.getElementById('char-counter');
+textarea.addEventListener('input', ()=>{
+  const len = textarea.value.length;
+  counter.textContent = `${len} / 1000`;
+  counter.className = 'char-counter' + (len > 900 ? ' over' : len > 700 ? ' warn' : '');
+});
+
+// ── AUTO-FILL EMAIL ────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', ()=>{
+  // dark mode default dark
+  const saved = localStorage.getItem('darkMode');
+  if(saved === '0'){
+    document.body.classList.remove('dark');
+    document.getElementById('darkToggle').textContent = '🌙';
+  } else {
+    document.body.classList.add('dark');
+    document.getElementById('darkToggle').textContent = '☀️';
+  }
+
+  // pre-fill email from localStorage if logged in
+  const savedEmail = localStorage.getItem('userEmail');
+  if(savedEmail){
+    const emailField = document.getElementById('email');
+    if(emailField && !emailField.value) emailField.value = savedEmail;
+  }
+
+  // set today's date as default for purchase date
+  const dateField = document.getElementById('purchase-date');
+  if(dateField){
+    const today = new Date().toISOString().split('T')[0];
+    dateField.max = today; // can't pick future date
+  }
+});
+
+// ── FORM SUBMISSION ────────────────────────────────────────────────────────
+const form = document.getElementById('refund-form');
+const submitBtn = document.getElementById('submit-btn');
+const submitLabel = document.getElementById('submit-label');
+const msgBox = document.getElementById('msg-box');
+const msgIco = document.getElementById('msg-ico');
+const msgText = document.getElementById('msg-text');
+const formCard = document.getElementById('form-card');
+const successScreen = document.getElementById('success-screen');
+
+function showMsg(text, type){
+  msgText.textContent = text;
+  msgIco.textContent = type === 'ok' ? '✓' : '✕';
+  msgBox.className = 'msg-box show ' + type;
+  msgBox.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function clearMsg(){
+  msgBox.className = 'msg-box';
+}
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  clearMsg();
+
+  // client-side validation
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const plan = document.getElementById('plan').value;
+  const purchaseDate = document.getElementById('purchase-date').value;
+  const reason = textarea.value.trim();
+
+  if(!name || !email || !plan || !purchaseDate || !reason){
+    showMsg('Please fill in all required fields.', 'error');
+    return;
+  }
+  if(reason.length < 20){
+    showMsg('Please provide a more detailed reason (at least 20 characters).', 'error');
+    return;
+  }
+
+  // loading state
+  submitBtn.disabled = true;
+  submitLabel.textContent = '⏳ Submitting…';
+
+  try{
+    const data = new FormData(form);
+    const res = await fetch(form.action, {
+      method:'POST',
+      body: data,
+      headers:{ 'Accept': 'application/json' }
+    });
+
+    if(res.ok){
+      // show success screen
+      formCard.style.display = 'none';
+      successScreen.classList.add('show');
+      window.scrollTo({top:0, behavior:'smooth'});
+    } else {
+      const json = await res.json().catch(()=>({}));
+      const errMsg = json?.errors?.[0]?.message || 'Submission failed. Please try again.';
+      showMsg(errMsg, 'error');
+      submitBtn.disabled = false;
+      submitLabel.textContent = '📨 Submit Refund Request';
+    }
+  }catch(err){
+    showMsg('Network error — please check your connection and try again.', 'error');
+    submitBtn.disabled = false;
+    submitLabel.textContent = '📨 Submit Refund Request';
+  }
+});
+</script>
 </body>
 </html>
