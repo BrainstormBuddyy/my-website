@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /billing.html
+Disallow: /requestrefund.html
+
+Sitemap: https://www.brainstormbuddy.co.uk/sitemap.xml
