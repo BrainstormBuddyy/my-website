@@ -1,365 +1,690 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17611666437"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'AW-17611666437');
 </script>
-
-<!-- Event snippet for Page view conversion page -->
 <script>
   gtag('event', 'conversion', {
-      'send_to': 'AW-17611666437/Cg3GCNqb56kbEIXo8s1B',
-      'value': 1.0,
-      'currency': 'GBP'
+    'send_to': 'AW-17611666437/Cg3GCNqb56kbEIXo8s1B',
+    'value': 1.0,
+    'currency': 'GBP'
   });
 </script>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pricing Plans</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root { --primary:#6c63ff; --accent:#a259ff; --bg:#fffafc; --bg-dark:#1a1a1a; --card-dark:#2a2a2a; --text:#333; --text-dark:#f0f0f0; --text-muted:#888; --text-muted-dark:#ccc; }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s}
-    body.dark{background:var(--bg-dark);color:var(--text-dark)}
-    header{background:linear-gradient(to right,var(--accent),var(--primary));padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;color:#fff}
-    .nav-left img{width:40px;cursor:pointer}
-    .switcher{background:transparent;color:#fff;border:1px solid #fff;padding:.5rem .75rem;border-radius:6px;cursor:pointer}
-    .pricing-header{text-align:center;padding:2rem 1rem}
-    .toggle-switch{background:#f2f2f2;display:inline-flex;border-radius:2rem;overflow:hidden;margin-top:1rem}
-    body.dark .toggle-switch{background:#444}
-    .toggle-switch button{padding:.5rem 1.25rem;border:0;background:transparent;font-weight:600;cursor:pointer;transition:background .3s;color:inherit}
-    .toggle-switch .active{background:#333;color:#fff}
-    body.dark .toggle-switch .active{background:#eee;color:#000}
-    .user-info{text-align:center;margin-top:1rem;font-size:1rem;color:var(--text-muted)}
-    body.dark .user-info{color:var(--text-muted-dark)}
-    .pricing-container{display:flex;justify-content:center;flex-wrap:wrap;gap:2rem;padding:3rem 2rem}
-    .pricing-card{background:#fff;border-radius:1.25rem;box-shadow:0 0 15px rgba(0,0,0,.05);padding:2rem;width:300px;text-align:center;transition:all .3s}
-    body.dark .pricing-card{background:var(--card-dark);color:var(--text-dark)}
-    .pricing-card.highlight{background:linear-gradient(to bottom right,#a259ff,#6c63ff);color:#fff}
-    .price{font-size:2rem;margin:1rem 0 .3rem;font-weight:700}
-    .small-text{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem}
-    body.dark .small-text{color:var(--text-muted-dark)}
-    .pricing-card.highlight .small-text,.pricing-card.highlight .save-msg{color:#fff}
-    .subscribe-btn{padding:.75rem 1.5rem;border-radius:2rem;border:2px solid var(--primary);background:transparent;color:var(--primary);font-weight:600;cursor:pointer;transition:.3s;width:100%}
-    .subscribe-btn:hover{background:#f4f0ff}
-    body.dark .subscribe-btn{border-color:var(--accent);color:var(--accent)}
-    body.dark .subscribe-btn:hover{background:rgba(255,255,255,.1)}
-    .pricing-card.highlight .subscribe-btn{background:#fff;color:var(--primary);border:none}
-    .save-msg{margin-top:1rem;color:var(--primary);font-weight:600;font-size:.95rem;cursor:pointer}
-    .save-msg::after{content:' ›'}
-    body.dark .save-msg{color:var(--accent)}
-    .features-box{text-align:left;margin-top:1rem}
-    .features-box p{margin:.25rem 0}
-    .enterprise-btn{padding:.85rem 2rem;background:var(--primary);color:#fff;font-weight:600;border:none;border-radius:2rem;font-size:1rem;cursor:pointer;transition:background .3s;margin-top:2rem}
-    .enterprise-btn:hover{background:var(--accent)}
-    body.dark .enterprise-btn{background:#fff;color:var(--primary)}
-    body.dark .enterprise-btn:hover{background:#f4f0ff}
-    @media (max-width:768px){.pricing-container{flex-direction:column;align-items:center}}
-    .pricing-card.nudge { transform: scale(1.02); }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pricing — Brainstorm Buddy</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
-  
-  <script>
-    window.API_BASE ??= (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
-      ? 'http://127.0.0.1:5050'
-      : 'https://auth-backend-b1b6.onrender.com';
-  </script>
+<script>
+  window.API_BASE ??= (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
+    ? 'http://127.0.0.1:5050'
+    : 'https://auth-backend-b1b6.onrender.com';
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --p:#5b5cf6;--p2:#818cf8;--p3:#4338ca;
+  --bg:#f8f8fc;--bg2:#f0f0fa;--card:#fff;--card2:#f5f5ff;
+  --border:#e8e8f0;--fg:#0a0a14;--fg2:#4b5563;--fg3:#9ca3af;
+  --shadow:0 4px 24px rgba(91,92,246,.08),0 1px 4px rgba(0,0,0,.06);
+  --shadow-lg:0 16px 48px rgba(91,92,246,.14),0 4px 12px rgba(0,0,0,.08);
+  --r:16px;--t:.18s;--e:cubic-bezier(.4,0,.2,1);
+}
+body.dark{
+  --bg:#09090f;--bg2:#111118;--card:#14141e;--card2:#1a1a28;
+  --border:#2a2a3a;--fg:#f0f0ff;--fg2:#a0a0c0;--fg3:#555570;
+  --shadow:0 4px 24px rgba(0,0,0,.4),0 1px 4px rgba(0,0,0,.3);
+  --shadow-lg:0 16px 48px rgba(0,0,0,.5);
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);color:var(--fg);
+  line-height:1.6;transition:background var(--t) var(--e),color var(--t) var(--e);
+  overflow-x:hidden;min-height:100vh;
+}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.5;
+}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:64px;
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:background var(--t) var(--e),border-color var(--t) var(--e);
+}
+body.dark nav{background:rgba(9,9,15,.85);}
+
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;}
+.nav-logo{width:36px;height:36px;border-radius:10px;object-fit:cover;}
+.nav-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--fg);letter-spacing:-.3px;}
+
+.nav-right{display:flex;align-items:center;gap:8px;}
+.ibtn{
+  width:36px;height:36px;border-radius:9px;border:1px solid var(--border);
+  background:var(--card);color:var(--fg2);font-size:15px;
+  display:grid;place-items:center;cursor:pointer;
+  transition:all var(--t) var(--e);
+}
+.ibtn:hover{border-color:var(--p);color:var(--p);background:rgba(91,92,246,.06);}
+select.nav-select{
+  padding:6px 10px;border-radius:8px;border:1px solid var(--border);
+  background:var(--card);color:var(--fg2);font-size:13px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;transition:all var(--t) var(--e);
+}
+select.nav-select:hover{border-color:var(--p);}
+.btn-back{
+  padding:8px 16px;border-radius:9px;border:1.5px solid var(--border);
+  background:var(--card);color:var(--fg);font-family:'DM Sans',sans-serif;
+  font-size:13px;font-weight:500;cursor:pointer;transition:all var(--t) var(--e);
+}
+.btn-back:hover{border-color:var(--p);color:var(--p);}
+
+/* ── HERO ── */
+.hero{
+  text-align:center;padding:72px 24px 48px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;
+  width:600px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(91,92,246,.15) 0%,transparent 70%);
+  top:-100px;left:50%;transform:translateX(-50%);
+  pointer-events:none;filter:blur(60px);
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 14px;border-radius:99px;
+  background:rgba(91,92,246,.1);border:1px solid rgba(91,92,246,.25);
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--p);
+  letter-spacing:.05em;margin-bottom:20px;
+}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(32px,5vw,52px);font-weight:800;
+  letter-spacing:-.04em;line-height:1.05;
+  color:var(--fg);margin-bottom:14px;
+}
+.hero h1 .grad{
+  background:linear-gradient(135deg,var(--p),var(--p2),#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{font-size:17px;font-weight:300;color:var(--fg2);max-width:500px;margin:0 auto 32px;line-height:1.65;}
+
+/* user status pill */
+.user-pill{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:8px 16px;border-radius:99px;
+  background:var(--card);border:1px solid var(--border);
+  font-size:13px;color:var(--fg2);
+  box-shadow:var(--shadow);margin-bottom:40px;
+}
+.user-pill-plan{
+  padding:3px 10px;border-radius:99px;
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  color:#fff;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+}
+
+/* ── TOGGLE ── */
+.billing-toggle{
+  display:inline-flex;align-items:center;
+  background:var(--card2);border:1.5px solid var(--border);
+  border-radius:12px;padding:4px;gap:2px;
+  margin-bottom:56px;position:relative;z-index:1;
+}
+.toggle-btn{
+  padding:9px 22px;border-radius:9px;border:none;
+  background:transparent;font-family:'DM Sans',sans-serif;
+  font-size:14px;font-weight:500;color:var(--fg3);cursor:pointer;
+  transition:all var(--t) var(--e);position:relative;
+}
+.toggle-btn.active{
+  background:linear-gradient(135deg,var(--p),var(--p3));
+  color:#fff;font-weight:600;
+  box-shadow:0 4px 14px rgba(91,92,246,.35);
+}
+.save-badge{
+  display:inline-block;margin-left:6px;
+  padding:2px 7px;border-radius:99px;
+  background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);
+  color:#10b981;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;
+}
+.toggle-btn.active .save-badge{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:#fff;}
+
+/* ── CARDS ── */
+.cards-wrap{
+  display:flex;justify-content:center;flex-wrap:wrap;
+  gap:20px;padding:0 24px 80px;
+  position:relative;z-index:1;max-width:1100px;margin:0 auto;
+}
+
+.plan-card{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:32px 28px;
+  width:300px;flex-shrink:0;
+  box-shadow:var(--shadow);
+  transition:transform var(--t) var(--e),box-shadow var(--t) var(--e),border-color var(--t);
+  position:relative;overflow:hidden;
+  animation:fadeUp .5s var(--e) both;
+}
+.plan-card:nth-child(1){animation-delay:.05s}
+.plan-card:nth-child(2){animation-delay:.1s}
+.plan-card:nth-child(3){animation-delay:.15s}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.plan-card:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-lg);
+  border-color:rgba(91,92,246,.3);
+}
+
+.plan-card.elite{
+  background:linear-gradient(145deg,#4338ca 0%,#5b5cf6 50%,#818cf8 100%);
+  border-color:transparent;
+  color:#fff;
+  transform:scale(1.04);
+}
+.plan-card.elite:hover{transform:scale(1.04) translateY(-6px);}
+
+.plan-card.nudge{animation:nudgePulse .6s var(--e);}
+@keyframes nudgePulse{
+  0%,100%{box-shadow:var(--shadow-lg)}
+  50%{box-shadow:0 0 0 4px rgba(91,92,246,.4),var(--shadow-lg)}
+}
+
+/* popular badge */
+.popular-badge{
+  position:absolute;top:20px;right:20px;
+  padding:3px 10px;border-radius:99px;
+  background:rgba(255,255,255,.2);
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  color:#fff;letter-spacing:.05em;text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.25);
+}
+
+.plan-name{
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--fg3);margin-bottom:16px;
+}
+.plan-card.elite .plan-name{color:rgba(255,255,255,.7);}
+
+.plan-price{
+  font-family:'Syne',sans-serif;font-size:48px;font-weight:800;
+  letter-spacing:-.04em;line-height:1;color:var(--fg);
+  margin-bottom:4px;
+}
+.plan-card.elite .plan-price{color:#fff;}
+
+.plan-price sup{font-size:20px;font-weight:600;vertical-align:super;margin-right:1px;}
+.plan-price .per{font-size:16px;font-weight:400;opacity:.6;}
+
+.plan-detail{font-size:12.5px;color:var(--fg3);margin-bottom:24px;}
+.plan-card.elite .plan-detail{color:rgba(255,255,255,.6);}
+
+.plan-btn{
+  width:100%;padding:12px;border-radius:10px;border:none;
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:all var(--t) var(--e);margin-bottom:16px;
+}
+.plan-btn.default{
+  background:rgba(91,92,246,.1);color:var(--p);
+  border:1.5px solid rgba(91,92,246,.2);
+}
+.plan-btn.default:hover{background:var(--p);color:#fff;border-color:var(--p);}
+.plan-card.elite .plan-btn{
+  background:#fff;color:var(--p3);
+  box-shadow:0 4px 14px rgba(0,0,0,.15);
+}
+.plan-card.elite .plan-btn:hover{background:#f0f0ff;}
+
+.save-link{
+  display:block;text-align:center;
+  font-size:12px;font-weight:600;color:var(--p);
+  cursor:pointer;margin-bottom:24px;
+  transition:opacity var(--t);
+}
+.save-link:hover{opacity:.7;}
+.plan-card.elite .save-link{color:rgba(255,255,255,.8);}
+
+.features-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.feature-item{
+  display:flex;align-items:flex-start;gap:9px;
+  font-size:13.5px;color:var(--fg2);line-height:1.5;
+}
+.plan-card.elite .feature-item{color:rgba(255,255,255,.85);}
+.feat-check{
+  width:18px;height:18px;border-radius:5px;flex-shrink:0;
+  background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);
+  display:grid;place-items:center;font-size:10px;margin-top:2px;
+}
+.plan-card.elite .feat-check{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);}
+
+/* ── ENTERPRISE ── */
+.enterprise-wrap{
+  text-align:center;padding:0 24px 80px;
+  position:relative;z-index:1;
+}
+.enterprise-card{
+  display:inline-flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:28px 40px;
+  box-shadow:var(--shadow);max-width:680px;
+}
+.enterprise-txt{text-align:left;}
+.enterprise-title{
+  font-family:'Syne',sans-serif;font-size:18px;font-weight:800;
+  color:var(--fg);margin-bottom:4px;letter-spacing:-.2px;
+}
+.enterprise-desc{font-size:14px;color:var(--fg2);font-weight:300;}
+.enterprise-btn{
+  padding:12px 28px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--p),var(--p3));
+  color:#fff;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;white-space:nowrap;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(91,92,246,.35);
+  transition:transform var(--t),box-shadow var(--t);
+}
+.enterprise-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(91,92,246,.45);}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:24px 32px;display:flex;align-items:center;justify-content:center;
+  gap:16px;flex-wrap:wrap;
+}
+.footer-link{
+  font-size:13px;color:var(--fg3);text-decoration:none;
+  padding:4px 8px;border-radius:6px;transition:color var(--t),background var(--t);
+}
+.footer-link:hover{color:var(--p);background:rgba(91,92,246,.07);}
+.footer-sep{color:var(--border);}
+</style>
 </head>
-<body>
-  <header>
-    <div class="nav-left">
-      <img src="icon128.png" alt="Logo" onclick="location.href='index.html'">
-    </div>
-    <div class="nav-right">
-      <button class="switcher" id="darkToggle" title="Toggle dark mode">🌙</button>
-      <select class="switcher" id="langSelect" title="Language">
-        <option value="en">EN</option><option value="es">ES</option><option value="fr">FR</option>
-        <option value="ru">RU</option><option value="it">IT</option><option value="pt">PT</option>
-      </select>
-    </div>
-  </header>
+<body class="dark">
 
-  <div class="pricing-header">
-    <h1 id="pricingTitle">Choose Your Plan</h1>
-    <div class="toggle-switch">
-      <button id="toggle-yearly" class="active">Yearly</button>
-      <button id="toggle-monthly">Monthly</button>
-    </div>
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-brand" onclick="location.href='index.html'">
+    <img src="icon128.png" alt="Logo" class="nav-logo"/>
+    <span class="nav-name">Brainstorm Buddy</span>
+  </div>
+  <div class="nav-right">
+    <button class="ibtn" id="darkToggle" title="Toggle theme">☀️</button>
+    <select class="nav-select" id="langSelect">
+      <option value="en">EN</option><option value="es">ES</option>
+      <option value="fr">FR</option><option value="ru">RU</option>
+      <option value="it">IT</option><option value="pt">PT</option>
+    </select>
+    <button class="btn-back" onclick="location.href='index.html'" id="backBtn">← Back</button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">💳 Simple, transparent pricing</div>
+  <h1 id="pricingTitle">Choose Your <span class="grad">Plan</span></h1>
+  <p class="hero-sub" id="pricingSub">Start free. Upgrade when you need more. Cancel anytime.</p>
+
+  <div class="user-pill">
+    <span id="emailLabel">Email:</span>
+    <span id="current-email">Not logged in</span>
+    <span class="user-pill-plan" id="current-plan">Free</span>
   </div>
 
-  <div class="user-info">
-    <p><strong id="planLabel">Current Plan:</strong> <span id="current-plan">Free</span></p>
-    <p><strong id="emailLabel">Email:</strong> <span id="current-email">Not logged in</span></p>
+  <!-- billing toggle -->
+  <div class="billing-toggle">
+    <button class="toggle-btn active" id="toggle-yearly">
+      <span id="toggleYearlyTxt">Yearly</span>
+      <span class="save-badge" id="saveBadgeTxt">Save 40%</span>
+    </button>
+    <button class="toggle-btn" id="toggle-monthly" id="toggleMonthlyTxt">
+      <span id="toggleMonthlyTxt">Monthly</span>
+    </button>
   </div>
+</div>
 
-  <div class="pricing-container" id="pricingCards"></div>
+<!-- ── CARDS ── -->
+<div class="cards-wrap" id="pricingCards"></div>
 
-  <div style="text-align:center;margin-bottom:3rem;">
-    <button onclick="location.href='enterprisecontact.html'" class="enterprise-btn" id="enterpriseBtn">Enterprise Contact Us</button>
+<!-- ── ENTERPRISE ── -->
+<div class="enterprise-wrap">
+  <div class="enterprise-card">
+    <div class="enterprise-txt">
+      <div class="enterprise-title" id="enterpriseTitle">Need more? Let's talk.</div>
+      <div class="enterprise-desc" id="enterpriseDesc">Custom limits, team billing, priority onboarding, and dedicated support.</div>
+    </div>
+    <button class="enterprise-btn" id="enterpriseBtn" onclick="location.href='enterprisecontact.html'">Contact Us →</button>
   </div>
+</div>
 
-  <script>
-    const translations = {
-      en:{
-        pricingTitle:"Choose Your Plan",
-        planLabel:"Current Plan:", emailLabel:"Email:",
-        subscribeNow:"Subscribe Now", loginToSubscribe:"Login to Subscribe",
-        basic:"Basic", elite:"Elite", pro:"Pro",
-        perMonth:"/mo", perYearSuffix:"/year",
-        saveAnnual:a=>`Save ${a} with annual plan`,
-        aroundPerDay:a=>`Around ${a}/day`,
-        enterpriseBtn:"Enterprise Contact Us",
-        toggleYearly:"Yearly (Save 40%)", toggleMonthly:"Monthly"
-      },
-      es:{
-        pricingTitle:"Elige tu plan",
-        planLabel:"Plan actual:", emailLabel:"Correo electrónico:",
-        subscribeNow:"Suscribirse ahora", loginToSubscribe:"Iniciar sesión para suscribirse",
-        basic:"Básico", elite:"élite", pro:"Pro",
-        perMonth:"/mes", perYearSuffix:"/año",
-        saveAnnual:a=>`Ahorra ${a} con el plan anual`,
-        aroundPerDay:a=>`Alrededor de ${a}/día`,
-        enterpriseBtn:"Contacto empresarial",
-        toggleYearly:"Anual (ahorra un 40%)", toggleMonthly:"Mensual"
-      },
-      fr:{
-        pricingTitle:"Choisissez votre plan",
-        planLabel:"Plan actuel:", emailLabel:"Email:",
-        subscribeNow:"S'abonner", loginToSubscribe:"Se connecter pour s'abonner",
-        basic:"Basique", elite:"élite", pro:"Pro",
-        perMonth:"/mois", perYearSuffix:"/an",
-        saveAnnual:a=>`Économisez ${a} avec le plan annuel`,
-        aroundPerDay:a=>`Environ ${a}/jour`,
-        enterpriseBtn:"Contact entreprise",
-        toggleYearly:"Annuel (économisez 40%)", toggleMonthly:"Mensuel"
-      },
-      ru:{
-        pricingTitle:"Выберите план",
-        planLabel:"Текущий план:", emailLabel:"Электронная почта:",
-        subscribeNow:"Подписаться", loginToSubscribe:"Войти, чтобы подписаться",
-        basic:"Базовый", elite:"элита", pro:"Про",
-        perMonth:"/мес", perYearSuffix:"/год",
-        saveAnnual:a=>`Сэкономьте ${a} с годовым планом`,
-        aroundPerDay:a=>`Примерно ${a}/день`,
-        enterpriseBtn:"Связаться с отделом продаж",
-        toggleYearly:"Годовой (сэкономьте 40%)", toggleMonthly:"Ежемесячно"
-      },
-      it:{
-        pricingTitle:"Scegli il tuo piano",
-        planLabel:"Piano attuale:", emailLabel:"Email:",
-        subscribeNow:"Abbonati ora", loginToSubscribe:"Accedi per abbonarti",
-        basic:"Base", elite:"élite", pro:"Pro",
-        perMonth:"/mese", perYearSuffix:"/anno",
-        saveAnnual:a=>`Risparmia ${a} con il piano annuale`,
-        aroundPerDay:a=>`Circa ${a}/giorno`,
-        enterpriseBtn:"Contatto aziendale",
-        toggleYearly:"Annuale (risparmia il 40%)", toggleMonthly:"Mensile"
-      },
-      pt:{
-        pricingTitle:"Escolha seu plano",
-        planLabel:"Plano atual:", emailLabel:"Email:",
-        subscribeNow:"Assinar agora", loginToSubscribe:"Entrar para assinar",
-        basic:"Básico", elite:"elite", pro:"Pro",
-        perMonth:"/mês", perYearSuffix:"/ano",
-        saveAnnual:a=>`Economize ${a} com o plano anual`,
-        aroundPerDay:a=>`Cerca de ${a}/dia`,
-        enterpriseBtn:"Contato corporativo",
-        toggleYearly:"Anual (economize 40%)", toggleMonthly:"Mensal"
-      }
-    };
+<!-- ── FOOTER ── -->
+<footer>
+  <a class="footer-link" href="privacy.html" id="footerPrivacy">Privacy Policy</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="terms.html" id="footerTerms">Terms</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="contact.html" id="footerContact">Contact</a>
+  <span class="footer-sep">·</span>
+  <span style="font-size:13px;color:var(--fg3);">© 2025 Brainstorm Buddy</span>
+</footer>
 
-    const featureI18n = {
-      es: { voice: '✅ Voz a notas', allpro: '✅ Todas las funciones Pro', priority: '✅ Soporte prioritario', early: '✅ Acceso anticipado a nuevas funciones', idea: n => `✅ ${n} generaciones de ideas con IA/mes` },
-      fr: { voice: '✅ Dictée en notes', allpro: '✅ Toutes les fonctionnalités Pro', priority: '✅ Support prioritaire', early: '✅ Accès anticipé à nouvelles fonctionnalités', idea: n => `✅ ${n} générations d\'idées IA/mois` },
-      ru: { voice: '✅ Голос в заметки', allpro: '✅ Все функции Pro', priority: '✅ Приоритетная поддержка', early: '✅ Ранний доступ к новым функциям', idea: n => `✅ ${n} генераций идей ИИ/мес` },
-      it: { voice: '✅ Voce in note', allpro: '✅ Tutte le funzionalità Pro', priority: '✅ Supporto prioritario', early: '✅ Accesso anticipato a nuovi funzionalità', idea: n => `✅ ${n} generazioni di idee IA/mese` },
-      pt: { voice: '✅ Voz para notas', allpro: '✅ Todos os recursos Pro', priority: '✅ Suporte prioritário', early: '✅ Acesso antecipado a novos recursos', idea: n => `✅ ${n} gerações de ideias com IA/mês` },
-      en: { voice: '✅ Voice to note', allpro: '✅ All Pro features', priority: '✅ Priority support', early: '✅ Early access to new features', idea: n => `✅ ${n} AI idea generations/month` }
-    };
+<script>
+const translations = {
+  en:{
+    pricingTitle:'Choose Your <span class="grad">Plan</span>',
+    pricingSub:'Start free. Upgrade when you need more. Cancel anytime.',
+    emailLabel:'Email:',planLabel:'Current Plan:',
+    subscribeNow:'Subscribe Now',loginToSubscribe:'Login to Subscribe',
+    basic:'Basic',elite:'Elite',pro:'Pro',
+    perMonth:'/mo',perYearSuffix:'/year',
+    saveAnnual:a=>`Save ${a} with annual plan`,
+    aroundPerDay:a=>`Around ${a}/day`,
+    enterpriseTitle:'Need more? Let\'s talk.',
+    enterpriseDesc:'Custom limits, team billing, priority onboarding, and dedicated support.',
+    enterpriseBtn:'Contact Us →',
+    toggleYearly:'Yearly',toggleMonthly:'Monthly',saveBadge:'Save 40%',
+    popular:'Most Popular',backBtn:'← Back',
+    footerPrivacy:'Privacy Policy',footerTerms:'Terms',footerContact:'Contact',
+  },
+  es:{
+    pricingTitle:'Elige tu <span class="grad">Plan</span>',
+    pricingSub:'Empieza gratis. Mejora cuando necesites más. Cancela cuando quieras.',
+    emailLabel:'Correo:',planLabel:'Plan actual:',
+    subscribeNow:'Suscribirse',loginToSubscribe:'Inicia sesión para suscribirte',
+    basic:'Básico',elite:'Élite',pro:'Pro',
+    perMonth:'/mes',perYearSuffix:'/año',
+    saveAnnual:a=>`Ahorra ${a} con el plan anual`,
+    aroundPerDay:a=>`Alrededor de ${a}/día`,
+    enterpriseTitle:'¿Necesitas más? Hablemos.',
+    enterpriseDesc:'Límites personalizados, facturación de equipo y soporte dedicado.',
+    enterpriseBtn:'Contáctanos →',
+    toggleYearly:'Anual',toggleMonthly:'Mensual',saveBadge:'Ahorra 40%',
+    popular:'Más popular',backBtn:'← Volver',
+    footerPrivacy:'Privacidad',footerTerms:'Términos',footerContact:'Contacto',
+  },
+  fr:{
+    pricingTitle:'Choisissez votre <span class="grad">Plan</span>',
+    pricingSub:'Commencez gratuitement. Mettez à niveau quand vous en avez besoin.',
+    emailLabel:'Email:',planLabel:'Plan actuel:',
+    subscribeNow:"S'abonner",loginToSubscribe:"Se connecter pour s'abonner",
+    basic:'Basique',elite:'Élite',pro:'Pro',
+    perMonth:'/mois',perYearSuffix:'/an',
+    saveAnnual:a=>`Économisez ${a} avec le plan annuel`,
+    aroundPerDay:a=>`Environ ${a}/jour`,
+    enterpriseTitle:'Besoin de plus ? Parlons-en.',
+    enterpriseDesc:'Limites personnalisées, facturation équipe et support dédié.',
+    enterpriseBtn:'Nous contacter →',
+    toggleYearly:'Annuel',toggleMonthly:'Mensuel',saveBadge:'Économisez 40%',
+    popular:'Plus populaire',backBtn:'← Retour',
+    footerPrivacy:'Confidentialité',footerTerms:'Conditions',footerContact:'Contact',
+  },
+  ru:{
+    pricingTitle:'Выберите <span class="grad">тариф</span>',
+    pricingSub:'Начните бесплатно. Переходите на платный по мере необходимости.',
+    emailLabel:'Почта:',planLabel:'Текущий тариф:',
+    subscribeNow:'Подписаться',loginToSubscribe:'Войдите для подписки',
+    basic:'Базовый',elite:'Элита',pro:'Про',
+    perMonth:'/мес',perYearSuffix:'/год',
+    saveAnnual:a=>`Экономия ${a} с годовым планом`,
+    aroundPerDay:a=>`Около ${a}/день`,
+    enterpriseTitle:'Нужно больше? Давайте поговорим.',
+    enterpriseDesc:'Индивидуальные лимиты, командная оплата и приоритетная поддержка.',
+    enterpriseBtn:'Связаться →',
+    toggleYearly:'Годовой',toggleMonthly:'Ежемесячно',saveBadge:'Экономия 40%',
+    popular:'Популярный',backBtn:'← Назад',
+    footerPrivacy:'Конфиденциальность',footerTerms:'Условия',footerContact:'Контакт',
+  },
+  it:{
+    pricingTitle:'Scegli il tuo <span class="grad">Piano</span>',
+    pricingSub:'Inizia gratis. Aggiorna quando ne hai bisogno. Cancella quando vuoi.',
+    emailLabel:'Email:',planLabel:'Piano attuale:',
+    subscribeNow:'Abbonati',loginToSubscribe:'Accedi per abbonarti',
+    basic:'Base',elite:'Élite',pro:'Pro',
+    perMonth:'/mese',perYearSuffix:'/anno',
+    saveAnnual:a=>`Risparmia ${a} con il piano annuale`,
+    aroundPerDay:a=>`Circa ${a}/giorno`,
+    enterpriseTitle:'Hai bisogno di più? Parliamone.',
+    enterpriseDesc:'Limiti personalizzati, fatturazione team e supporto dedicato.',
+    enterpriseBtn:'Contattaci →',
+    toggleYearly:'Annuale',toggleMonthly:'Mensile',saveBadge:'Risparmia 40%',
+    popular:'Più popolare',backBtn:'← Indietro',
+    footerPrivacy:'Privacy',footerTerms:'Termini',footerContact:'Contatto',
+  },
+  pt:{
+    pricingTitle:'Escolha seu <span class="grad">Plano</span>',
+    pricingSub:'Comece grátis. Faça upgrade quando precisar. Cancele a qualquer hora.',
+    emailLabel:'Email:',planLabel:'Plano atual:',
+    subscribeNow:'Assinar',loginToSubscribe:'Entre para assinar',
+    basic:'Básico',elite:'Elite',pro:'Pro',
+    perMonth:'/mês',perYearSuffix:'/ano',
+    saveAnnual:a=>`Economize ${a} com o plano anual`,
+    aroundPerDay:a=>`Cerca de ${a}/dia`,
+    enterpriseTitle:'Precisa de mais? Vamos conversar.',
+    enterpriseDesc:'Limites personalizados, cobrança por equipe e suporte dedicado.',
+    enterpriseBtn:'Fale conosco →',
+    toggleYearly:'Anual',toggleMonthly:'Mensal',saveBadge:'Economize 40%',
+    popular:'Mais popular',backBtn:'← Voltar',
+    footerPrivacy:'Privacidade',footerTerms:'Termos',footerContact:'Contato',
+  }
+};
 
-    function translateFeature(f, lang) {
-      const t = featureI18n[lang] || featureI18n.en;
-      const m = f.match(/^\s*✅\s*(\d+)\s*AI idea generations\/month\s*$/i);
-      if (m) return t.idea(m[1]);
-      if (/voice to note/i.test(f)) return t.voice;
-      if (/all pro features/i.test(f)) return t.allpro;
-      if (/priority support/i.test(f)) return t.priority;
-      if (/early access to new features/i.test(f)) return t.early;
-      return f;
+const featureI18n = {
+  en:{ voice:'Voice to note', allpro:'All Pro features', priority:'Priority support', early:'Early access to new features', idea:n=>`${n} AI idea generations/month` },
+  es:{ voice:'Voz a notas', allpro:'Todas las funciones Pro', priority:'Soporte prioritario', early:'Acceso anticipado a nuevas funciones', idea:n=>`${n} generaciones de ideas con IA/mes` },
+  fr:{ voice:'Dictée en notes', allpro:'Toutes les fonctionnalités Pro', priority:'Support prioritaire', early:'Accès anticipé aux nouvelles fonctionnalités', idea:n=>`${n} générations d'idées IA/mois` },
+  ru:{ voice:'Голос в заметки', allpro:'Все функции Pro', priority:'Приоритетная поддержка', early:'Ранний доступ к новым функциям', idea:n=>`${n} генераций идей ИИ/мес` },
+  it:{ voice:'Voce in note', allpro:'Tutte le funzionalità Pro', priority:'Supporto prioritario', early:'Accesso anticipato a nuove funzionalità', idea:n=>`${n} generazioni di idee IA/mese` },
+  pt:{ voice:'Voz para notas', allpro:'Todos os recursos Pro', priority:'Suporte prioritário', early:'Acesso antecipado a novos recursos', idea:n=>`${n} gerações de ideias com IA/mês` },
+};
+
+function translateFeature(f, lang){
+  const t = featureI18n[lang] || featureI18n.en;
+  const m = f.match(/(\d+)\s*AI idea generations\/month/i);
+  if(m) return t.idea(m[1]);
+  if(/voice to note/i.test(f)) return t.voice;
+  if(/all pro features/i.test(f)) return t.allpro;
+  if(/priority support/i.test(f)) return t.priority;
+  if(/early access to new features/i.test(f)) return t.early;
+  return f;
+}
+
+const pricingData = {
+  yearly:[
+    {key:'basic', price:'6',  detail:'US$ 72/year',  save:'Save US$ 48 with annual plan', url:'https://buy.stripe.com/dRmfZg8qrggeafD1XQ2Ry08', features:['120 AI idea generations/month','Voice to note']},
+    {key:'elite', price:'24', detail:'US$ 288/year', save:'Save US$ 192 with annual plan',url:'https://buy.stripe.com/fZu6oG9uvfcacnLcCu2Ry0a', features:['700 AI idea generations/month','All Pro features','Priority support','Early access to new features']},
+    {key:'pro',   price:'12', detail:'US$ 144/year', save:'Save US$ 96 with annual plan', url:'https://buy.stripe.com/9B6eVc2232po9bzfOG2Ry09', features:['300 AI idea generations/month','Voice to note']},
+  ],
+  monthly:[
+    {key:'basic', price:'10', detail:'Around US$ 0.33/day', save:'Save US$ 48 with annual plan', url:'https://buy.stripe.com/8x228qcGH0hg87v1XQ2Ry03', features:['120 AI idea generations/month','Voice to note']},
+    {key:'elite', price:'40', detail:'Around US$ 1.33/day', save:'Save US$ 192 with annual plan',url:'https://buy.stripe.com/fZu9AS7mn2po1J7fOG2Ry01', features:['700 AI idea generations/month','All Pro features','Priority support','Early access to new features']},
+    {key:'pro',   price:'20', detail:'Around US$ 0.66/day', save:'Save US$ 96 with annual plan', url:'https://buy.stripe.com/4gMaEWayz5BA1J7gSK2Ry02', features:['300 AI idea generations/month','Voice to note']},
+  ]
+};
+
+const $=id=>document.getElementById(id);
+let currentMode='yearly';
+let currentLang='en';
+
+function toggleDarkMode(){
+  const d=document.body.classList.toggle('dark');
+  $('darkToggle').textContent=d?'☀️':'🌙';
+  localStorage.setItem('darkMode',d?'1':'0');
+}
+
+function applyLang(lang){
+  currentLang=lang;
+  const t=translations[lang]||translations.en;
+  // innerHTML for titles with grad span
+  $('pricingTitle').innerHTML=t.pricingTitle;
+  $('pricingSub').textContent=t.pricingSub;
+  $('emailLabel').textContent=t.emailLabel;
+  $('enterpriseTitle').textContent=t.enterpriseTitle;
+  $('enterpriseDesc').textContent=t.enterpriseDesc;
+  $('enterpriseBtn').textContent=t.enterpriseBtn;
+  $('toggleYearlyTxt').textContent=t.toggleYearly;
+  $('toggleMonthlyTxt').textContent=t.toggleMonthly;
+  $('saveBadgeTxt').textContent=t.saveBadge;
+  $('backBtn').textContent=t.backBtn;
+  if($('footerPrivacy')) $('footerPrivacy').textContent=t.footerPrivacy;
+  if($('footerTerms'))   $('footerTerms').textContent=t.footerTerms;
+  if($('footerContact')) $('footerContact').textContent=t.footerContact;
+  localStorage.setItem('selectedLanguage',lang);
+}
+
+function makeClientRef(email){
+  if(!email) return '';
+  return 'e_'+btoa(email).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+
+function withParams(url,email){
+  if(!email) return url;
+  const j=url.includes('?')?'&':'?';
+  return `${url}${j}prefilled_email=${encodeURIComponent(email)}&client_reference_id=${makeClientRef(email)}`;
+}
+
+function renderCards(mode){
+  const container=$('pricingCards');
+  container.innerHTML='';
+  const t=translations[currentLang]||translations.en;
+  const userEmail=localStorage.getItem('userEmail')||'';
+  const isLoggedIn=localStorage.getItem('isLoggedIn')==='true'&&!!userEmail;
+
+  pricingData[mode].forEach(plan=>{
+    const isElite=plan.key==='elite';
+    const card=document.createElement('div');
+    card.className='plan-card'+(isElite?' elite':'');
+    card.setAttribute('data-plan-key',plan.key);
+
+    const title=t[plan.key]||plan.key.charAt(0).toUpperCase()+plan.key.slice(1);
+    const btnLabel=isLoggedIn?t.subscribeNow:t.loginToSubscribe;
+
+    // detail line
+    let detail='';
+    if(mode==='monthly'){
+      const m=plan.detail.match(/US\$ [\d.]+/);
+      detail=t.aroundPerDay(m?m[0]:plan.detail);
+    } else {
+      detail=plan.detail.replace(/\/year/i, t.perYearSuffix||'/year');
     }
 
-    
-    const pricingData = {
-      yearly: [
-        { key:'basic', title:'Basic', price:'US$ 6',  detail:'US$ 72/year',  save:'Save US$ 48 with annual plan', url:'https://buy.stripe.com/dRmfZg8qrggeafD1XQ2Ry08', features:["✅ 120 AI idea generations/month","✅ Voice to note"] },
-        { key:'elite', title:'Elite', price:'US$ 24', detail:'US$ 288/year', save:'Save US$ 192 with annual plan', url:'https://buy.stripe.com/fZu6oG9uvfcacnLcCu2Ry0a', features:["✅ 700 AI idea generations/month","✅ All Pro features","✅ Priority support","✅ Early access to new features"] },
-        { key:'pro', title:'Pro', price:'US$ 12', detail:'US$ 144/year', save:'Save US$ 96 with annual plan', url:'https://buy.stripe.com/9B6eVc2232po9bzfOG2Ry09', features:["✅ 300 AI idea generations/month","✅ Voice to note"] }
-      ],
-      monthly: [
-        { key:'basic', title:'Basic', price:'US$ 10', detail:'Around US$ 0.33/day', save:'Save US$ 48 with annual plan', url:'https://buy.stripe.com/8x228qcGH0hg87v1XQ2Ry03', features:["✅ 120 AI idea generations/month","✅ Voice to note"] },
-        { key:'elite', title:'Elite', price:'US$ 40', detail:'Around US$ 1.33/day', save:'Save US$ 192 with annual plan', url:'https://buy.stripe.com/fZu9AS7mn2po1J7fOG2Ry01', features:["✅ 700 AI idea generations/month","✅ All Pro features","✅ Priority support","✅ Early access to new features"] },
-        { key:'pro', title:'Pro', price:'US$ 20', detail:'Around US$ 0.66/day', save:'Save US$ 96 with annual plan', url:'https://buy.stripe.com/4gMaEWayz5BA1J7gSK2Ry02', features:["✅ 300 AI idea generations/month","✅ Voice to note"] }
-      ]
-    };
+    // save msg
+    const saveM=plan.save.match(/US\$ [\d.]+/);
+    const saveMsg=t.saveAnnual(saveM?saveM[0]:plan.save);
 
-    const $ = id => document.getElementById(id);
-    const darkToggle = $('darkToggle');
-    const langSelect = $('langSelect');
-    let currentMode = 'yearly';
+    const feats=plan.features.map(f=>`
+      <li class="feature-item">
+        <span class="feat-check">✓</span>
+        <span>${translateFeature(f,currentLang)}</span>
+      </li>`).join('');
 
-    function toggleDarkMode(){
-      document.body.classList.toggle('dark');
-      localStorage.setItem('dark', document.body.classList.contains('dark')?'1':'0');
-      darkToggle.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
-    }
+    card.innerHTML=`
+      ${isElite?`<div class="popular-badge">${t.popular}</div>`:''}
+      <div class="plan-name">${title}</div>
+      <div class="plan-price"><sup>$</sup>${plan.price}<span class="per">${t.perMonth}</span></div>
+      <div class="plan-detail">${detail}</div>
+      <button class="plan-btn default">${btnLabel}</button>
+      ${mode==='monthly'?`<div class="save-link">${saveMsg} →</div>`:'<div style="margin-bottom:16px"></div>'}
+      <ul class="features-list">${feats}</ul>
+    `;
 
-    function applyLang(lang){
-      const t=translations[lang]||translations.en;
-      $('pricingTitle').textContent=t.pricingTitle;
-      $('planLabel').textContent=t.planLabel;
-      $('emailLabel').textContent=t.emailLabel;
-      $('enterpriseBtn').textContent=t.enterpriseBtn;
-      // translated toggles
- $('toggle-monthly').textContent = t.toggleMonthly;         
-$('toggle-yearly').textContent = t.toggleYearly; 
-
-    }
-
-    function priceDetail(lang,mode,raw){
-      const t=translations[lang]||translations.en;
-      if(mode==='monthly'){
-        const m=raw.match(/US\$ [\d.]+/);
-        return t.aroundPerDay(m?m[0]:raw);
-      }
-      // yearly: translate "/year" suffix
-      const perYear = t.perYearSuffix || '/year';
-      return raw.replace(/\/year/i, perYear);
-    }
-
-    function saveMsgText(lang,raw){
-      const t=translations[lang]||translations.en;
-      const m=raw.match(/US\$ [\d.]+/);
-      return t.saveAnnual(m?m[0]:raw);
-    }
-
-    function makeClientRef(email) {
-      if (!email) return '';
-      const b64 = btoa(email).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-      return 'e_' + b64;
-    }
-
-    function withParams(url, email){
-      if(!email) return url;
-      const j = url.includes('?') ? '&' : '?';
-      const clientRef = makeClientRef(email);
-      return `${url}${j}prefilled_email=${encodeURIComponent(email)}&client_reference_id=${clientRef}`;
-    }
-
-    function renderCards(mode){
-      const container = $('pricingCards');
-      container.innerHTML='';
-      const lang = localStorage.getItem('selectedLanguage') || 'en';
-      const t = translations[lang] || translations.en;
-      const userEmail = localStorage.getItem('userEmail') || '';
-      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true' && !!userEmail;
-
-      pricingData[mode].forEach(plan=>{
-        const card = document.createElement('div');
-        card.className='pricing-card';
-        card.setAttribute('data-plan-key', plan.key);
-        if(plan.title==='Elite') card.classList.add('highlight');
-
-        const translatedTitle = t[plan.title.toLowerCase()] || plan.title;
-        const detail = priceDetail(lang, mode, plan.detail);
-        const saveMsg = saveMsgText(lang, plan.save);
-        const buttonLabel = isLoggedIn ? t.subscribeNow : t.loginToSubscribe;
-
-        const translatedFeatures = plan.features.map(f => translateFeature(f, lang));
-
-        card.innerHTML = `
-          <h2>${translatedTitle}</h2>
-          <div class="price">${plan.price}<span style="font-size:1rem;"> ${t.perMonth}</span></div>
-          <div class="small-text">${detail}</div>
-          <button class="subscribe-btn">${buttonLabel}</button>
-          <div class="save-msg" role="button" tabindex="0">${saveMsg}</div>
-          <div class="features-box">${translatedFeatures.map(f=>`<p>${f}</p>`).join('')}</div>
-        `;
-
-        // Subscribe click
-        card.querySelector('.subscribe-btn').addEventListener('click', ()=>{
-          if(!isLoggedIn){ window.location.href='login.html'; return; }
-          const finalUrl = withParams(plan.url, userEmail);
-          console.log('[pricing] redirect to stripe:', finalUrl);
-          window.location.href = finalUrl;
-        });
-
-        // "Save ..." click -> switch to Yearly and nudge this plan
-        const saveEl = card.querySelector('.save-msg');
-        const goYearly = () => {
-          if(currentMode !== 'yearly'){
-            $('toggle-yearly').classList.add('active');
-            $('toggle-monthly').classList.remove('active');
-            currentMode = 'yearly';
-            renderCards(currentMode);
-            requestAnimationFrame(() => {
-              const target = document.querySelector(`.pricing-card[data-plan-key="${plan.key}"]`);
-              if(target){
-                target.scrollIntoView({ behavior:'smooth', block:'center' });
-                target.classList.add('nudge');
-                setTimeout(()=> target.classList.remove('nudge'), 700);
-              }
-            });
-          }
-        };
-        saveEl.addEventListener('click', goYearly);
-        saveEl.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') goYearly(); });
-
-        container.appendChild(card);
-      });
-    }
-
-    async function refreshStatus(){
-      const email = localStorage.getItem('userEmail') || '';
-      $('current-email').textContent = email || 'Not logged in';
-      if(!email){ $('current-plan').textContent='Free'; return; }
-      try{
-        const url = `${window.API_BASE}/api/subscription-status?email=${encodeURIComponent(email)}`;
-        console.log('[pricing] status →', url);
-        const res = await fetch(url);
-        if(!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        const plan = (data.plan || 'free');
-        $('current-plan').textContent = plan.charAt(0).toUpperCase() + plan.slice(1);
-      }catch(e){
-        console.error('[pricing] status fetch failed:', e);
-        $('current-plan').textContent='Error';
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', ()=>{
-      if(localStorage.getItem('dark')==='1'){ document.body.classList.add('dark'); darkToggle.textContent='☀️'; }
-      const savedLang = localStorage.getItem('selectedLanguage') || 'en';
-      langSelect.value = savedLang; applyLang(savedLang);
-
-      darkToggle.addEventListener('click', toggleDarkMode);
-      langSelect.addEventListener('change', e=>{ localStorage.setItem('selectedLanguage', e.target.value); applyLang(e.target.value); renderCards(currentMode); });
-      $('toggle-yearly').addEventListener('click', ()=>{ $('toggle-yearly').classList.add('active'); $('toggle-monthly').classList.remove('active'); currentMode='yearly'; renderCards(currentMode); });
-      $('toggle-monthly').addEventListener('click', ()=>{ $('toggle-monthly').classList.add('active'); $('toggle-yearly').classList.remove('active'); currentMode='monthly'; renderCards(currentMode); });
-
-      renderCards(currentMode);
-      refreshStatus();
+    card.querySelector('.plan-btn').addEventListener('click',()=>{
+      if(!isLoggedIn){location.href='login.html';return;}
+      location.href=withParams(plan.url,userEmail);
     });
 
-    window.addEventListener('focus', refreshStatus);
-    document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) refreshStatus(); });
-  </script>
+    const saveEl=card.querySelector('.save-link');
+    if(saveEl){
+      const goYearly=()=>{
+        if(currentMode!=='yearly'){
+          $('toggle-yearly').classList.add('active');
+          $('toggle-monthly').classList.remove('active');
+          currentMode='yearly';
+          renderCards('yearly');
+          requestAnimationFrame(()=>{
+            const target=document.querySelector(`.plan-card[data-plan-key="${plan.key}"]`);
+            if(target){
+              target.scrollIntoView({behavior:'smooth',block:'center'});
+              target.classList.add('nudge');
+              setTimeout(()=>target.classList.remove('nudge'),700);
+            }
+          });
+        }
+      };
+      saveEl.addEventListener('click',goYearly);
+      saveEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')goYearly();});
+    }
+
+    container.appendChild(card);
+  });
+}
+
+async function refreshStatus(){
+  const email=localStorage.getItem('userEmail')||'';
+  $('current-email').textContent=email||'Not logged in';
+  if(!email){$('current-plan').textContent='Free';return;}
+  try{
+    const res=await fetch(`${window.API_BASE}/api/subscription-status?email=${encodeURIComponent(email)}`);
+    if(!res.ok) throw new Error();
+    const data=await res.json();
+    const plan=data.plan||'free';
+    $('current-plan').textContent=plan.charAt(0).toUpperCase()+plan.slice(1);
+  }catch{
+    $('current-plan').textContent='Free';
+  }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  // dark mode — default dark
+  const saved=localStorage.getItem('darkMode');
+  if(saved==='0'){document.body.classList.remove('dark');$('darkToggle').textContent='🌙';}
+  else{document.body.classList.add('dark');$('darkToggle').textContent='☀️';}
+
+  currentLang=localStorage.getItem('selectedLanguage')||'en';
+  $('langSelect').value=currentLang;
+  applyLang(currentLang);
+
+  $('darkToggle').addEventListener('click',toggleDarkMode);
+  $('langSelect').addEventListener('change',e=>{applyLang(e.target.value);renderCards(currentMode);});
+
+  $('toggle-yearly').addEventListener('click',()=>{
+    $('toggle-yearly').classList.add('active');
+    $('toggle-monthly').classList.remove('active');
+    currentMode='yearly';renderCards('yearly');
+  });
+  $('toggle-monthly').addEventListener('click',()=>{
+    $('toggle-monthly').classList.add('active');
+    $('toggle-yearly').classList.remove('active');
+    currentMode='monthly';renderCards('monthly');
+  });
+
+  renderCards(currentMode);
+  refreshStatus();
+});
+
+window.addEventListener('focus',refreshStatus);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshStatus();});
+</script>
 </body>
 </html>

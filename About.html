@@ -1,453 +1,780 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17611666437"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'AW-17611666437');
 </script>
-
-<!-- Event snippet for Page view conversion page -->
 <script>
   gtag('event', 'conversion', {
-      'send_to': 'AW-17611666437/Cg3GCNqb56kbEIXo8s1B',
-      'value': 1.0,
-      'currency': 'GBP'
+    'send_to': 'AW-17611666437/Cg3GCNqb56kbEIXo8s1B',
+    'value': 1.0,
+    'currency': 'GBP'
   });
 </script>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About - Brainstorm Buddy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #6c63ff;
-      --accent: #a259ff;
-      --bg: #f5f4fa;
-      --dark-bg: #1a1a1a;
-      --text: #333;
-      --text-dark: #f0f0f0;
-    }
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.3s, color 0.3s;
-    }
-    body.dark {
-      background: var(--dark-bg);
-      color: var(--text-dark);
-    }
-    header {
-      background: linear-gradient(to right, var(--accent), var(--primary));
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .nav-left, .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .nav-left img {
-      width: 40px;
-      cursor: pointer;
-    }
-    .btn {
-      background: white;
-      color: var(--primary);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
-    }
-    .btn:hover {
-      background: #eae8ff;
-    }
-    .switcher {
-      background: transparent;
-      color: white;
-      border: 1px solid white;
-      padding: 0.5rem 0.75rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    main {
-      padding: 3rem 1rem;
-      max-width: 900px;
-      margin: auto;
-    }
-    section {
-      margin-bottom: 3rem;
-    }
-    h1, h2 {
-      text-align: center;
-      color: var(--primary);
-    }
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .faq-item {
-      background: white;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      cursor: pointer;
-    }
-    body.dark .faq-item {
-      background: #2a2a2a;
-    }
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, opacity 0.3s ease;
-      opacity: 0;
-    }
-    .faq-item.active .faq-answer {
-      max-height: 300px;
-      opacity: 1;
-    }
-    ul {
-      list-style: none;
-      padding-left: 0;
-      text-align: center;
-    }
-    ul li {
-      margin: 0.5rem 0;
-      font-size: 1.05rem;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.9rem;
-      background: #fafafa;
-    }
-    footer a {
-      margin: 0 1rem;
-      color: var(--primary);
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-    
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About — Brainstorm Buddy</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --p:#5b5cf6;--p2:#818cf8;--p3:#4338ca;
+  --ok:#10b981;
+  --bg:#f8f8fc;--bg2:#f0f0fa;--card:#fff;--card2:#f5f5ff;
+  --border:#e8e8f0;--fg:#0a0a14;--fg2:#4b5563;--fg3:#9ca3af;
+  --shadow:0 4px 24px rgba(91,92,246,.08),0 1px 4px rgba(0,0,0,.06);
+  --shadow-lg:0 16px 48px rgba(91,92,246,.14),0 4px 12px rgba(0,0,0,.08);
+  --r:16px;--rs:10px;--t:.18s;--e:cubic-bezier(.4,0,.2,1);
+}
+body.dark{
+  --bg:#09090f;--bg2:#111118;--card:#14141e;--card2:#1a1a28;
+  --border:#2a2a3a;--fg:#f0f0ff;--fg2:#a0a0c0;--fg3:#555570;
+  --shadow:0 4px 24px rgba(0,0,0,.4),0 1px 4px rgba(0,0,0,.3);
+  --shadow-lg:0 16px 48px rgba(0,0,0,.5);
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);color:var(--fg);
+  line-height:1.6;transition:background var(--t) var(--e),color var(--t) var(--e);
+  overflow-x:hidden;
+}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.5;
+}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:64px;
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:background var(--t) var(--e),border-color var(--t) var(--e);
+}
+body.dark nav{background:rgba(9,9,15,.85);}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;}
+.nav-logo{width:36px;height:36px;border-radius:10px;object-fit:cover;}
+.nav-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--fg);letter-spacing:-.3px;}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.ibtn{
+  width:36px;height:36px;border-radius:9px;border:1px solid var(--border);
+  background:var(--card);color:var(--fg2);font-size:15px;
+  display:grid;place-items:center;cursor:pointer;transition:all var(--t) var(--e);
+}
+.ibtn:hover{border-color:var(--p);color:var(--p);background:rgba(91,92,246,.06);}
+select.nav-select{
+  padding:6px 10px;border-radius:8px;border:1px solid var(--border);
+  background:var(--card);color:var(--fg2);font-size:13px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;transition:all var(--t) var(--e);
+}
+select.nav-select:hover{border-color:var(--p);}
+.btn-back{
+  padding:8px 16px;border-radius:9px;border:1.5px solid var(--border);
+  background:var(--card);color:var(--fg);font-family:'DM Sans',sans-serif;
+  font-size:13px;font-weight:500;cursor:pointer;transition:all var(--t) var(--e);
+}
+.btn-back:hover{border-color:var(--p);color:var(--p);}
+
+/* ── HERO ── */
+.hero{
+  text-align:center;padding:80px 24px 60px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;
+  width:700px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(91,92,246,.14) 0%,transparent 70%);
+  top:-150px;left:50%;transform:translateX(-50%);
+  pointer-events:none;filter:blur(70px);
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 14px;border-radius:99px;
+  background:rgba(91,92,246,.1);border:1px solid rgba(91,92,246,.25);
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--p);
+  letter-spacing:.05em;margin-bottom:20px;
+  animation:fadeUp .5s var(--e) both;
+}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(36px,5vw,60px);font-weight:800;
+  letter-spacing:-.04em;line-height:1.05;color:var(--fg);
+  margin-bottom:16px;
+  animation:fadeUp .5s var(--e) .1s both;
+}
+.hero h1 .grad{
+  background:linear-gradient(135deg,var(--p),var(--p2),#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-size:18px;font-weight:300;color:var(--fg2);
+  max-width:600px;margin:0 auto;line-height:1.7;
+  animation:fadeUp .5s var(--e) .2s both;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── SECTIONS ── */
+.page{max-width:900px;margin:0 auto;padding:0 24px 80px;position:relative;z-index:1;}
+
+.section-label{
+  display:inline-block;
+  font-family:'DM Mono',monospace;font-size:11px;font-weight:500;
+  color:var(--p);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;
+}
+.section-title{
+  font-family:'Syne',sans-serif;font-size:clamp(24px,3vw,34px);
+  font-weight:800;letter-spacing:-.03em;color:var(--fg);
+  margin-bottom:14px;line-height:1.1;
+}
+.section-title .grad{
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.section-body{
+  font-size:16px;font-weight:300;color:var(--fg2);line-height:1.75;
+}
+
+/* fade in on scroll */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s var(--e),transform .6s var(--e);}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:56px 0;}
+
+/* ── STATS ROW ── */
+.stats-row{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:16px;margin:48px 0;
+}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:24px 20px;text-align:center;
+  box-shadow:var(--shadow);transition:transform var(--t) var(--e),border-color var(--t);
+}
+.stat-card:hover{transform:translateY(-3px);border-color:rgba(91,92,246,.3);}
+.stat-num{
+  font-family:'Syne',sans-serif;font-size:32px;font-weight:800;
+  color:var(--p);letter-spacing:-.03em;line-height:1;margin-bottom:6px;
+}
+.stat-lbl{font-size:13px;color:var(--fg3);font-weight:400;}
+
+/* ── VALUES GRID ── */
+.values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:32px;}
+.value-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:24px;
+  box-shadow:var(--shadow);transition:all var(--t) var(--e);
+}
+.value-card:hover{transform:translateY(-3px);border-color:rgba(91,92,246,.3);}
+.value-ico{font-size:28px;margin-bottom:12px;}
+.value-title{
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:700;
+  color:var(--fg);margin-bottom:7px;letter-spacing:-.2px;
+}
+.value-desc{font-size:13.5px;color:var(--fg2);line-height:1.6;font-weight:300;}
+
+/* ── WHO IT'S FOR ── */
+.who-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:28px;}
+.who-card{
+  display:flex;align-items:flex-start;gap:12px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--rs);padding:18px;
+  transition:all var(--t) var(--e);
+}
+.who-card:hover{border-color:rgba(91,92,246,.3);}
+.who-ico{font-size:24px;flex-shrink:0;margin-top:2px;}
+.who-text{}
+.who-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--fg);margin-bottom:3px;}
+.who-desc{font-size:13px;color:var(--fg2);font-weight:300;line-height:1.5;}
+
+/* ── MISSION BAND ── */
+.mission-band{
+  background:linear-gradient(135deg,var(--p) 0%,var(--p3) 100%);
+  border-radius:20px;padding:48px 40px;text-align:center;
+  margin:56px 0;position:relative;overflow:hidden;
+}
+.mission-band::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.mission-ico{font-size:36px;margin-bottom:16px;position:relative;}
+.mission-title{
+  font-family:'Syne',sans-serif;font-size:clamp(22px,3vw,32px);
+  font-weight:800;letter-spacing:-.03em;color:#fff;
+  margin-bottom:12px;line-height:1.1;position:relative;
+}
+.mission-text{
+  font-size:17px;font-weight:300;color:rgba(255,255,255,.8);
+  max-width:520px;margin:0 auto;line-height:1.7;position:relative;
+}
+
+/* ── FAQ ── */
+.faq-list{display:flex;flex-direction:column;gap:10px;margin-top:28px;}
+.faq-item{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--rs);overflow:hidden;
+  transition:border-color var(--t) var(--e),box-shadow var(--t);
+  cursor:pointer;
+}
+.faq-item:hover{border-color:rgba(91,92,246,.3);}
+.faq-item.active{border-color:rgba(91,92,246,.4);box-shadow:var(--shadow);}
+.faq-q{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 20px;gap:12px;
+}
+.faq-q-text{
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+  color:var(--fg);letter-spacing:-.1px;
+}
+.faq-chevron{
+  width:24px;height:24px;border-radius:6px;
+  background:rgba(91,92,246,.1);border:1px solid rgba(91,92,246,.15);
+  display:grid;place-items:center;font-size:11px;color:var(--p);
+  flex-shrink:0;transition:transform var(--t) var(--e),background var(--t);
+}
+.faq-item.active .faq-chevron{transform:rotate(180deg);background:var(--p);color:#fff;border-color:var(--p);}
+.faq-answer{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s var(--e),opacity .3s var(--e);
+  opacity:0;
+}
+.faq-item.active .faq-answer{max-height:400px;opacity:1;}
+.faq-answer-inner{
+  padding:0 20px 20px;
+  font-size:14.5px;color:var(--fg2);line-height:1.7;font-weight:300;
+  border-top:1px solid var(--border);padding-top:16px;
+}
+.faq-answer-inner p{margin-bottom:10px;}
+.faq-answer-inner p:last-child{margin-bottom:0;}
+.faq-answer-inner a{color:var(--p);text-decoration:underline;}
+.faq-answer-inner strong{color:var(--fg);font-weight:600;}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:32px;display:flex;align-items:center;justify-content:center;
+  gap:16px;flex-wrap:wrap;position:relative;z-index:1;
+}
+.footer-link{
+  font-size:13px;color:var(--fg3);text-decoration:none;
+  padding:4px 8px;border-radius:6px;transition:color var(--t),background var(--t);
+}
+.footer-link:hover{color:var(--p);background:rgba(91,92,246,.07);}
+.footer-sep{color:var(--border);}
+
+@media(max-width:680px){
+  nav{padding:0 16px;}
+  .hero{padding:60px 16px 40px;}
+  .page{padding:0 16px 60px;}
+  .mission-band{padding:36px 24px;}
+}
+</style>
 </head>
-<body>
-  <header>
-    <div class="nav-left">
-      <img src="icon128.png" alt="Logo" onclick="location.href='index.html'">
-      <button class="btn" onclick="location.href='index.html'">Home</button>
-    </div>
-    <div class="nav-right">
-      <button class="switcher" onclick="toggleDarkMode()">🌙</button>
-      <select class="switcher" onchange="changeLanguage(this.value)">
-        <option value="en">EN</option>
-        <option value="es">ES</option>
-        <option value="fr">FR</option>
-        <option value="ru">RU</option>
-        <option value="it">IT</option>
-        <option value="pt">PT</option>
-      </select>
-    </div>
-  </header>
+<body class="dark">
 
-  <main>
-    <section class="fade-in">
-      <h1 id="aboutTitle">About Brainstorm Buddy</h1>
-     <p id="aboutText">
-  Brainstorm Buddy is your creative thinking companion — an AI-powered extension designed to turn messy sparks of inspiration into organized, actionable notes. Whether you're drafting an article, outlining a business pitch, or simply collecting thoughts, our tool helps you capture, refine, and explore ideas with speed and clarity — all from the comfort of your browser.
-</p>
-    </section>
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-brand" onclick="location.href='index.html'">
+    <img src="icon128.png" alt="Logo" class="nav-logo"/>
+    <span class="nav-name">Brainstorm Buddy</span>
+  </div>
+  <div class="nav-right">
+    <button class="ibtn" id="darkToggle" onclick="toggleDarkMode()" title="Toggle theme">☀️</button>
+    <select class="nav-select" id="langSelect" onchange="changeLanguage(this.value)">
+      <option value="en">EN</option><option value="es">ES</option>
+      <option value="fr">FR</option><option value="ru">RU</option>
+      <option value="it">IT</option><option value="pt">PT</option>
+    </select>
+    <button class="btn-back" id="backBtn" onclick="location.href='index.html'">← Home</button>
+  </div>
+</nav>
 
-    <section class="fade-in">
-      <h2 id="whyTitle">Why We Built It</h2>
-    <p id="whyText">
-  Great ideas often strike when you're not expecting them — and traditional note apps can slow you down or leave you disorganized. We built Brainstorm Buddy to eliminate that friction. Our goal was to create a seamless, AI-enhanced space where creativity flows naturally, and ideas can evolve into action — without jumping between apps or losing your train of thought.
-</p>
-
-    </section>
-
-    <section class="fade-in">
-      <h2 id="whoTitle">Who It's For</h2>
-      <ul id="whoList">
-        <li id="who1">🧑‍🎓 Students: Essay and study planning</li>
-        <li id="who2">✍️ Writers: Break writer’s block and ideate</li>
-        <li id="who3">💡 Entrepreneurs: Business and product notes</li>
-      </ul>
-    </section>
-
-    <section class="fade-in">
-      <h2 id="missionTitle">Our Mission</h2>
-      <p id="missionText">To empower anyone to generate, refine, and organize ideas — intelligently and instantly.</p>
-    </section>
-
-    <section class="fade-in">
-      <h2 id="faqTitle">❓ Frequently Asked Questions</h2>
-      <div class="faq-item" onclick="toggleFAQ(this)">
-        <h3 id="faqQ1">How does Brainstorm Buddy work?</h3>
-        <div class="faq-answer" id="faqA1">It uses AI to generate ideas based on your prompts. You can also write, edit, and save notes in your browser.</div>
-      </div>
-      <div class="faq-item" onclick="toggleFAQ(this)">
-        <h3 id="faqQ2">Is there a free version?</h3>
-        <div class="faq-answer" id="faqA2">Yes! The free version gives you access to essential features, allowing you to generate 10 AI ideas per month. You can upgrade for access to more advanced tools.</div>
-      </div>
-      <div class="faq-item" onclick="toggleFAQ(this)">
-        <h3 id="faqQ3">Can I export my notes?</h3>
-        <div class="faq-answer" id="faqA3">Absolutely. You can export or import notes at any time from the extension.</div>
-      </div>
-      <div class="faq-item" onclick="toggleFAQ(this)">
-  <h3 id="faqQ4">Can I get a refund?</h3>
-  <div class="faq-answer" id="faqA4">
-  <p><strong>Subscriptions:</strong> You may request a refund within 14 days of purchase. After that period, yearly and monthly subscriptions are non-refundable.</p>
-
-  <p><strong>Refund Policy Notes:</strong> To prevent misuse, we may limit future purchases or decline refund requests if more than two have been approved for the same account or payment method.</p>
-
-  <p>Refunds are typically processed within 5 to 10 business days.</p>
-
-  <p>
-    <a href="requestrefund.html" style="color: var(--primary); text-decoration: underline;">Request a refund here.</a>
-  </p>
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge" id="heroBadge">Our story</div>
+  <h1><span id="aboutTitle">About <span class="grad">Brainstorm Buddy</span></span></h1>
+  <p class="hero-sub" id="aboutText">Your creative thinking companion — AI-powered brainstorming and smart note-taking, right in your browser.</p>
 </div>
 
-</div>
-    </section>
-  </main>
+<div class="page">
 
-  <footer>
-    <a href="privacy.html" id="footerPrivacy">Privacy Policy</a>
-    <a href="terms.html" id="footerTerms">Terms of Service</a>
-    <a href="contact.html" id="footerContact">Contact Us</a>
-    <a id="footerSupport" href="support.html">Support Us</a>
-  </footer>
+  <!-- ── STATS ── -->
+  <div class="stats-row fade-in">
+    <div class="stat-card">
+      <div class="stat-num" id="stat1Num">6+</div>
+      <div class="stat-lbl" id="stat1Lbl">Languages supported</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat2Num">700</div>
+      <div class="stat-lbl" id="stat2Lbl">Ideas/month on Elite</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat3Num">7</div>
+      <div class="stat-lbl" id="stat3Lbl">AI analysis tools</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat4Num">∞</div>
+      <div class="stat-lbl" id="stat4Lbl">Notes you can save</div>
+    </div>
+  </div>
 
-  <script>
-  const translations = {
-    en: {
-      aboutTitle: "About Brainstorm Buddy",
-      aboutText: "Brainstorm Buddy is your creative thinking companion — an AI-powered extension designed to turn messy sparks of inspiration into organized, actionable notes. Whether you're drafting an article, outlining a business pitch, or simply collecting thoughts, our tool helps you capture, refine, and explore ideas with speed and clarity — all from the comfort of your browser.",
-      whyTitle: "Why We Built It",
-    whyText: "Great ideas often strike when you're not expecting them — and traditional note apps can slow you down or leave you disorganized. We built Brainstorm Buddy to eliminate that friction. Our goal was to create a seamless, AI-enhanced space where creativity flows naturally, and ideas can evolve into action — without jumping between apps or losing your train of thought.",
-      whoTitle: "Who It's For",
-      who1: "🧑‍🎓 Students: Essay and study planning",
-      who2: "✍️ Writers: Break writer’s block and ideate",
-      who3: "💡 Entrepreneurs: Business and product notes",
-      missionTitle: "Our Mission",
-      missionText: "To empower anyone to generate, refine, and organize ideas — intelligently and instantly.",
-      faqTitle: "❓ Frequently Asked Questions",
-      faqQ1: "How does Brainstorm Buddy work?",
-      faqA1: "It uses AI to generate ideas based on your prompts. You can also write, edit, and save notes in your browser.",
-      faqQ2: "Is there a free version?",
-      faqA2: "Yes! The free version gives you access to essential features, allowing you to generate 10 AI ideas per month. You can upgrade for access to more advanced tools.",
-      faqQ3: "Can I export my notes?",
-      faqA3: "Absolutely. You can export or import notes at any time from the extension.",
-      faqQ4: "Can I get a refund?",
-      faqA4: `
-        <p><strong>Subscriptions:</strong> You may request a refund within 14 days of purchase. After that period, yearly and monthly subscriptions are non-refundable.</p>
-        <p><strong>Refund Policy Notes:</strong> To prevent misuse, we may limit future purchases or decline refund requests if more than two have been approved for the same account or payment method.</p>
-        <p>Refunds are typically processed within 5 to 10 business days.</p>
-        <p><a href="requestrefund.html" style="color: var(--primary); text-decoration: underline;">Request a refund here.</a></p>
-      `,
-      footerPrivacy: "Privacy Policy",
-      footerTerms: "Terms of Service",
-      footerContact: "Contact Us",
-      footerSupport: "Support Us"
-    },
+  <div class="divider"></div>
 
-    es: {
-      aboutTitle: "Acerca de Brainstorm Buddy",
-     aboutText: "Brainstorm Buddy es tu compañero para el pensamiento creativo: una extensión impulsada por IA diseñada para convertir chispas caóticas de inspiración en notas organizadas y accionables. Ya sea que estés redactando un artículo, planificando un negocio o simplemente recopilando ideas, nuestra herramienta te ayuda a capturarlas, refinarlas y explorarlas con rapidez y claridad, todo desde tu navegador.",
-      whyTitle: "Por qué lo creamos",
-      whyText: "Las grandes ideas suelen surgir cuando menos lo esperas, y las aplicaciones tradicionales de notas pueden entorpecer tu flujo o dejarte desorganizado. Creamos Brainstorm Buddy para eliminar esa fricción. Nuestro objetivo es ofrecer un espacio fluido, mejorado con IA, donde la creatividad fluya naturalmente y las ideas se conviertan en acción, sin tener que saltar entre aplicaciones ni perder el hilo.",
-      whoTitle: "Para quién es",
-      who1: "🧑‍🎓 Estudiantes: Ensayos y planificación",
-      who2: "✍️ Escritores: Superar bloqueos creativos",
-      who3: "💡 Emprendedores: Notas de negocio",
-      missionTitle: "Nuestra misión",
-      missionText: "Empoderar a cualquiera para generar y organizar ideas de forma inteligente.",
-      faqTitle: "❓ Preguntas frecuentes",
-      faqQ1: "¿Cómo funciona Brainstorm Buddy?",
-      faqA1: "Usa IA para generar ideas. También puedes guardar y editar notas.",
-      faqQ2: "¿Tiene versión gratuita?",
-      faqA2: "¡Sí! La versión gratuita te da acceso a funciones esenciales, permitiéndote generar 10 ideas con IA por mes.",
-      faqQ3: "¿Puedo exportar mis notas?",
-      faqA3: "Sí. Puedes exportarlas o importarlas cuando lo necesites.",
-      faqQ4: "¿Puedo solicitar un reembolso?",
-      faqA4: `
-        <p><strong>Suscripciones:</strong> Puede solicitar un reembolso dentro de los 14 días posteriores a la compra. Después de ese período, las suscripciones anuales y mensuales no son reembolsables.</p>
-        <p><strong>Notas de la política de reembolsos:</strong> Podemos limitar futuras compras o rechazar solicitudes si se aprueban más de dos por cuenta o método.</p>
-        <p>Los reembolsos suelen procesarse en un plazo de 5 a 10 días hábiles.</p>
-        <p><a href="requestrefund.html" style="color: var(--primary); text-decoration: underline;">Solicita un reembolso aquí.</a></p>
-      `,
-      footerPrivacy: "Política de Privacidad",
-      footerTerms: "Términos del Servicio",
-      footerContact: "Contáctanos",
-      footerSupport: "Apóyanos"
-    },
-    fr: {
-    aboutTitle: "À propos de Brainstorm Buddy",
-    aboutText: "Brainstorm Buddy est votre compagnon de pensée créative — une extension alimentée par l'IA conçue pour transformer les éclairs d'inspiration en notes claires et exploitables. Que vous rédigiez un article, prépariez un pitch ou notiez vos idées, notre outil vous aide à les capturer, les affiner et les développer rapidement et facilement — directement dans votre navigateur.",
-    whyTitle: "Pourquoi nous l'avons créé",
-   whyText: "Les meilleures idées arrivent souvent par surprise — et les applications de notes classiques peuvent freiner ou désorganiser votre élan créatif. Nous avons créé Brainstorm Buddy pour supprimer ces obstacles. Notre ambition : un espace fluide, optimisé par l’IA, où la créativité s’épanouit et où vos idées se concrétisent, sans distractions ni allers-retours entre applications.",
-    whoTitle: "Pour qui est-ce fait",
-    who1: "🧑‍🎓 Étudiants : planification de dissertations et d'études",
-    who2: "✍️ Écrivains : surmonter le blocage de l'écrivain et trouver des idées",
-    who3: "💡 Entrepreneurs : notes commerciales et produits",
-    missionTitle: "Notre mission",
-    missionText: "Permettre à chacun de générer, affiner et organiser des idées — intelligemment et instantanément.",
-    faqTitle: "❓ Questions fréquentes",
-    faqQ1: "Comment fonctionne Brainstorm Buddy ?",
-    faqA1: "Il utilise l’IA pour générer des idées à partir de vos indications. Vous pouvez également écrire, modifier et enregistrer des notes dans votre navigateur.",
-    faqQ2: "Y a-t-il une version gratuite ?",
-    faqA2: "Oui ! La version gratuite vous donne accès aux fonctionnalités essentielles, vous permettant de générer 10 idées d'IA par mois. Vous pouvez passer à la version premium pour accéder à des outils avancés.",
-    faqQ3: "Puis-je exporter mes notes ?",
-    faqA3: "Absolument. Vous pouvez exporter ou importer vos notes à tout moment depuis l'extension.",
-    faqQ4: "Puis-je demander un remboursement ?",
-    faqA4: `
-      <p><strong>Abonnements&nbsp;:</strong> Vous pouvez demander un remboursement dans les 14 jours suivant l’achat. Après cette période, les abonnements annuels et mensuels ne sont pas remboursables.</p>
-      <p><strong>Notes :</strong> Pour éviter les abus, nous pouvons limiter les futurs achats ou refuser les remboursements si plus de deux ont été approuvés pour le même compte ou moyen de paiement.</p>
-      <p>Les remboursements sont généralement traités sous 5 à 10 jours ouvrables.</p>
-      <p><a href=\"requestrefund.html\" style=\"color: var(--primary); text-decoration: underline;\">Demandez un remboursement ici.</a></p>`
+  <!-- ── WHY WE BUILT IT ── -->
+  <div class="fade-in">
+    <div class="section-label" id="whyLabel">Origin</div>
+    <h2 class="section-title" id="whyTitle">Why We <span class="grad">Built It</span></h2>
+    <p class="section-body" id="whyText">Great ideas often strike when you're not expecting them — and traditional note apps can slow you down or leave you disorganised. We built Brainstorm Buddy to eliminate that friction. Our goal was to create a seamless, AI-enhanced space where creativity flows naturally, and ideas can evolve into action — without jumping between apps or losing your train of thought.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── VALUES ── -->
+  <div class="fade-in">
+    <div class="section-label" id="valuesLabel">What we stand for</div>
+    <h2 class="section-title" id="valuesTitle">Our <span class="grad">Values</span></h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-ico">⚡</div>
+        <div class="value-title" id="val1Title">Speed first</div>
+        <p class="value-desc" id="val1Desc">Ideas don't wait. Every interaction is optimised to be instant — from generation to saving to exporting.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-ico">🔒</div>
+        <div class="value-title" id="val2Title">Privacy by default</div>
+        <p class="value-desc" id="val2Desc">We never sell your data. We only request permissions that are strictly needed for the features you use.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-ico">🌍</div>
+        <div class="value-title" id="val3Title">Built for everyone</div>
+        <p class="value-desc" id="val3Desc">Six languages, accessible design, and a free tier — because good thinking tools should be available to all.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-ico">🧠</div>
+        <div class="value-title" id="val4Title">AI that assists, not replaces</div>
+        <p class="value-desc" id="val4Desc">We believe AI should amplify your thinking — not replace it. You stay in control. The AI just helps you go further.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── WHO IT'S FOR ── -->
+  <div class="fade-in">
+    <div class="section-label" id="whoLabel">Audience</div>
+    <h2 class="section-title" id="whoTitle">Who It's <span class="grad">For</span></h2>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="who-ico">🧑‍🎓</div>
+        <div class="who-text">
+          <div class="who-title" id="who1Title">Students</div>
+          <div class="who-desc" id="who1Desc">Essay ideas, project outlines, and study notes — all without leaving your browser tab.</div>
+        </div>
+      </div>
+      <div class="who-card">
+        <div class="who-ico">✍️</div>
+        <div class="who-text">
+          <div class="who-title" id="who2Title">Writers</div>
+          <div class="who-desc" id="who2Desc">Break through creative blocks and develop story angles or article hooks in seconds.</div>
+        </div>
+      </div>
+      <div class="who-card">
+        <div class="who-ico">💡</div>
+        <div class="who-text">
+          <div class="who-title" id="who3Title">Entrepreneurs</div>
+          <div class="who-desc" id="who3Desc">Validate ideas fast with AI stress-testing, ranking, and niche analysis.</div>
+        </div>
+      </div>
+      <div class="who-card">
+        <div class="who-ico">👔</div>
+        <div class="who-text">
+          <div class="who-title" id="who4Title">Professionals</div>
+          <div class="who-desc" id="who4Desc">Prep for meetings, draft reports, and generate team improvement ideas efficiently.</div>
+        </div>
+      </div>
+      <div class="who-card">
+        <div class="who-ico">🛍️</div>
+        <div class="who-text">
+          <div class="who-title" id="who5Title">Marketers</div>
+          <div class="who-desc" id="who5Desc">Plan campaigns and brainstorm content with AI, then export straight to your workflow.</div>
+        </div>
+      </div>
+      <div class="who-card">
+        <div class="who-ico">🧑‍💻</div>
+        <div class="who-text">
+          <div class="who-title" id="who6Title">Developers</div>
+          <div class="who-desc" id="who6Desc">Log feature ideas and capture research notes without breaking your flow.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MISSION BAND ── -->
+  <div class="mission-band fade-in">
+    <div class="mission-ico">🎯</div>
+    <div class="mission-title" id="missionTitle">Our Mission</div>
+    <p class="mission-text" id="missionText">To empower anyone to generate, refine, and organise ideas — intelligently and instantly.</p>
+  </div>
+
+  <!-- ── FAQ ── -->
+  <div class="fade-in">
+    <div class="section-label" id="faqLabel">FAQ</div>
+    <h2 class="section-title" id="faqTitle">Frequently Asked <span class="grad">Questions</span></h2>
+
+    <div class="faq-list">
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" id="faqQ1">How does Brainstorm Buddy work?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner" id="faqA1">It uses AI to generate ideas based on your prompts. You can also write, edit, and save notes in your browser.</div></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" id="faqQ2">Is there a free version?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner" id="faqA2">Yes! The free version gives you access to essential features. You can upgrade to Basic, Pro, or Elite for more AI generations and advanced tools.</div></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" id="faqQ3">Can I export my notes?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner" id="faqA3">Absolutely. You can export notes as Markdown or plain text, and import from any text file — all from within the extension.</div></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" id="faqQ4">What AI analysis tools are included?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner" id="faqA4">After generating ideas you get access to 7 instant tools: Reverse Brainstorm, SWOT Analysis, Idea Ranker, Niche Drill-Down, What If Mode, Mind Map, and Trend Radar — all free, no extra credits.</div></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" id="faqQ5">Can I get a refund?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" id="faqA5">
+            <p><strong>Subscriptions:</strong> You may request a refund within 14 days of purchase. After that period, yearly and monthly subscriptions are non-refundable.</p>
+            <p><strong>Policy notes:</strong> To prevent misuse, we may limit future purchases or decline refund requests if more than two have been approved for the same account or payment method.</p>
+            <p>Refunds are typically processed within 5–10 business days.</p>
+            <p><a href="requestrefund.html">Request a refund here →</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" id="faqQ6">Is my data safe?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner" id="faqA6">Yes. We never sell your data and only request permissions that are strictly needed for the features you use — such as Save Page, voice notes, and account authentication. See our privacy policy for full details.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- ── FOOTER ── -->
+<footer>
+  <a class="footer-link" href="privacy.html" id="footerPrivacy">Privacy Policy</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="terms.html" id="footerTerms">Terms of Service</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="contact.html" id="footerContact">Contact Us</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="support.html" id="footerSupport">Support Us</a>
+  <span class="footer-sep">·</span>
+  <span style="font-size:13px;color:var(--fg3);">© 2025 Brainstorm Buddy</span>
+</footer>
+
+<script>
+const translations = {
+  en:{
+    heroBadge:'Our story',
+    aboutTitle:'About <span class="grad">Brainstorm Buddy</span>',
+    aboutText:'Your creative thinking companion — AI-powered brainstorming and smart note-taking, right in your browser.',
+    whyLabel:'Origin', whyTitle:'Why We <span class="grad">Built It</span>',
+    whyText:"Great ideas often strike when you're not expecting them — and traditional note apps can slow you down or leave you disorganised. We built Brainstorm Buddy to eliminate that friction. Our goal was to create a seamless, AI-enhanced space where creativity flows naturally, and ideas can evolve into action.",
+    valuesLabel:'What we stand for', valuesTitle:'Our <span class="grad">Values</span>',
+    val1Title:'Speed first', val1Desc:"Ideas don't wait. Every interaction is optimised to be instant.",
+    val2Title:'Privacy by default', val2Desc:'We never sell your data. We only request permissions strictly needed for the features you use.',
+    val3Title:'Built for everyone', val3Desc:'Six languages, accessible design, and a free tier — because good thinking tools should be available to all.',
+    val4Title:'AI that assists, not replaces', val4Desc:'AI should amplify your thinking — not replace it. You stay in control.',
+    whoLabel:'Audience', whoTitle:"Who It's <span class='grad'>For</span>",
+    who1Title:'Students', who1Desc:'Essay ideas, project outlines, and study notes.',
+    who2Title:'Writers', who2Desc:'Break through creative blocks in seconds.',
+    who3Title:'Entrepreneurs', who3Desc:'Validate ideas fast with AI stress-testing and ranking.',
+    who4Title:'Professionals', who4Desc:'Prep for meetings and generate team ideas efficiently.',
+    who5Title:'Marketers', who5Desc:'Plan campaigns and brainstorm content with AI.',
+    who6Title:'Developers', who6Desc:'Log feature ideas without breaking your flow.',
+    missionTitle:'Our Mission',
+    missionText:'To empower anyone to generate, refine, and organise ideas — intelligently and instantly.',
+    faqLabel:'FAQ', faqTitle:'Frequently Asked <span class="grad">Questions</span>',
+    faqQ1:'How does Brainstorm Buddy work?', faqA1:'It uses AI to generate ideas based on your prompts. You can also write, edit, and save notes in your browser.',
+    faqQ2:'Is there a free version?', faqA2:'Yes! The free version gives you essential features. Upgrade to Basic, Pro, or Elite for more AI generations and advanced tools.',
+    faqQ3:'Can I export my notes?', faqA3:'Absolutely. Export as Markdown or plain text, and import from any file — all within the extension.',
+    faqQ4:'What AI analysis tools are included?', faqA4:'After generating ideas you get 7 instant tools: Reverse Brainstorm, SWOT Analysis, Idea Ranker, Niche Drill-Down, What If Mode, Mind Map, and Trend Radar — all free.',
+    faqQ5:'Can I get a refund?', faqA5:'<p><strong>Subscriptions:</strong> Request a refund within 14 days of purchase. After that, subscriptions are non-refundable.</p><p><strong>Policy notes:</strong> We may limit future purchases if more than two refunds have been approved for the same account.</p><p>Refunds are processed within 5–10 business days.</p><p><a href="requestrefund.html">Request a refund here →</a></p>',
+    faqQ6:'Is my data safe?', faqA6:"Yes. We never sell your data and only request permissions needed for the features you use. See our privacy policy for full details.",
+    stat1Num:'6+', stat1Lbl:'Languages supported',
+    stat2Num:'700', stat2Lbl:'Ideas/month on Elite',
+    stat3Num:'7', stat3Lbl:'AI analysis tools',
+    stat4Num:'∞', stat4Lbl:'Notes you can save',
+    backBtn:'← Home',
+    footerPrivacy:'Privacy Policy', footerTerms:'Terms of Service', footerContact:'Contact Us', footerSupport:'Support Us',
   },
-  ru: {
-    aboutTitle: "О Brainstorm Buddy",
-    aboutText: "Brainstorm Buddy — ваш помощник в креативном мышлении: расширение с ИИ, которое превращает хаотичные идеи в чёткие, структурированные заметки. Пишете ли вы статью, разрабатываете бизнес-план или просто собираете мысли — инструмент поможет быстро и понятно фиксировать, развивать и структурировать идеи прямо в браузере.",
-    whyTitle: "Зачем мы это создали",
-    whyText: "Гениальные идеи часто приходят внезапно — а обычные приложения для заметок могут сбить темп или запутать. Мы создали Brainstorm Buddy, чтобы устранить это трение. Наша цель — создать плавную, интуитивную среду с ИИ, где креативность течёт свободно, а идеи быстро превращаются в действия — без переключения между приложениями и потери фокуса.",
-    whoTitle: "Для кого это",
-    who1: "🧑‍🎓 Студенты: планирование эссе и учебы",
-    who2: "✍️ Писатели: преодоление творческих блоков и генерация идей",
-    who3: "💡 Предприниматели: бизнес- и продуктовые заметки",
-    missionTitle: "Наша миссия",
-    missionText: "Помочь каждому генерировать, уточнять и организовывать идеи — умно и мгновенно.",
-    faqTitle: "❓ Часто задаваемые вопросы",
-    faqQ1: "Как работает Brainstorm Buddy?",
-    faqA1: "Он использует ИИ для генерации идей по вашим запросам. Вы также можете писать, редактировать и сохранять заметки в браузере.",
-    faqQ2: "Есть ли бесплатная версия?",
-    faqA2: "Да! Бесплатная версия предоставляет доступ к основным функциям и позволяет генерировать 10 идей в месяц. Вы можете перейти на расширенный тариф для доступа к продвинутым функциям.",
-    faqQ3: "Можно ли экспортировать заметки?",
-    faqA3: "Конечно. Вы можете экспортировать или импортировать заметки в любое время из расширения.",
-    faqQ4: "Можно ли запросить возврат?",
-    faqA4: `
-      <p><strong>Подписки:</strong> Вы можете запросить возврат средств в течение 14 дней с момента покупки. По истечении этого срока годовые и месячные подписки не подлежат возврату.</p>
-      <p><strong>Примечание:</strong> Чтобы предотвратить злоупотребления, мы можем ограничить будущие покупки или отказать в возврате, если было одобрено более двух возвратов на одну учетную запись или способ оплаты.</p>
-      <p>Возвраты обычно обрабатываются в течение 5–10 рабочих дней.</p>
-      <p><a href=\"requestrefund.html\" style=\"color: var(--primary); text-decoration: underline;\">Запросить возврат здесь.</a></p>`
+  es:{
+    heroBadge:'Nuestra historia',
+    aboutTitle:'Sobre <span class="grad">Brainstorm Buddy</span>',
+    aboutText:'Tu compañero de pensamiento creativo — lluvia de ideas con IA y notas inteligentes en tu navegador.',
+    whyLabel:'Origen', whyTitle:'Por qué lo <span class="grad">creamos</span>',
+    whyText:'Las grandes ideas suelen surgir cuando menos lo esperas. Creamos Brainstorm Buddy para eliminar la fricción entre la idea y la acción.',
+    valuesLabel:'Lo que defendemos', valuesTitle:'Nuestros <span class="grad">valores</span>',
+    val1Title:'Velocidad primero', val1Desc:'Las ideas no esperan. Cada interacción está optimizada para ser instantánea.',
+    val2Title:'Privacidad por defecto', val2Desc:'Nunca vendemos tus datos. Solo solicitamos los permisos estrictamente necesarios.',
+    val3Title:'Para todos', val3Desc:'Seis idiomas, diseño accesible y plan gratuito.',
+    val4Title:'IA que asiste, no reemplaza', val4Desc:'La IA amplifica tu pensamiento — tú sigues al mando.',
+    whoLabel:'Audiencia', whoTitle:'Para <span class="grad">quién es</span>',
+    who1Title:'Estudiantes', who1Desc:'Ideas para ensayos, esquemas y notas de estudio.',
+    who2Title:'Escritores', who2Desc:'Supera bloqueos creativos en segundos.',
+    who3Title:'Emprendedores', who3Desc:'Valida ideas rápido con IA.',
+    who4Title:'Profesionales', who4Desc:'Prepara reuniones y genera ideas para el equipo.',
+    who5Title:'Marketeros', who5Desc:'Planifica campañas con IA.',
+    who6Title:'Desarrolladores', who6Desc:'Registra ideas sin interrumpir tu flujo.',
+    missionTitle:'Nuestra misión',
+    missionText:'Empoderar a cualquiera para generar y organizar ideas de forma inteligente e instantánea.',
+    faqLabel:'FAQ', faqTitle:'Preguntas <span class="grad">frecuentes</span>',
+    faqQ1:'¿Cómo funciona?', faqA1:'Usa IA para generar ideas. También puedes escribir y guardar notas.',
+    faqQ2:'¿Hay versión gratuita?', faqA2:'Sí. La versión gratuita te da acceso a funciones esenciales.',
+    faqQ3:'¿Puedo exportar mis notas?', faqA3:'Sí. Exporta como Markdown o texto plano desde la extensión.',
+    faqQ4:'¿Qué herramientas de análisis IA hay?', faqA4:'7 herramientas instantáneas: Brainstorming inverso, DAFO, Clasificador de ideas, Nicho, ¿Qué pasa si?, Mapa mental y Radar de tendencias.',
+    faqQ5:'¿Puedo pedir un reembolso?', faqA5:'<p><strong>Suscripciones:</strong> Solicita reembolso en 14 días tras la compra.</p><p>Los reembolsos se procesan en 5–10 días hábiles.</p><p><a href="requestrefund.html">Solicitar reembolso →</a></p>',
+    faqQ6:'¿Están seguros mis datos?', faqA6:'Sí. Nunca vendemos tus datos y solo pedimos los permisos necesarios.',
+    stat1Num:'6+', stat1Lbl:'Idiomas disponibles',
+    stat2Num:'700', stat2Lbl:'Ideas/mes en Elite',
+    stat3Num:'7', stat3Lbl:'Herramientas de análisis IA',
+    stat4Num:'∞', stat4Lbl:'Notas que puedes guardar',
+    backBtn:'← Inicio',
+    footerPrivacy:'Privacidad', footerTerms:'Términos', footerContact:'Contáctanos', footerSupport:'Apóyanos',
   },
-
-  it: {
-    aboutTitle: "Informazioni su Brainstorm Buddy",
-    aboutText: "Brainstorm Buddy è il tuo compagno di pensiero creativo — un'estensione basata sull'IA progettata per trasformare lampi disordinati di ispirazione in note organizzate e utilizzabili. Che tu stia scrivendo un articolo, pianificando un business o raccogliendo idee, il nostro strumento ti aiuta a catturarle, perfezionarle ed esplorarle con chiarezza e velocità — tutto dal tuo browser.",
-    whyTitle: "Perché lo abbiamo creato",
-   whyText: "Le grandi idee spesso arrivano inaspettatamente — e le app tradizionali per prendere appunti possono rallentarti o creare confusione. Abbiamo creato Brainstorm Buddy per eliminare questi ostacoli. Il nostro obiettivo è fornire uno spazio fluido, potenziato dall’IA, dove la creatività può fluire liberamente e le idee possono trasformarsi in azioni — senza perdere il filo o cambiare continuamente applicazione.",
-    whoTitle: "Per chi è",
-    who1: "🧑‍🎓 Studenti: pianificazione di saggi e studi",
-    who2: "✍️ Scrittori: superare il blocco dello scrittore e ideare",
-    who3: "💡 Imprenditori: note di business e di prodotto",
-    missionTitle: "La nostra missione",
-    missionText: "Consentire a chiunque di generare, perfezionare e organizzare idee — in modo intelligente e istantaneo.",
-    faqTitle: "❓ Domande frequenti",
-    faqQ1: "Come funziona Brainstorm Buddy?",
-    faqA1: "Usa l’IA per generare idee basate sui tuoi suggerimenti. Puoi anche scrivere, modificare e salvare note nel browser.",
-    faqQ2: "Esiste una versione gratuita?",
-    faqA2: "Sì! La versione gratuita ti consente di accedere alle funzionalità essenziali e generare 10 idee al mese. Puoi passare alla versione a pagamento per sbloccare strumenti avanzati.",
-    faqQ3: "Posso esportare le mie note?",
-    faqA3: "Assolutamente. Puoi esportare o importare note in qualsiasi momento direttamente dall'estensione.",
-    faqQ4: "Posso richiedere un rimborso?",
-    faqA4: `
-      <p><strong>Abbonamenti:</strong> È possibile richiedere un rimborso entro 14 giorni dall’acquisto. Dopo tale periodo, gli abbonamenti annuali e mensili non sono rimborsabili.</p>
-      <p><strong>Note:</strong> Per evitare abusi, possiamo limitare futuri acquisti o rifiutare rimborsi se più di due sono già stati approvati per lo stesso account o metodo di pagamento.</p>
-      <p>I rimborsi vengono generalmente elaborati entro 5–10 giorni lavorativi.</p>
-      <p><a href=\"requestrefund.html\" style=\"color: var(--primary); text-decoration: underline;\">Richiedi un rimborso qui.</a></p>`
+  fr:{
+    heroBadge:'Notre histoire',
+    aboutTitle:'À propos de <span class="grad">Brainstorm Buddy</span>',
+    aboutText:'Votre compagnon de pensée créative — brainstorming IA et prise de notes intelligente dans votre navigateur.',
+    whyLabel:'Origine', whyTitle:'Pourquoi nous l\'avons <span class="grad">créé</span>',
+    whyText:'Les meilleures idées arrivent souvent par surprise. Nous avons créé Brainstorm Buddy pour supprimer la friction entre l\'idée et l\'action.',
+    valuesLabel:'Ce que nous défendons', valuesTitle:'Nos <span class="grad">valeurs</span>',
+    val1Title:'La vitesse avant tout', val1Desc:'Les idées n\'attendent pas. Chaque interaction est optimisée pour être instantanée.',
+    val2Title:'Confidentialité par défaut', val2Desc:'Nous ne vendons jamais vos données. Nous ne demandons que les permissions strictement nécessaires.',
+    val3Title:'Pour tout le monde', val3Desc:'Six langues, design accessible et niveau gratuit.',
+    val4Title:'L\'IA assiste, elle ne remplace pas', val4Desc:'L\'IA amplifie votre pensée — vous restez aux commandes.',
+    whoLabel:'Audience', whoTitle:'Pour <span class="grad">qui</span>',
+    who1Title:'Étudiants', who1Desc:'Idées d\'essais, plans de projets et notes d\'étude.',
+    who2Title:'Écrivains', who2Desc:'Surmontez les blocages créatifs en secondes.',
+    who3Title:'Entrepreneurs', who3Desc:'Validez vos idées rapidement avec l\'IA.',
+    who4Title:'Professionnels', who4Desc:'Préparez réunions et idées d\'équipe efficacement.',
+    who5Title:'Marketeurs', who5Desc:'Planifiez des campagnes avec l\'IA.',
+    who6Title:'Développeurs', who6Desc:'Notez vos idées sans interrompre votre flux.',
+    missionTitle:'Notre mission',
+    missionText:'Permettre à chacun de générer, affiner et organiser des idées — intelligemment et instantanément.',
+    faqLabel:'FAQ', faqTitle:'Questions <span class="grad">fréquentes</span>',
+    faqQ1:'Comment ça fonctionne ?', faqA1:'Il utilise l\'IA pour générer des idées. Vous pouvez aussi écrire et sauvegarder des notes.',
+    faqQ2:'Y a-t-il une version gratuite ?', faqA2:'Oui ! La version gratuite donne accès aux fonctionnalités essentielles.',
+    faqQ3:'Puis-je exporter mes notes ?', faqA3:'Absolument. Exportez en Markdown ou texte brut depuis l\'extension.',
+    faqQ4:'Quels outils d\'analyse IA sont inclus ?', faqA4:'7 outils instantanés : Brainstorming inversé, SWOT, Classement d\'idées, Niche, Et si ?, Carte mentale et Radar de tendances.',
+    faqQ5:'Puis-je obtenir un remboursement ?', faqA5:'<p><strong>Abonnements :</strong> Demandez un remboursement dans les 14 jours suivant l\'achat.</p><p>Les remboursements sont traités sous 5–10 jours ouvrables.</p><p><a href="requestrefund.html">Demander un remboursement →</a></p>',
+    faqQ6:'Mes données sont-elles sécurisées ?', faqA6:'Oui. Nous ne vendons jamais vos données et ne demandons que les permissions nécessaires.',
+    stat1Num:'6+', stat1Lbl:'Langues supportées',
+    stat2Num:'700', stat2Lbl:'Idées/mois sur Elite',
+    stat3Num:'7', stat3Lbl:'Outils d\'analyse IA',
+    stat4Num:'∞', stat4Lbl:'Notes sauvegardables',
+    backBtn:'← Accueil',
+    footerPrivacy:'Confidentialité', footerTerms:'Conditions', footerContact:'Contact', footerSupport:'Soutenez-nous',
   },
-
-  pt: {
-    aboutTitle: "Sobre o Brainstorm Buddy",
-    aboutText: "O Brainstorm Buddy é seu parceiro para o pensamento criativo — uma extensão com IA projetada para transformar ideias soltas em anotações organizadas e acionáveis. Seja escrevendo um artigo, esboçando um plano de negócios ou apenas organizando pensamentos, nossa ferramenta ajuda você a capturar, refinar e explorar ideias com rapidez e clareza — tudo dentro do seu navegador.",
-    whyTitle: "Por que criamos isso",
-    whyText: "Grandes ideias muitas vezes surgem de forma inesperada — e os apps tradicionais de anotações podem atrapalhar ou desorganizar o processo. Criamos o Brainstorm Buddy para eliminar esse atrito. Nosso objetivo é oferecer um espaço fluido, aprimorado por IA, onde a criatividade flui naturalmente e as ideias evoluem para ações — sem trocar de aplicativo ou perder a linha de raciocínio.",
-    whoTitle: "Para quem é",
-    who1: "🧑‍🎓 Estudantes: planejamento de redações e estudos",
-    who2: "✍️ Escritores: superar bloqueios criativos e gerar ideias",
-    who3: "💡 Empreendedores: anotações de negócios e produtos",
-    missionTitle: "Nossa missão",
-    missionText: "Capacitar qualquer pessoa a gerar, refinar e organizar ideias — de forma inteligente e instantânea.",
-    faqTitle: "❓ Perguntas frequentes",
-    faqQ1: "Como funciona o Brainstorm Buddy?",
-    faqA1: "Ele usa IA para gerar ideias com base nos seus comandos. Você também pode escrever, editar e salvar anotações no navegador.",
-    faqQ2: "Existe uma versão gratuita?",
-    faqA2: "Sim! A versão gratuita oferece acesso às funcionalidades essenciais, permitindo gerar 10 ideias por mês. Você pode fazer upgrade para recursos avançados.",
-    faqQ3: "Posso exportar minhas anotações?",
-    faqA3: "Com certeza. Você pode exportar ou importar suas anotações a qualquer momento através da extensão.",
-    faqQ4: "Posso solicitar um reembolso?",
-    faqA4: `
-      <p><strong>Assinaturas:</strong> Você pode solicitar um reembolso em até 14 dias após a compra. Após esse período, as assinaturas anuais e mensais não são reembolsáveis.</p>
-      <p><strong>Notas:</strong> Para evitar abusos, podemos limitar compras futuras ou recusar pedidos de reembolso se mais de dois já tiverem sido aprovados para a mesma conta ou método de pagamento.</p>
-      <p>Os reembolsos normalmente são processados em até 5 a 10 dias úteis.</p>
-      <p><a href=\"requestrefund.html\" style=\"color: var(--primary); text-decoration: underline;\">Solicite um reembolso aqui.</a></p>`
+  ru:{
+    heroBadge:'Наша история',
+    aboutTitle:'О <span class="grad">Brainstorm Buddy</span>',
+    aboutText:'Ваш помощник в креативном мышлении — ИИ-мозговой штурм и умные заметки прямо в браузере.',
+    whyLabel:'История', whyTitle:'Зачем мы это <span class="grad">создали</span>',
+    whyText:'Гениальные идеи часто приходят внезапно. Мы создали Brainstorm Buddy, чтобы устранить трение между идеей и действием.',
+    valuesLabel:'Наши принципы', valuesTitle:'Наши <span class="grad">ценности</span>',
+    val1Title:'Скорость прежде всего', val1Desc:'Идеи не ждут. Каждое взаимодействие оптимизировано для мгновенного отклика.',
+    val2Title:'Конфиденциальность по умолчанию', val2Desc:'Мы никогда не продаём ваши данные.',
+    val3Title:'Для всех', val3Desc:'Шесть языков, доступный дизайн и бесплатный план.',
+    val4Title:'ИИ помогает, а не заменяет', val4Desc:'ИИ усиливает ваше мышление — вы остаётесь в управлении.',
+    whoLabel:'Аудитория', whoTitle:'Для <span class="grad">кого</span>',
+    who1Title:'Студенты', who1Desc:'Идеи для эссе, планы проектов и учебные заметки.',
+    who2Title:'Писатели', who2Desc:'Преодолейте творческий блок за секунды.',
+    who3Title:'Предприниматели', who3Desc:'Быстрая проверка идей с ИИ.',
+    who4Title:'Профессионалы', who4Desc:'Подготовка к встречам и идеи для команды.',
+    who5Title:'Маркетологи', who5Desc:'Планируйте кампании с ИИ.',
+    who6Title:'Разработчики', who6Desc:'Записывайте идеи, не прерывая поток работы.',
+    missionTitle:'Наша миссия',
+    missionText:'Помочь каждому генерировать, уточнять и организовывать идеи — умно и мгновенно.',
+    faqLabel:'FAQ', faqTitle:'Часто задаваемые <span class="grad">вопросы</span>',
+    faqQ1:'Как работает Brainstorm Buddy?', faqA1:'Использует ИИ для генерации идей. Вы также можете писать и сохранять заметки.',
+    faqQ2:'Есть ли бесплатная версия?', faqA2:'Да! Бесплатная версия даёт доступ к основным функциям.',
+    faqQ3:'Можно ли экспортировать заметки?', faqA3:'Конечно. Экспортируйте в Markdown или текст прямо из расширения.',
+    faqQ4:'Какие инструменты анализа ИИ включены?', faqA4:'7 мгновенных инструментов: Обратный мозговой штурм, SWOT, Рейтинг идей, Анализ ниш, «А что если», Карта идей и Радар трендов.',
+    faqQ5:'Можно ли запросить возврат?', faqA5:'<p><strong>Подписки:</strong> Запросите возврат в течение 14 дней с момента покупки.</p><p>Возвраты обрабатываются в течение 5–10 рабочих дней.</p><p><a href="requestrefund.html">Запросить возврат →</a></p>',
+    faqQ6:'Мои данные в безопасности?', faqA6:'Да. Мы никогда не продаём данные и запрашиваем только необходимые разрешения.',
+    stat1Num:'6+', stat1Lbl:'Поддерживаемых языков',
+    stat2Num:'700', stat2Lbl:'Идей/мес на Elite',
+    stat3Num:'7', stat3Lbl:'Инструментов анализа ИИ',
+    stat4Num:'∞', stat4Lbl:'Заметок можно сохранить',
+    backBtn:'← Главная',
+    footerPrivacy:'Конфиденциальность', footerTerms:'Условия', footerContact:'Контакт', footerSupport:'Поддержать',
+  },
+  it:{
+    heroBadge:'La nostra storia',
+    aboutTitle:'Su <span class="grad">Brainstorm Buddy</span>',
+    aboutText:'Il tuo compagno di pensiero creativo — brainstorming IA e note intelligenti nel tuo browser.',
+    whyLabel:'Origine', whyTitle:'Perché lo abbiamo <span class="grad">creato</span>',
+    whyText:'Le grandi idee spesso arrivano inaspettatamente. Abbiamo creato Brainstorm Buddy per eliminare la frizione tra idea e azione.',
+    valuesLabel:'Cosa difendiamo', valuesTitle:'I nostri <span class="grad">valori</span>',
+    val1Title:'Velocità prima di tutto', val1Desc:'Le idee non aspettano. Ogni interazione è ottimizzata per essere istantanea.',
+    val2Title:'Privacy per default', val2Desc:'Non vendiamo mai i tuoi dati. Chiediamo solo i permessi strettamente necessari.',
+    val3Title:'Per tutti', val3Desc:'Sei lingue, design accessibile e piano gratuito.',
+    val4Title:'L\'IA assiste, non sostituisce', val4Desc:'L\'IA amplifica il tuo pensiero — tu rimani in controllo.',
+    whoLabel:'Pubblico', whoTitle:'Per <span class="grad">chi è</span>',
+    who1Title:'Studenti', who1Desc:'Idee per saggi, schemi e appunti di studio.',
+    who2Title:'Scrittori', who2Desc:'Supera i blocchi creativi in pochi secondi.',
+    who3Title:'Imprenditori', who3Desc:'Valida le idee rapidamente con l\'IA.',
+    who4Title:'Professionisti', who4Desc:'Prepara riunioni e genera idee per il team.',
+    who5Title:'Marketer', who5Desc:'Pianifica campagne con l\'IA.',
+    who6Title:'Sviluppatori', who6Desc:'Registra idee senza interrompere il flusso di lavoro.',
+    missionTitle:'La nostra missione',
+    missionText:'Consentire a chiunque di generare, perfezionare e organizzare idee — in modo intelligente e istantaneo.',
+    faqLabel:'FAQ', faqTitle:'Domande <span class="grad">frequenti</span>',
+    faqQ1:'Come funziona?', faqA1:'Usa l\'IA per generare idee. Puoi anche scrivere e salvare note nel browser.',
+    faqQ2:'C\'è una versione gratuita?', faqA2:'Sì! La versione gratuita dà accesso alle funzionalità essenziali.',
+    faqQ3:'Posso esportare le note?', faqA3:'Assolutamente. Esporta in Markdown o testo semplice dall\'estensione.',
+    faqQ4:'Quali strumenti di analisi IA sono inclusi?', faqA4:'7 strumenti istantanei: Brainstorming inverso, SWOT, Classifica idee, Nicchia, E se?, Mappa mentale e Radar tendenze.',
+    faqQ5:'Posso richiedere un rimborso?', faqA5:'<p><strong>Abbonamenti:</strong> Richiedi un rimborso entro 14 giorni dall\'acquisto.</p><p>I rimborsi vengono elaborati entro 5–10 giorni lavorativi.</p><p><a href="requestrefund.html">Richiedi un rimborso →</a></p>',
+    faqQ6:'I miei dati sono al sicuro?', faqA6:'Sì. Non vendiamo mai i dati e chiediamo solo i permessi necessari.',
+    stat1Num:'6+', stat1Lbl:'Lingue supportate',
+    stat2Num:'700', stat2Lbl:'Idee/mese su Elite',
+    stat3Num:'7', stat3Lbl:'Strumenti di analisi IA',
+    stat4Num:'∞', stat4Lbl:'Note salvabili',
+    backBtn:'← Home',
+    footerPrivacy:'Privacy', footerTerms:'Termini', footerContact:'Contatto', footerSupport:'Sostienici',
+  },
+  pt:{
+    heroBadge:'Nossa história',
+    aboutTitle:'Sobre o <span class="grad">Brainstorm Buddy</span>',
+    aboutText:'Seu parceiro de pensamento criativo — brainstorming com IA e notas inteligentes no seu navegador.',
+    whyLabel:'Origem', whyTitle:'Por que o <span class="grad">criamos</span>',
+    whyText:'Grandes ideias muitas vezes surgem de forma inesperada. Criamos o Brainstorm Buddy para eliminar o atrito entre a ideia e a ação.',
+    valuesLabel:'O que defendemos', valuesTitle:'Nossos <span class="grad">valores</span>',
+    val1Title:'Velocidade em primeiro lugar', val1Desc:'As ideias não esperam. Cada interação é otimizada para ser instantânea.',
+    val2Title:'Privacidade por padrão', val2Desc:'Nunca vendemos seus dados. Solicitamos apenas as permissões estritamente necessárias.',
+    val3Title:'Para todos', val3Desc:'Seis idiomas, design acessível e plano gratuito.',
+    val4Title:'IA que auxilia, não substitui', val4Desc:'A IA amplifica seu pensamento — você permanece no controle.',
+    whoLabel:'Público', whoTitle:'Para <span class="grad">quem é</span>',
+    who1Title:'Estudantes', who1Desc:'Ideias para redações, esquemas e notas de estudo.',
+    who2Title:'Escritores', who2Desc:'Supere bloqueios criativos em segundos.',
+    who3Title:'Empreendedores', who3Desc:'Valide ideias rapidamente com IA.',
+    who4Title:'Profissionais', who4Desc:'Prepare reuniões e gere ideias para o time.',
+    who5Title:'Marketing', who5Desc:'Planeje campanhas com IA.',
+    who6Title:'Desenvolvedores', who6Desc:'Registre ideias sem interromper o fluxo de trabalho.',
+    missionTitle:'Nossa missão',
+    missionText:'Capacitar qualquer pessoa a gerar, refinar e organizar ideias — de forma inteligente e instantânea.',
+    faqLabel:'FAQ', faqTitle:'Perguntas <span class="grad">frequentes</span>',
+    faqQ1:'Como funciona?', faqA1:'Usa IA para gerar ideias. Você também pode escrever e salvar notas.',
+    faqQ2:'Existe versão gratuita?', faqA2:'Sim! A versão gratuita dá acesso às funcionalidades essenciais.',
+    faqQ3:'Posso exportar minhas anotações?', faqA3:'Com certeza. Exporte em Markdown ou texto simples pela extensão.',
+    faqQ4:'Quais ferramentas de análise IA estão incluídas?', faqA4:'7 ferramentas instantâneas: Brainstorming inverso, SWOT, Ranking de ideias, Nicho, E se?, Mapa mental e Radar de tendências.',
+    faqQ5:'Posso solicitar reembolso?', faqA5:'<p><strong>Assinaturas:</strong> Solicite reembolso em até 14 dias após a compra.</p><p>Os reembolsos são processados em 5–10 dias úteis.</p><p><a href="requestrefund.html">Solicitar reembolso →</a></p>',
+    faqQ6:'Meus dados estão seguros?', faqA6:'Sim. Nunca vendemos dados e solicitamos apenas as permissões necessárias.',
+    stat1Num:'6+', stat1Lbl:'Idiomas suportados',
+    stat2Num:'700', stat2Lbl:'Ideias/mês no Elite',
+    stat3Num:'7', stat3Lbl:'Ferramentas de análise IA',
+    stat4Num:'∞', stat4Lbl:'Notas que você pode salvar',
+    backBtn:'← Início',
+    footerPrivacy:'Privacidade', footerTerms:'Termos', footerContact:'Contato', footerSupport:'Apoie-nos',
   }
+};
 
-    // You can copy/paste the same format to add other languages like fr, ru, etc.
-  };
+// keys that allow innerHTML (contain HTML tags)
+const htmlKeys = new Set(['aboutTitle','whyTitle','valuesTitle','whoTitle','faqTitle',
+  'faqA5','section-title','missionTitle']);
 
-  function changeLanguage(lang) {
-    const t = translations[lang];
-    if (!t) return;
-
-    for (const key in t) {
-      const el = document.getElementById(key);
-      if (!el) continue;
-
-      if (key.startsWith("faqA")) {
-        el.innerHTML = t[key]; // allow HTML formatting
-      } else {
-        el.textContent = t[key]; // plain text
-      }
+function changeLanguage(lang){
+  const t = translations[lang] || translations.en;
+  for(const key in t){
+    const el = document.getElementById(key);
+    if(!el) continue;
+    if(key.startsWith('faqA') || htmlKeys.has(key)){
+      el.innerHTML = t[key];
+    } else {
+      el.textContent = t[key];
     }
-
-    localStorage.setItem('selectedLanguage', lang);
   }
+  localStorage.setItem('selectedLanguage', lang);
+  document.getElementById('langSelect').value = lang;
+}
 
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark");
-  }
+function toggleDarkMode(){
+  const d = document.body.classList.toggle('dark');
+  document.getElementById('darkToggle').textContent = d ? '☀️' : '🌙';
+  localStorage.setItem('darkMode', d ? '1' : '0');
+}
 
-  function toggleFAQ(item) {
-    item.classList.toggle("active");
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const lang = localStorage.getItem("selectedLanguage") || "en";
-    changeLanguage(lang);
-
-    const fadeEls = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    fadeEls.forEach(el => observer.observe(el));
+function toggleFAQ(item){
+  // close others
+  document.querySelectorAll('.faq-item.active').forEach(el => {
+    if(el !== item) el.classList.remove('active');
   });
-</script>
+  item.classList.toggle('active');
+}
 
+document.addEventListener('DOMContentLoaded', () => {
+  // dark mode default dark
+  const saved = localStorage.getItem('darkMode');
+  if(saved === '0'){
+    document.body.classList.remove('dark');
+    document.getElementById('darkToggle').textContent = '🌙';
+  } else {
+    document.body.classList.add('dark');
+    document.getElementById('darkToggle').textContent = '☀️';
+  }
+
+  const lang = localStorage.getItem('selectedLanguage') || 'en';
+  changeLanguage(lang);
+
+  // scroll fade in
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold: 0.08});
+  fadeEls.forEach(el => observer.observe(el));
+});
+</script>
 </body>
 </html>

@@ -1,439 +1,1066 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17611666437"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'AW-17611666437');
 </script>
-
-<!-- Event snippet for Page view conversion page -->
 <script>
   gtag('event', 'conversion', {
-      'send_to': 'AW-17611666437/Cg3GCNqb56kbEIXo8s1B',
-      'value': 1.0,
-      'currency': 'GBP'
+    'send_to': 'AW-17611666437/Cg3GCNqb56kbEIXo8s1B',
+    'value': 1.0,
+    'currency': 'GBP'
   });
 </script>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Brainstorm Buddy</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Brainstorm Buddy — AI Ideas & Smart Notes</title>
+<link rel="icon" type="image/png" sizes="32x32" href="smallicon.png">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="smallicon.png">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<script>
+  window.API_BASE ??= (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
+    ? 'http://127.0.0.1:5050'
+    : 'https://api.brainstormbuddy.co.uk';
+  const API_BASE = window.API_BASE;
+</script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-  <style>
-    :root {
-      --primary: #6c63ff;
-      --accent: #a259ff;
-      --bg-light: #f5f4fa;
-      --bg-dark: #1a1a1a;
-      --text-light: #333;
-      --text-dark: #f0f0f0;
-      --muted-light: #666;
-      --muted-dark: #aaa;
-      --white: #ffffff;
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg-light); color: var(--text-light); transition: background 0.3s, color 0.3s; line-height: 1; }
-    body.dark { background: var(--bg-dark); color: var(--text-dark); }
+:root{
+  --p:#5b5cf6;
+  --p2:#818cf8;
+  --p3:#4338ca;
+  --ok:#10b981;
+  --warn:#f59e0b;
+  --bad:#ef4444;
 
-    header {
-      background: linear-gradient(to right, var(--accent), var(--primary));
-      padding: 1rem 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-    }
-    .nav-left, .nav-right { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
-    .logo { width: 40px; height: 40px; cursor: pointer; }
+  /* light */
+  --bg:#f8f8fc;
+  --bg2:#f0f0fa;
+  --card:#ffffff;
+  --card2:#f5f5ff;
+  --border:#e8e8f0;
+  --fg:#0a0a14;
+  --fg2:#4b5563;
+  --fg3:#9ca3af;
 
-    .btn, .switcher {
-      padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
-      cursor: pointer; border: none; transition: background 0.2s, color 0.2s;
-    }
-    .btn.primary { background: white; color: var(--primary); }
-    .btn.primary:hover { background: #eae8ff; }
-    .btn.outline, .switcher { background: transparent; color: white; border: 1px solid white; }
-    .btn.outline:hover, .switcher:hover { background: rgba(255,255,255,0.1); }
+  --r:14px;
+  --rs:8px;
+  --t:.18s;
+  --e:cubic-bezier(.4,0,.2,1);
+  --shadow:0 4px 24px rgba(91,92,246,.08),0 1px 4px rgba(0,0,0,.06);
+  --shadow-lg:0 16px 48px rgba(91,92,246,.14),0 4px 12px rgba(0,0,0,.08);
+}
 
-    main { text-align: center; padding: 3rem 1rem 2rem; max-width: 900px; margin: auto; }
-    main img { width: 100px; margin-bottom: 1rem; cursor: pointer; }
-    main h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.35rem; }
-    main p { font-size: 1.2rem; color: var(--muted-light); max-width: 700px; margin: 0.25rem auto 0; }
-    #welcome { margin-top: 0.25rem; font-weight: 600; }
+body.dark{
+  --bg:#09090f;
+  --bg2:#111118;
+  --card:#14141e;
+  --card2:#1a1a28;
+  --border:#2a2a3a;
+  --fg:#f0f0ff;
+  --fg2:#a0a0c0;
+  --fg3:#555570;
+  --shadow:0 4px 24px rgba(0,0,0,.4),0 1px 4px rgba(0,0,0,.3);
+  --shadow-lg:0 16px 48px rgba(0,0,0,.5);
+}
 
-    body.dark main p { color: var(--muted-dark); }
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--fg);
+  line-height:1.6;
+  transition:background var(--t) var(--e),color var(--t) var(--e);
+  overflow-x:hidden;
+}
 
-    section { padding: 2rem 1rem; max-width: 900px; margin: auto; }
-    h2 { font-size: 1.75rem; color: var(--primary); margin-bottom: 1.25rem; text-align: center; }
-    ul, ol { text-align: left; padding-left: 1.2rem; font-size: 1rem; }
+/* ── NOISE TEXTURE ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.5;
+}
 
-    .use-cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-    .card { background: var(--white); color: var(--text-light); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); text-align: left; }
-    body.dark .card { background: #2a2a2a; color: var(--text-dark); }
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:64px;
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:background var(--t) var(--e),border-color var(--t) var(--e);
+}
+body.dark nav{background:rgba(9,9,15,.85);}
 
-    .cta { background: var(--primary); color: white; border-radius: 16px; padding: 2rem; text-align: center; margin: 2rem auto; max-width: 900px; }
-    .cta h2, .cta p { color: white !important; }
-    .cta button { margin-top: 1rem; background: white; color: var(--primary); }
-    .cta button:hover { background: #f0efff; }
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  display:grid;place-items:center;font-size:18px;
+  box-shadow:0 4px 12px rgba(91,92,246,.3);
+  flex-shrink:0;
+}
+.nav-name{
+  font-family:'Syne',sans-serif;font-size:17px;font-weight:800;
+  color:var(--fg);letter-spacing:-.3px;
+}
 
-    footer { padding: 2rem; text-align: center; font-size: 0.9rem; background: #fafafa; color: var(--muted-light); }
-    footer a { color: var(--primary); margin: 0 0.75rem; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{
+  padding:7px 14px;border-radius:8px;
+  font-size:14px;font-weight:500;color:var(--fg2);
+  background:none;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+  transition:color var(--t),background var(--t);
+  text-decoration:none;display:inline-block;
+}
+.nav-link:hover{color:var(--p);background:rgba(91,92,246,.07);}
 
-    .profile-container { margin-left: 1rem; }
-    .dropdown { display:none; position:absolute; right:0; top:2.5rem; background:white; color:#333; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.1); z-index:10; min-width:220px; }
-    .dropdown a, .dropdown div { display:block; padding:0.6rem 1rem; text-decoration:none; color:#333; }
+.nav-right{display:flex;align-items:center;gap:8px;}
 
-    @media (max-width: 600px) {
-      header { flex-direction: column; align-items: stretch; padding: 1rem; }
-      .nav-left, .nav-right { justify-content: center; width: 100%; }
-      .nav-left button, .nav-right button, .nav-right select { flex: 1 1 auto; min-width: 100px; }
-      .logo { margin-bottom: 0.5rem; }
-    }
-  </style>
+.ibtn{
+  width:36px;height:36px;border-radius:9px;border:1px solid var(--border);
+  background:var(--card);color:var(--fg2);font-size:15px;
+  display:grid;place-items:center;cursor:pointer;
+  transition:all var(--t) var(--e);
+}
+.ibtn:hover{border-color:var(--p);color:var(--p);background:rgba(91,92,246,.06);}
 
-  <script>
-    // Global API base (prod -> your API domain)
-    window.API_BASE ??= (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
-      ? 'http://127.0.0.1:5050'
-      : 'https://api.brainstormbuddy.co.uk';
-    const API_BASE = window.API_BASE;
-  </script>
+select.nav-select{
+  padding:6px 10px;border-radius:8px;border:1px solid var(--border);
+  background:var(--card);color:var(--fg2);font-size:13px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  transition:all var(--t) var(--e);
+}
+select.nav-select:hover{border-color:var(--p);}
+
+.btn-add{
+  padding:8px 18px;border-radius:9px;border:none;
+  background:linear-gradient(135deg,var(--p),var(--p3));
+  color:#fff;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(91,92,246,.35);
+  transition:transform var(--t),box-shadow var(--t);
+}
+.btn-add:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(91,92,246,.45);}
+
+.btn-login{
+  padding:8px 16px;border-radius:9px;
+  border:1.5px solid var(--border);
+  background:var(--card);color:var(--fg);
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  cursor:pointer;transition:all var(--t) var(--e);
+}
+.btn-login:hover{border-color:var(--p);color:var(--p);}
+
+/* profile dropdown */
+.profile-container{position:relative;}
+.profile-trigger{
+  width:36px;height:36px;border-radius:50%;border:2px solid var(--border);
+  background:none;cursor:pointer;overflow:hidden;padding:0;
+  transition:border-color var(--t);
+}
+.profile-trigger:hover{border-color:var(--p);}
+.profile-trigger img{width:100%;height:100%;object-fit:cover;}
+.dropdown{
+  display:none;position:absolute;right:0;top:calc(100% + 8px);
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;box-shadow:var(--shadow-lg);
+  z-index:200;min-width:200px;overflow:hidden;
+  animation:ddIn .15s var(--e);
+}
+@keyframes ddIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.dropdown a,.dropdown div{
+  display:block;padding:10px 16px;
+  text-decoration:none;color:var(--fg2);font-size:13px;
+  transition:background var(--t),color var(--t);
+}
+.dropdown a:hover{background:var(--bg2);color:var(--p);}
+.dropdown .dd-name{font-weight:600;color:var(--fg);border-bottom:1px solid var(--border);}
+.plan-label{font-size:12px;color:var(--fg3);padding-top:4px!important;}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  min-height:88vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  padding:80px 24px 60px;
+  overflow:hidden;
+}
+
+/* gradient orbs */
+.hero::before,.hero::after{
+  content:'';position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;
+}
+.hero::before{
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(91,92,246,.18) 0%,transparent 70%);
+  top:-100px;left:50%;transform:translateX(-50%);
+}
+.hero::after{
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(16,185,129,.1) 0%,transparent 70%);
+  bottom:-80px;right:10%;
+}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 14px;border-radius:99px;
+  background:rgba(91,92,246,.1);border:1px solid rgba(91,92,246,.25);
+  font-family:'DM Mono',monospace;font-size:11.5px;font-weight:500;
+  color:var(--p);letter-spacing:.05em;
+  margin-bottom:28px;
+  animation:fadeUp .6s var(--e) .1s both;
+}
+.hero-badge-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--p);animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(91,92,246,.4)}
+  50%{box-shadow:0 0 0 6px rgba(91,92,246,0)}
+}
+
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(38px,6vw,72px);
+  font-weight:800;line-height:1.04;letter-spacing:-.04em;
+  color:var(--fg);
+  max-width:800px;
+  margin-bottom:20px;
+  animation:fadeUp .6s var(--e) .2s both;
+}
+
+.hero h1 .grad{
+  background:linear-gradient(135deg,var(--p),var(--p2),#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.hero-sub{
+  font-size:clamp(16px,2vw,20px);font-weight:300;
+  color:var(--fg2);max-width:560px;line-height:1.65;
+  margin-bottom:10px;
+  animation:fadeUp .6s var(--e) .3s both;
+}
+
+#welcome{
+  font-size:14px;font-weight:500;color:var(--p);
+  margin-bottom:36px;min-height:20px;
+  animation:fadeUp .6s var(--e) .35s both;
+}
+
+.hero-cta{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;
+  margin-bottom:60px;
+  animation:fadeUp .6s var(--e) .4s both;
+}
+
+.cta-primary{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:14px 28px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,var(--p),var(--p3));
+  color:#fff;font-family:'Syne',sans-serif;font-size:16px;font-weight:700;
+  cursor:pointer;
+  box-shadow:0 8px 28px rgba(91,92,246,.38);
+  transition:transform var(--t),box-shadow var(--t);
+}
+.cta-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(91,92,246,.5);}
+
+.cta-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 24px;border-radius:12px;
+  border:1.5px solid var(--border);background:var(--card);
+  color:var(--fg);font-size:15px;font-weight:500;cursor:pointer;
+  transition:all var(--t) var(--e);font-family:'DM Sans',sans-serif;
+}
+.cta-secondary:hover{border-color:var(--p);color:var(--p);}
+
+/* social proof strip */
+.proof-strip{
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp .6s var(--e) .5s both;
+}
+.proof-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:13px;color:var(--fg3);font-weight:400;
+}
+.proof-item span{font-size:16px;}
+
+/* extension mockup in hero */
+.hero-mockup{
+  width:100%;max-width:420px;
+  background:var(--card);border-radius:16px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+  margin:56px auto 0;
+  animation:fadeUp .7s var(--e) .55s both;
+  position:relative;z-index:1;
+}
+.mock-bar{
+  display:flex;align-items:center;gap:7px;
+  padding:10px 14px;background:var(--bg2);
+  border-bottom:1px solid var(--border);
+}
+.mock-dot{width:9px;height:9px;border-radius:50%;}
+.mock-dot.r{background:#ff5f57;}
+.mock-dot.y{background:#febc2e;}
+.mock-dot.g{background:#28c840;}
+.mock-url{
+  flex:1;padding:4px 10px;border-radius:6px;
+  background:var(--card);border:1px solid var(--border);
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--fg3);
+}
+.mock-body{padding:16px;}
+.mock-prompt{
+  width:100%;padding:10px 12px;border-radius:8px;
+  border:1.5px solid rgba(91,92,246,.3);background:rgba(91,92,246,.04);
+  font-family:'DM Sans',sans-serif;font-size:13px;color:var(--fg);
+  margin-bottom:10px;
+}
+.mock-btn{
+  width:100%;padding:10px;border-radius:8px;
+  background:linear-gradient(135deg,var(--p),var(--p3));
+  color:#fff;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  box-shadow:0 4px 14px rgba(91,92,246,.35);
+  margin-bottom:10px;
+}
+.mock-out{
+  background:var(--bg2);border-radius:8px;
+  border:1px solid var(--border);padding:10px 12px;
+}
+.mock-out-lbl{
+  font-family:'DM Mono',monospace;font-size:9.5px;color:var(--p);margin-bottom:8px;
+}
+.mock-idea{
+  display:flex;gap:8px;align-items:flex-start;
+  font-size:12px;color:var(--fg2);padding:4px 0;border-bottom:1px solid var(--border);
+  line-height:1.5;
+}
+.mock-idea:last-child{border:none;padding-bottom:0;}
+.mock-idea-n{
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  color:var(--p);background:rgba(91,92,246,.1);
+  padding:1px 5px;border-radius:4px;flex-shrink:0;margin-top:2px;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── SECTIONS ── */
+.section{padding:80px 24px;max-width:1100px;margin:auto;}
+.section-label{
+  display:inline-block;
+  font-family:'DM Mono',monospace;font-size:11px;font-weight:500;
+  color:var(--p);letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:14px;
+}
+.section-title{
+  font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,42px);
+  font-weight:800;letter-spacing:-.03em;color:var(--fg);
+  margin-bottom:14px;line-height:1.1;
+}
+.section-sub{font-size:17px;color:var(--fg2);font-weight:300;max-width:560px;line-height:1.65;}
+.section-hdr{margin-bottom:48px;}
+.section-hdr.center{text-align:center;}
+.section-hdr.center .section-sub{margin:0 auto;}
+
+/* features grid */
+.feat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
+}
+.feat-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:28px;
+  box-shadow:var(--shadow);
+  transition:transform var(--t) var(--e),box-shadow var(--t) var(--e),border-color var(--t);
+}
+.feat-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-lg);
+  border-color:rgba(91,92,246,.3);
+}
+.feat-ico{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(91,92,246,.12),rgba(129,140,248,.08));
+  border:1px solid rgba(91,92,246,.15);
+  display:grid;place-items:center;font-size:22px;
+  margin-bottom:16px;
+}
+.feat-title{
+  font-family:'Syne',sans-serif;font-size:17px;font-weight:700;
+  color:var(--fg);margin-bottom:8px;letter-spacing:-.2px;
+}
+.feat-desc{font-size:14px;color:var(--fg2);line-height:1.65;font-weight:300;}
+
+/* how it works */
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{
+  display:flex;gap:24px;align-items:flex-start;
+  padding:28px 0;border-bottom:1px solid var(--border);
+}
+.step:last-child{border:none;}
+.step-num{
+  width:44px;height:44px;border-radius:12px;
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  color:#fff;font-family:'Syne',sans-serif;font-size:18px;font-weight:800;
+  display:grid;place-items:center;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(91,92,246,.3);
+}
+.step-content{}
+.step-title{
+  font-family:'Syne',sans-serif;font-size:18px;font-weight:700;
+  color:var(--fg);margin-bottom:6px;letter-spacing:-.2px;
+}
+.step-desc{font-size:14.5px;color:var(--fg2);line-height:1.65;font-weight:300;}
+
+/* use cases */
+.uc-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
+}
+.uc-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:24px;
+  transition:all var(--t) var(--e);
+}
+.uc-card:hover{border-color:rgba(91,92,246,.3);transform:translateY(-2px);}
+.uc-icon{font-size:28px;margin-bottom:12px;}
+.uc-title{
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:700;
+  color:var(--fg);margin-bottom:7px;letter-spacing:-.2px;
+}
+.uc-desc{font-size:13.5px;color:var(--fg2);line-height:1.6;font-weight:300;}
+
+/* tools strip */
+.tools-strip{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-top:32px;
+}
+.tool-pill{
+  display:flex;align-items:center;gap:7px;
+  padding:9px 16px;border-radius:99px;
+  background:var(--card);border:1.5px solid var(--border);
+  font-size:13px;font-weight:500;color:var(--fg2);
+  transition:all var(--t) var(--e);
+}
+.tool-pill:hover{border-color:var(--p);color:var(--p);background:rgba(91,92,246,.05);}
+
+/* CTA band */
+.cta-band{
+  background:linear-gradient(135deg,var(--p) 0%,var(--p3) 100%);
+  border-radius:24px;padding:64px 40px;text-align:center;
+  margin:0 24px 80px;
+  position:relative;overflow:hidden;
+}
+.cta-band::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.cta-band-title{
+  font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,44px);
+  font-weight:800;letter-spacing:-.03em;color:#fff;
+  margin-bottom:14px;line-height:1.1;position:relative;
+}
+.cta-band-sub{
+  font-size:17px;font-weight:300;color:rgba(255,255,255,.75);
+  max-width:480px;margin:0 auto 32px;line-height:1.65;position:relative;
+}
+.cta-band-btn{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:15px 32px;border-radius:12px;border:none;
+  background:#fff;color:var(--p);
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:700;
+  cursor:pointer;position:relative;
+  box-shadow:0 8px 28px rgba(0,0,0,.2);
+  transition:transform var(--t),box-shadow var(--t);
+}
+.cta-band-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,0,0,.25);}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:40px 32px;
+  display:flex;flex-direction:column;align-items:center;gap:20px;
+}
+.footer-brand{
+  display:flex;align-items:center;gap:9px;
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--fg);
+}
+.footer-links{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;}
+.footer-link{
+  padding:6px 14px;border-radius:8px;
+  font-size:13px;color:var(--fg3);text-decoration:none;
+  transition:color var(--t),background var(--t);
+}
+.footer-link:hover{color:var(--p);background:rgba(91,92,246,.07);}
+.footer-copy{font-size:12px;color:var(--fg3);}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:0 32px;}
+
+/* ── MOBILE ── */
+@media(max-width:680px){
+  nav{padding:0 16px;}
+  .nav-links{display:none;}
+  .hero{padding:60px 16px 40px;}
+  .section{padding:56px 16px;}
+  .cta-band{margin:0 16px 56px;padding:48px 24px;}
+  footer{padding:32px 16px;}
+  .step{flex-direction:column;gap:12px;}
+}
+</style>
 </head>
-<body>
-  <header>
-    <div class="nav-left">
-      <img src="icon128.png" alt="Logo" class="logo" onclick="location.href='index.html'" />
-      <button id="addBtn" class="btn primary">Add to Chrome</button>
-      <button id="loginBtn" class="btn outline">Login</button>
+<body class="dark">
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-brand" href="index.html">
+    <img src="icon128.png" alt="Brainstorm Buddy" class="nav-logo" style="border-radius:10px;object-fit:cover;">
+    <span class="nav-name">Brainstorm Buddy</span>
+  </a>
+
+  <div class="nav-links">
+    <button class="nav-link" id="pricingBtn">Pricing</button>
+    <button class="nav-link" id="aboutBtn">About</button>
+  </div>
+
+  <div class="nav-right">
+    <button class="ibtn" id="darkToggle" onclick="toggleDarkMode()" title="Toggle theme">☀️</button>
+    <select class="nav-select" id="langSelect">
+      <option value="en">EN</option>
+      <option value="es">ES</option>
+      <option value="fr">FR</option>
+      <option value="ru">RU</option>
+      <option value="it">IT</option>
+      <option value="pt">PT</option>
+    </select>
+    <button class="btn-login" id="loginBtn">Login</button>
+    <button class="btn-add" id="addBtn">⚡ Add to Chrome</button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <img src="icon128.png" alt="Brainstorm Buddy" style="width:72px;height:72px;border-radius:20px;box-shadow:0 8px 28px rgba(91,92,246,.3);margin-bottom:24px;animation:fadeUp .6s cubic-bezier(.4,0,.2,1) both;">
+  <div class="hero-badge"><span class="hero-badge-dot"></span> Chrome Extension · Free to start</div>
+
+  <h1 id="headline">Think Faster.<br><span class="grad">Build Smarter.</span></h1>
+
+  <p class="hero-sub" id="subtext">AI-powered brainstorming and smart note-taking, right in your browser. Generate ideas, build mind maps, and capture everything — instantly.</p>
+
+  <p id="welcome"></p>
+
+  <div class="hero-cta">
+    <button class="cta-primary" id="heroChromeBtn">⚡ Add to Chrome — Free</button>
+    <button class="cta-secondary" id="heroPricingBtn">See pricing →</button>
+  </div>
+
+  <div class="proof-strip">
+    <div class="proof-item"><span>🧠</span> <span id="proof1">AI idea generator</span></div>
+    <div class="proof-item"><span>🗺️</span> <span id="proof2">Visual mind maps</span></div>
+    <div class="proof-item"><span>🎙️</span> <span id="proof3">Voice notes</span></div>
+    <div class="proof-item"><span>💬</span> <span id="proof4">In-note AI chat</span></div>
+    <div class="proof-item"><span>🔒</span> <span id="proof5">Data never sold</span></div>
+  </div>
+
+  <!-- Mini mockup -->
+  <div class="hero-mockup">
+    <div class="mock-bar">
+      <div class="mock-dot r"></div>
+      <div class="mock-dot y"></div>
+      <div class="mock-dot g"></div>
+      <div class="mock-url"><span id="mockUrl">brainstorm-buddy · chrome extension</span></div>
     </div>
-    <div class="nav-right">
-      <button id="pricingBtn" class="btn outline">Pricing</button>
-      <button id="aboutBtn" class="btn outline">About</button>
-      <button class="switcher" onclick="toggleDarkMode()">🌙</button>
-      <select class="switcher" id="langSelect">
-        <option value="en">EN</option>
-        <option value="es">ES</option>
-        <option value="fr">FR</option>
-        <option value="ru">RU</option>
-        <option value="it">IT</option>
-        <option value="pt">PT</option>
-      </select>
-    </div>
-  </header>
-
-  <main>
-    <img src="icon128.png" alt="Brainstorm Buddy Icon" onclick="location.href='index.html'" />
-    <h1 id="headline">Boost Your Productivity</h1>
-    <p id="subtext">Your favorite Chrome Extension for AI-powered brainstorming and smart note-taking.</p>
-    <p id="welcome"></p>
-  </main>
-
-  <section>
-    <h2 id="featuresTitle">✨ Features</h2>
-    <ul>
-      <li id="feature1">🧠 Instantly generate ideas using AI</li>
-      <li id="feature2">📝 Write and organize your own notes</li>
-      <li id="feature3">📁 Export or import your notes anytime</li>
-      <li id="feature4">⚡ Super lightweight and fast in your browser</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2 id="howTitle">📌 How It Works</h2>
-    <ol>
-      <li id="step1">Install the extension on Chrome</li>
-      <li id="step2">Click the Brainstorm Buddy icon</li>
-      <li id="step3">Generate ideas with AI or write your own</li>
-      <li id="step4">Save, export, or import your notes</li>
-    </ol>
-  </section>
-
-  <section>
-    <h2 id="usecasesTitle">🎯 Perfect For</h2>
-    <div class="use-cases-grid">
-      <div class="card">
-        <h3 id="studentTitle">🧑‍🎓 Students</h3>
-        <p id="studentDesc">Quickly brainstorm essay ideas, project outlines, and study notes.</p>
-      </div>
-      <div class="card">
-        <h3 id="writerTitle">✍️ Writers</h3>
-        <p id="writerDesc">Get past creative blocks and develop fresh story or content ideas.</p>
-      </div>
-      <div class="card">
-        <h3 id="entrepreneurTitle">💡 Entrepreneurs</h3>
-        <p id="entrepreneurDesc">Jot down business ideas, product features, and customer pain points.</p>
-      </div>
-      <div class="card">
-        <h3 id="professionalTitle">👔 Professionals & Employers</h3>
-        <p id="professionalDesc">Streamline reports, prep for meetings, draft emails, and generate ideas for team improvement.</p>
-      </div>
-      <div class="card">
-        <h3 id="marketerTitle">🛍️ Marketers & Content Creators</h3>
-        <p id="marketerDesc">Plan social media content, brainstorm campaigns, and draft blog post ideas effortlessly.</p>
-      </div>
-      <div class="card">
-        <h3 id="developerTitle">🧑‍💻 Developers & Techies</h3>
-        <p id="developerDesc">Jot down code snippets, write pseudocode, and log feature ideas or bugs during research or development.</p>
+    <div class="mock-body">
+      <div class="mock-prompt" id="mockPrompt">10 startup ideas in the sustainability space…</div>
+      <div class="mock-btn" id="mockBtn">✨ Generate Ideas</div>
+      <div class="mock-out">
+        <div class="mock-out-lbl" id="mockLbl">// output</div>
+        <div class="mock-idea"><span class="mock-idea-n">01</span><span id="mockIdea1">AI carbon footprint tracker for SMBs</span></div>
+        <div class="mock-idea"><span class="mock-idea-n">02</span><span id="mockIdea2">Circular economy B2B waste marketplace</span></div>
+        <div class="mock-idea"><span class="mock-idea-n">03</span><span id="mockIdea3">Green supply chain audit tool with AI scoring</span></div>
+        <div class="mock-idea"><span class="mock-idea-n">04</span><span id="mockIdea4">Subscription box for zero-waste home products</span></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="cta">
-    <h2 id="ctaTitle">Ready to turn ideas into action?</h2>
-    <p id="ctaDesc">Install Brainstorm Buddy and start brainstorming smarter, not harder.</p>
-    <button class="btn primary" onclick="window.open('https://chromewebstore.google.com/detail/brainstorm-buddy-powered/cjdmgbbgficmdlgaihamohgpaadeagja?authuser=7&hl=en', '_blank')">➕ Add to Chrome</button>
-  </section>
+<div class="divider"></div>
 
-  <footer>
-    <a id="footerPrivacy" href="privacy.html">Privacy Policy</a>
-    <a id="footerTerms" href="terms.html">Terms of Service</a>
-    <a id="footerContact" href="contact.html">Contact Us</a>
-    <a id="footerSupport" href="support.html">Support Us</a>
-  </footer>
+<!-- ── FEATURES ── -->
+<section class="section" id="features">
+  <div class="section-hdr center">
+    <div class="section-label" id="featuresLabel">Features</div>
+    <h2 class="section-title" id="featuresTitle">Everything you need to think better</h2>
+    <p class="section-sub" id="featuresSub">From first idea to finished note — Brainstorm Buddy has every step covered.</p>
+  </div>
 
-  <script>
-    // ========= i18n =========
-    const translations = {
-      en: {
-        addBtn:"Add to Chrome", loginBtn:"Login", pricingBtn:"Pricing", aboutBtn:"About",
-        headline:"Boost Your Productivity", subtext:"Your favorite Chrome Extension for AI-powered brainstorming and smart note-taking.",
-        featuresTitle:"✨ Features", feature1:"🧠 Instantly generate ideas using AI", feature2:"📝 Write and organize your own notes",
-        feature3:"📁 Export or import your notes anytime", feature4:"⚡ Super lightweight and fast in your browser",
-        howTitle:"📌 How It Works", step1:"Install the extension on Chrome", step2:"Click the Brainstorm Buddy icon",
-        step3:"Generate ideas with AI or write your own", step4:"Save, export, or import your notes",
-        usecasesTitle:"🎯 Perfect For", studentTitle:"🧑‍🎓 Students", studentDesc:"Quickly brainstorm essay ideas, project outlines, and study notes.",
-        writerTitle:"✍️ Writers", writerDesc:"Get past creative blocks and develop fresh story or content ideas.",
-        entrepreneurTitle:"💡 Entrepreneurs", entrepreneurDesc:"Jot down business ideas, product features, and customer pain points.",
-        professionalTitle:"👔 Professionals & Employers", professionalDesc:"Streamline reports, prep for meetings, draft emails, and generate ideas for team improvement.",
-        marketerTitle:"🛍️ Marketers & Content Creators", marketerDesc:"Plan social media content, brainstorm campaigns, and draft blog post ideas effortlessly.",
-        developerTitle:"🧑‍💻 Developers & Techies", developerDesc:"Jot down code snippets, write pseudocode, and log feature ideas or bugs during research or development.",
-        ctaTitle:"Ready to turn ideas into action?", ctaDesc:"Install Brainstorm Buddy and start brainstorming smarter, not harder.",
-        footerPrivacy:"Privacy Policy", footerTerms:"Terms of Service", footerContact:"Contact Us", footerSupport:"Support Us"
-      },
-      es:{addBtn:"Agregar a Chrome",loginBtn:"Iniciar sesión",pricingBtn:"Precios",aboutBtn:"Acerca de",
-        headline:"Aumenta tu productividad",subtext:"Tu extensión favorita para lluvia de ideas con IA.",
-        featuresTitle:"✨ Funciones",feature1:"🧠 Genera ideas con IA",feature2:"📝 Escribe tus notas",
-        feature3:"📁 Exporta o importa tus notas",feature4:"⚡ Ligera y rápida",
-        howTitle:"📌 Cómo funciona",step1:"Instala la extensión",step2:"Haz clic en el icono",step3:"Genera ideas o escribe",step4:"Guarda o exporta tus notas",
-        usecasesTitle:"🎯 Perfecto para",studentTitle:"🧑‍🎓 Estudiantes",studentDesc:"Ideas para ensayos y estudios",
-        writerTitle:"✍️ Escritores",writerDesc:"Supera bloqueos creativos",
-        entrepreneurTitle:"💡 Emprendedores",entrepreneurDesc:"Anota ideas y problemas de clientes",
-        professionalTitle:"👔 Profesionales y Empleadores",professionalDesc:"Optimiza informes, prepara reuniones, redacta correos y genera ideas para mejorar el equipo.",
-        marketerTitle:"🛍️ Marketeros y Creadores de Contenido",marketerDesc:"Planifica contenido en redes sociales, ideas de campañas y borradores de blogs fácilmente.",
-        developerTitle:"🧑‍💻 Desarrolladores y Técnicos",developerDesc:"Anota fragmentos de código, escribe pseudocódigo y registra ideas o errores.",
-        ctaTitle:"¿Listo para empezar?",ctaDesc:"Instala Brainstorm Buddy ahora",
-        footerPrivacy:"Política de privacidad",footerTerms:"Términos del servicio",footerContact:"Contáctanos",footerSupport:"Apóyanos"
-      },
-      fr:{addBtn:"Ajouter à Chrome",loginBtn:"Connexion",pricingBtn:"Tarifs",aboutBtn:"À propos",
-        headline:"Boostez votre productivité",subtext:"Extension Chrome pour prise de notes intelligente.",
-        featuresTitle:"✨ Fonctionnalités",feature1:"🧠 Générez des idées avec l'IA",feature2:"📝 Organisez vos notes",
-        feature3:"📁 Exportez ou importez vos notes",feature4:"⚡ Rapide et légère",
-        howTitle:"📌 Comment ça marche",step1:"Installez l'extension",step2:"Cliquez sur l'icône",step3:"Générez ou écrivez",step4:"Sauvegardez vos notes",
-        usecasesTitle:"🎯 Idéal pour",studentTitle:"🧑‍🎓 Étudiants",studentDesc:"Idées de projets et études",
-        writerTitle:"✍️ Écrivains",writerDesc:"Débloquez votre créativité",entrepreneurTitle:"💡 Entrepreneurs",entrepreneurDesc:"Notez vos idées de produits",
-        professionalTitle:"👔 Professionnels et Employeurs",professionalDesc:"Simplifiez les rapports, préparez les réunions, rédigez des e-mails et trouvez des idées.",
-        marketerTitle:"🛍️ Marketeurs & Créateurs de contenu",marketerDesc:"Planifiez du contenu social, imaginez des campagnes et des brouillons de blogs.",
-        developerTitle:"🧑‍💻 Développeurs & Technophiles",developerDesc:"Notez des extraits de code, écrivez du pseudocode et consignez des idées ou bugs.",
-        ctaTitle:"Prêt à agir ?",ctaDesc:"Installez Brainstorm Buddy",footerPrivacy:"Politique de confidentialité",
-        footerTerms:"Conditions d'utilisation",footerContact:"Contactez-nous",footerSupport:"Soutenez-nous"
-      },
-      ru:{addBtn:"Добавить в Chrome",loginBtn:"Войти",pricingBtn:"Цены",aboutBtn:"О нас",
-        headline:"Повышайте продуктивность",subtext:"Ваш помощник для мозгового штурма",
-        featuresTitle:"✨ Функции",feature1:"🧠 Генерация идей с ИИ",feature2:"📝 Организуйте свои заметки",
-        feature3:"📁 Экспорт и импорт",feature4:"⚡ Быстрая работа",
-        howTitle:"📌 Как это работает",step1:"Установите расширение",step2:"Нажмите на иконку",step3:"Создайте или напишите",step4:"Сохраните заметки",
-        usecasesTitle:"🎯 Идеально для",studentTitle:"🧑‍🎓 Студенты",studentDesc:"Идеи и заметки для учебы",
-        writerTitle:"✍️ Писатели",writerDesc:"Преодолейте творческие блоки",
-        entrepreneurTitle:"💡 Предприниматели",entrepreneurDesc:"Записывайте идеи и фичи",
-        professionalTitle:"👔 Профессионалы и Работодатели",professionalDesc:"Отчёты, встречи, письма и идеи для команды.",
-        marketerTitle:"🛍️ Маркетологи и Контент-криэйторы",marketerDesc:"Планируйте контент, кампании и черновики статей.",
-        developerTitle:"🧑‍💻 Разработчики и Техники",developerDesc:"Сниппеты кода, псевдокод и заметки о багах.",
-        ctaTitle:"Готовы начать?",ctaDesc:"Установите Brainstorm Buddy",
-        footerPrivacy:"Политика конфиденциальности",footerTerms:"Условия использования",footerContact:"Связаться с нами",footerSupport:"Поддержать нас"
-      },
-      it:{addBtn:"Aggiungi a Chrome",loginBtn:"Accedi",pricingBtn:"Prezzi",aboutBtn:"Chi siamo",
-        headline:"Aumenta la produttività",subtext:"Estensione per brainstorming intelligente",
-        featuresTitle:"✨ Caratteristiche",feature1:"🧠 Genera idee con l'IA",feature2:"📝 Organizza le tue note",
-        feature3:"📁 Esporta o importa",feature4:"⚡ Veloce e leggera",
-        howTitle:"📌 Come funziona",step1:"Installa l'estensione",step2:"Clicca sull'icona",step3:"Genera o scrivi",step4:"Salva le note",
-        usecasesTitle:"🎯 Perfetto per",studentTitle:"🧑‍🎓 Studenti",studentDesc:"Appunti e idee per lo studio",
-        writerTitle:"✍️ Scrittori",writerDesc:"Supera i blocchi creativi",
-        entrepreneurTitle:"💡 Imprenditori",entrepreneurDesc:"Scrivi idee di business",
-        professionalTitle:"👔 Professionisti e Datori di lavoro",professionalDesc:"Report, riunioni, e-mail e idee per il team.",
-        marketerTitle:"🛍️ Marketer e Creatori di Contenuti",marketerDesc:"Post social, campagne e bozze di blog.",
-        developerTitle:"🧑‍💻 Sviluppatori & Tecnici",developerDesc:"Snippet di codice, pseudocodice e idee/bug.",
-        ctaTitle:"Pronto ad agire?",ctaDesc:"Installa Brainstorm Buddy",
-        footerPrivacy:"Privacy",footerTerms:"Termini",footerContact:"Contattaci",footerSupport:"Sostienici"
-      },
-      pt:{addBtn:"Adicionar ao Chrome",loginBtn:"Entrar",pricingBtn:"Preços",aboutBtn:"Sobre",
-        headline:"Aumente sua produtividade",subtext:"Extensão de anotações inteligentes com IA.",
-        featuresTitle:"✨ Recursos",feature1:"🧠 Ideias com IA",feature2:"📝 Organize suas notas",
-        feature3:"📁 Exporte ou importe",feature4:"⚡ Rápida e leve",
-        howTitle:"📌 Como funciona",step1:"Instale a extensão",step2:"Clique no ícone",step3:"Gere ou escreva ideias",step4:"Salve suas anotações",
-        usecasesTitle:"🎯 Perfeito para",studentTitle:"🧑‍🎓 Estudantes",studentDesc:"Ideias e resumos",
-        writerTitle:"✍️ Escritores",writerDesc:"Supere bloqueios criativos",entrepreneurTitle:"💡 Empreendedores",entrepreneurDesc:"Anote ideias de negócios",
-        professionalTitle:"👔 Profissionais e Empregadores",professionalDesc:"Relatórios, reuniões, e-mails e ideias para o time.",
-        marketerTitle:"🛍️ Marketing & Criadores",marketerDesc:"Posts sociais, campanhas e rascunhos.",
-        developerTitle:"🧑‍💻 Desenvolvedores & Técnicos",developerDesc:"Trechos de código, pseudocódigo e ideias/bugs.",
-        ctaTitle:"Pronto para agir?",ctaDesc:"Instale agora",
-        footerPrivacy:"Política de Privacidade",footerTerms:"Termos de Uso",footerContact:"Contato",footerSupport:"Apoie-nos"
-      }
-    };
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-ico">🧠</div>
+      <div class="feat-title" id="feature1Title">AI Idea Generator</div>
+      <p class="feat-desc" id="feature1">Instantly get angles, outlines, and talking points for any challenge. Refine with one click — more creative, more practical, or drill into a niche.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-ico">🗺️</div>
+      <div class="feat-title" id="feature2Title">Visual Mind Maps</div>
+      <p class="feat-desc" id="feature2">Turn any output into a colour-coded mind map instantly. Save it to your notepad as an image with space to write notes beneath.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-ico">📝</div>
+      <div class="feat-title" id="feature3Title">Smart Notepad</div>
+      <p class="feat-desc" id="feature3">A fast, distraction-free workspace. Organise with #hashtags, search instantly, drag to reorder, and attach voice recordings.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-ico">🎙️</div>
+      <div class="feat-title" id="feature4Title">Voice Notes & TTS</div>
+      <p class="feat-desc" id="feature4">Record voice snippets or play back your writing with text-to-speech — the fastest way to hear gaps and improve flow.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-ico">💬</div>
+      <div class="feat-title" id="feature5Title">In-Note AI Chat</div>
+      <p class="feat-desc" id="feature5">Chat with AI directly inside any note. Ask follow-ups, refine sections, co-write paragraphs, or get instant feedback.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-ico">📤</div>
+      <div class="feat-title" id="feature6Title">Import & Export</div>
+      <p class="feat-desc" id="feature6">Export notes as Markdown or plain text. Import from any file. One-click Save Page captures title, URL, and selection from any website.</p>
+    </div>
+  </div>
 
-    function changeLanguage(lang) {
-      const t = translations[lang] || translations.en;
-      for (const key in t) {
-        const el = document.getElementById(key);
-        if (el) el.textContent = t[key];
-      }
-      localStorage.setItem('selectedLanguage', lang);
-      document.getElementById('langSelect').value = lang;
+  <!-- AI Tools pills -->
+  <div style="margin-top:48px;">
+    <div class="section-label" id="toolsLabel">AI Analysis Tools</div>
+    <p style="font-size:15px;color:var(--fg2);margin-top:6px;margin-bottom:20px;" id="toolsDesc">Run any of these on your generated ideas — all instant, no extra credits used.</p>
+    <div class="tools-strip">
+      <div class="tool-pill" id="tool1">🪞 Reverse Brainstorm</div>
+      <div class="tool-pill" id="tool2">💪 SWOT Analysis</div>
+      <div class="tool-pill" id="tool3">🏆 Idea Ranker</div>
+      <div class="tool-pill" id="tool4">🎯 Niche Drill-Down</div>
+      <div class="tool-pill" id="tool5">💡 What If Mode</div>
+      <div class="tool-pill" id="tool6">🗺️ Mind Map</div>
+      <div class="tool-pill" id="tool7">🌡️ Trend Radar</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="section">
+  <div class="section-hdr">
+    <div class="section-label" id="howLabel">How it works</div>
+    <h2 class="section-title" id="howTitle">Up and running in 60 seconds</h2>
+    <p class="section-sub" id="howSub">No setup. No learning curve. Just open and think.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title" id="step1Title">Install the extension</div>
+        <p class="step-desc" id="step1">Add Brainstorm Buddy to Chrome in one click from the Web Store. It appears instantly in your toolbar — no account required to start.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title" id="step2Title">Type your challenge</div>
+        <p class="step-desc" id="step2">Click the Brainstorm Buddy icon, type any prompt — a business idea, essay topic, campaign brief, anything — and hit Generate.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title" id="step3Title">Analyse and refine</div>
+        <p class="step-desc" id="step3">Use AI analysis tools to rank, stress-test, and drill into your ideas. Refine with one click or run a mind map to see the full picture.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title" id="step4Title">Save, export, or share</div>
+        <p class="step-desc" id="step4">Save ideas to your notepad, export as Markdown, record a voice note, or save any web page — everything in one place.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── USE CASES ── -->
+<section class="section">
+  <div class="section-hdr center">
+    <div class="section-label" id="usecasesLabel">Perfect for</div>
+    <h2 class="section-title" id="usecasesTitle">Built for how you actually think</h2>
+  </div>
+
+  <div class="uc-grid">
+    <div class="uc-card">
+      <div class="uc-icon">🧑‍🎓</div>
+      <div class="uc-title" id="studentTitle">Students</div>
+      <p class="uc-desc" id="studentDesc">Brainstorm essay ideas, build project outlines, and organise study notes — all without leaving your browser tab.</p>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">✍️</div>
+      <div class="uc-title" id="writerTitle">Writers</div>
+      <p class="uc-desc" id="writerDesc">Break through creative blocks. Generate story angles, article hooks, or chapter outlines in seconds.</p>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">💡</div>
+      <div class="uc-title" id="entrepreneurTitle">Entrepreneurs</div>
+      <p class="uc-desc" id="entrepreneurDesc">Validate ideas fast. Jot business concepts, stress-test them with AI, and rank your strongest bets.</p>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">👔</div>
+      <div class="uc-title" id="professionalTitle">Professionals</div>
+      <p class="uc-desc" id="professionalDesc">Prep for meetings, draft reports, and generate team improvement ideas — all captured in one smart notepad.</p>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">🛍️</div>
+      <div class="uc-title" id="marketerTitle">Marketers</div>
+      <p class="uc-desc" id="marketerDesc">Plan campaigns, brainstorm content, and draft post ideas with AI — then export straight to your workflow.</p>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">🧑‍💻</div>
+      <div class="uc-title" id="developerTitle">Developers</div>
+      <p class="uc-desc" id="developerDesc">Log feature ideas, capture research notes, and brainstorm architecture decisions without breaking your flow.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BAND ── -->
+<div class="cta-band">
+  <div class="cta-band-title" id="ctaTitle">Ready to think faster?</div>
+  <p class="cta-band-sub" id="ctaDesc">Install Brainstorm Buddy and start brainstorming smarter, not harder. Free to start — no credit card needed.</p>
+  <button class="cta-band-btn" id="ctaBandBtn" onclick="window.open('https://chromewebstore.google.com/detail/brainstorm-buddy-powered/cjdmgbbgficmdlgaihamohgpaadeagja?authuser=7&hl=en','_blank')">
+    <span id="ctaBandBtnText">⚡ Add to Chrome — It's Free</span>
+  </button>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">
+    <img src="icon128.png" alt="Brainstorm Buddy" style="width:30px;height:30px;border-radius:8px;object-fit:cover;">
+    Brainstorm Buddy
+  </div>
+  <div class="footer-links">
+    <a class="footer-link" id="footerPrivacy" href="privacy.html">Privacy Policy</a>
+    <a class="footer-link" id="footerTerms" href="terms.html">Terms of Service</a>
+    <a class="footer-link" id="footerContact" href="contact.html">Contact</a>
+    <a class="footer-link" id="footerSupport" href="support.html">Support Us</a>
+    <a class="footer-link" href="pricing.html">Pricing</a>
+  </div>
+  <div class="footer-copy" id="footerCopy">© 2025 Brainstorm Buddy · Built for thinkers</div>
+</footer>
+
+<script>
+// ── i18n ──────────────────────────────────────────────────────────────────────
+const translations = {
+  en:{
+    addBtn:"⚡ Add to Chrome", loginBtn:"Login", pricingBtn:"Pricing", aboutBtn:"About",
+    heroChromeBtn:"⚡ Add to Chrome — Free",heroPricingBtn:"See pricing →",headline:"Think Faster.<br><span class='grad'>Build Smarter.</span>",
+    subtext:"AI-powered brainstorming and smart note-taking, right in your browser.",
+    proof1:"AI idea generator",proof2:"Visual mind maps",proof3:"Voice notes",proof4:"In-note AI chat",proof5:"Data never sold",mockUrl:"brainstorm-buddy · chrome extension",mockPrompt:"10 startup ideas in the sustainability space…",mockBtn:"✨ Generate Ideas",mockLbl:"// output",mockIdea1:"AI carbon footprint tracker for SMBs",mockIdea2:"Circular economy B2B waste marketplace",mockIdea3:"Green supply chain audit tool with AI scoring",mockIdea4:"Subscription box for zero-waste home products",toolsLabel:"AI Analysis Tools",toolsDesc:"Run any of these on your generated ideas — all instant, no extra credits used.",tool1:"🪞 Reverse Brainstorm",tool2:"💪 SWOT Analysis",tool3:"🏆 Idea Ranker",tool4:"🎯 Niche Drill-Down",tool5:"💡 What If Mode",tool6:"🗺️ Mind Map",tool7:"🌡️ Trend Radar",footerCopy:"© 2025 Brainstorm Buddy · Built for thinkers",ctaBandBtnText:"⚡ Add to Chrome — It's Free",featuresLabel:"Features",howLabel:"How it works",usecasesLabel:"Perfect for",featuresTitle:"Everything you need to think better",
+    featuresSub:"From first idea to finished note — Brainstorm Buddy has every step covered.",
+    feature1Title:"AI Idea Generator", feature1:"Instantly get angles, outlines, and talking points for any challenge.",
+    feature2Title:"Visual Mind Maps", feature2:"Turn any output into a colour-coded mind map instantly.",
+    feature3Title:"Smart Notepad", feature3:"A fast, distraction-free workspace with #hashtags and search.",
+    feature4Title:"Voice Notes & TTS", feature4:"Record voice snippets or play back your writing with text-to-speech.",
+    feature5Title:"In-Note AI Chat", feature5:"Chat with AI directly inside any note.",
+    feature6Title:"Import & Export", feature6:"Export as Markdown. Import from any file. Save pages in one click.",
+    howTitle:"Up and running in 60 seconds", howSub:"No setup. No learning curve. Just open and think.",
+    step1Title:"Install the extension", step1:"Add Brainstorm Buddy to Chrome in one click from the Web Store.",
+    step2Title:"Type your challenge", step2:"Type any prompt and hit Generate.",
+    step3Title:"Analyse and refine", step3:"Use AI tools to rank, stress-test, and drill into your ideas.",
+    step4Title:"Save, export, or share", step4:"Save to notepad, export as Markdown, or record a voice note.",
+    usecasesTitle:"Built for how you actually think",
+    studentTitle:"Students", studentDesc:"Brainstorm essay ideas, build project outlines, and organise study notes.",
+    writerTitle:"Writers", writerDesc:"Break through creative blocks and generate story angles in seconds.",
+    entrepreneurTitle:"Entrepreneurs", entrepreneurDesc:"Validate ideas fast with AI stress-testing and ranking.",
+    professionalTitle:"Professionals", professionalDesc:"Prep for meetings, draft reports, and capture team ideas.",
+    marketerTitle:"Marketers", marketerDesc:"Plan campaigns and draft post ideas with AI.",
+    developerTitle:"Developers", developerDesc:"Log feature ideas and capture research without breaking flow.",
+    ctaTitle:"Ready to think faster?", ctaDesc:"Install Brainstorm Buddy and start brainstorming smarter, not harder. Free to start.",
+    footerPrivacy:"Privacy Policy", footerTerms:"Terms of Service", footerContact:"Contact", footerSupport:"Support Us"
+  },
+  es:{addBtn:"Agregar a Chrome",loginBtn:"Iniciar sesión",pricingBtn:"Precios",aboutBtn:"Acerca de",
+    heroChromeBtn:"⚡ Agregar a Chrome — Gratis",heroPricingBtn:"Ver precios →",headline:"Piensa más rápido.<br><span class='grad'>Construye mejor.</span>",
+    subtext:"Lluvia de ideas con IA y notas inteligentes en tu navegador.",
+    proof1:"Generador de ideas IA",proof2:"Mapas mentales visuales",proof3:"Notas de voz",proof4:"Chat IA en notas",proof5:"Datos nunca vendidos",mockUrl:"brainstorm-buddy · extensión de chrome",mockPrompt:"10 ideas de startup en el espacio de sostenibilidad…",mockBtn:"✨ Generar ideas",mockLbl:"// resultado",mockIdea1:"Rastreador de huella de carbono con IA para pymes",mockIdea2:"Mercado B2B de economía circular",mockIdea3:"Herramienta de auditoría de cadena de suministro verde",mockIdea4:"Caja de suscripción de productos ecológicos para el hogar",toolsLabel:"Herramientas de análisis IA",toolsDesc:"Úsalas en tus ideas generadas — instantáneas, sin créditos extra.",tool1:"🪞 Brainstorming inverso",tool2:"💪 Análisis DAFO",tool3:"🏆 Clasificador de ideas",tool4:"🎯 Nicho específico",tool5:"💡 Modo ¿Qué pasa si?",tool6:"🗺️ Mapa mental",tool7:"🌡️ Radar de tendencias",footerCopy:"© 2025 Brainstorm Buddy · Hecho para pensadores",ctaBandBtnText:"⚡ Agregar a Chrome — Es gratis",featuresLabel:"Funciones",howLabel:"Cómo funciona",usecasesLabel:"Perfecto para",featuresTitle:"Todo lo que necesitas para pensar mejor",featuresSub:"De la primera idea a la nota final.",
+    feature1Title:"Generador de ideas IA",feature1:"Genera ideas al instante para cualquier reto.",
+    feature2Title:"Mapas mentales",feature2:"Convierte el resultado en un mapa mental visual.",
+    feature3Title:"Bloc de notas",feature3:"Espacio rápido con #etiquetas y búsqueda.",
+    feature4Title:"Notas de voz y TTS",feature4:"Graba o reproduce tus notas con texto a voz.",
+    feature5Title:"Chat IA en notas",feature5:"Chatea con IA dentro de cualquier nota.",
+    feature6Title:"Importar y exportar",feature6:"Exporta en Markdown. Importa cualquier archivo.",
+    howTitle:"Listo en 60 segundos",howSub:"Sin configuración. Solo abre y piensa.",
+    step1Title:"Instala la extensión",step1:"Añade Brainstorm Buddy a Chrome con un clic.",
+    step2Title:"Escribe tu reto",step2:"Escribe cualquier pregunta y pulsa Generar.",
+    step3Title:"Analiza y refina",step3:"Usa herramientas IA para clasificar y explorar ideas.",
+    step4Title:"Guarda o exporta",step4:"Guarda, exporta o graba una nota de voz.",
+    usecasesTitle:"Diseñado para cómo piensas",
+    studentTitle:"Estudiantes",studentDesc:"Ideas para ensayos y notas de estudio.",
+    writerTitle:"Escritores",writerDesc:"Supera bloqueos creativos al instante.",
+    entrepreneurTitle:"Emprendedores",entrepreneurDesc:"Valida ideas rápido con IA.",
+    professionalTitle:"Profesionales",professionalDesc:"Prepara reuniones y captura ideas de equipo.",
+    marketerTitle:"Marketeros",marketerDesc:"Planifica campañas con IA.",
+    developerTitle:"Desarrolladores",developerDesc:"Registra ideas sin interrumpir tu flujo.",
+    ctaTitle:"¿Listo para pensar más rápido?",ctaDesc:"Instala Brainstorm Buddy ahora. Gratis.",
+    footerPrivacy:"Privacidad",footerTerms:"Términos",footerContact:"Contacto",footerSupport:"Apóyanos"
+  },
+  fr:{addBtn:"Ajouter à Chrome",loginBtn:"Connexion",pricingBtn:"Tarifs",aboutBtn:"À propos",
+    heroChromeBtn:"⚡ Ajouter à Chrome — Gratuit",heroPricingBtn:"Voir les tarifs →",headline:"Pensez plus vite.<br><span class='grad'>Construisez mieux.</span>",
+    subtext:"Brainstorming IA et prise de notes intelligente dans votre navigateur.",
+    proof1:"Générateur d'idées IA",proof2:"Cartes mentales visuelles",proof3:"Notes vocales",proof4:"Chat IA dans les notes",proof5:"Données jamais vendues",mockUrl:"brainstorm-buddy · extension chrome",mockPrompt:"10 idées de startup dans le domaine du développement durable…",mockBtn:"✨ Générer des idées",mockLbl:"// résultat",mockIdea1:"Suivi carbone IA pour PME",mockIdea2:"Marché B2B d'économie circulaire",mockIdea3:"Outil d'audit de chaîne d'approvisionnement verte",mockIdea4:"Box d'abonnement zéro déchet",toolsLabel:"Outils d'analyse IA",toolsDesc:"Appliquez-les à vos idées — instantanés, sans crédits supplémentaires.",tool1:"🪞 Brainstorming inversé",tool2:"💪 Analyse SWOT",tool3:"🏆 Classement d'idées",tool4:"🎯 Niche spécifique",tool5:"💡 Mode Et si ?",tool6:"🗺️ Carte mentale",tool7:"🌡️ Radar de tendances",footerCopy:"© 2025 Brainstorm Buddy · Conçu pour les penseurs",ctaBandBtnText:"⚡ Ajouter à Chrome — C'est gratuit",featuresLabel:"Fonctionnalités",howLabel:"Comment ça marche",usecasesLabel:"Idéal pour",featuresTitle:"Tout ce qu'il faut pour mieux penser",featuresSub:"De la première idée à la note finale.",
+    feature1Title:"Générateur d'idées IA",feature1:"Obtenez des idées instantanément.",
+    feature2Title:"Cartes mentales",feature2:"Transformez les résultats en carte mentale visuelle.",
+    feature3Title:"Bloc-notes intelligent",feature3:"Espace rapide avec #tags et recherche.",
+    feature4Title:"Notes vocales & TTS",feature4:"Enregistrez ou écoutez vos notes.",
+    feature5Title:"Chat IA dans les notes",feature5:"Chattez avec l'IA dans n'importe quelle note.",
+    feature6Title:"Import & Export",feature6:"Exportez en Markdown. Importez tout fichier.",
+    howTitle:"Opérationnel en 60 secondes",howSub:"Pas de configuration. Ouvrez et pensez.",
+    step1Title:"Installez l'extension",step1:"Ajoutez Brainstorm Buddy à Chrome en un clic.",
+    step2Title:"Tapez votre défi",step2:"Saisissez une question et cliquez sur Générer.",
+    step3Title:"Analysez et affinez",step3:"Utilisez les outils IA pour classer et explorer.",
+    step4Title:"Sauvegardez ou exportez",step4:"Sauvegardez, exportez ou enregistrez une note.",
+    usecasesTitle:"Conçu pour votre façon de penser",
+    studentTitle:"Étudiants",studentDesc:"Idées d'essais et notes d'étude.",
+    writerTitle:"Écrivains",writerDesc:"Surmontez les blocages créatifs.",
+    entrepreneurTitle:"Entrepreneurs",entrepreneurDesc:"Validez vos idées rapidement avec l'IA.",
+    professionalTitle:"Professionnels",professionalDesc:"Préparez réunions et capturez idées.",
+    marketerTitle:"Marketeurs",marketerDesc:"Planifiez des campagnes avec l'IA.",
+    developerTitle:"Développeurs",developerDesc:"Notez vos idées sans interrompre votre flux.",
+    ctaTitle:"Prêt à penser plus vite ?",ctaDesc:"Installez Brainstorm Buddy maintenant. Gratuit.",
+    footerPrivacy:"Confidentialité",footerTerms:"Conditions",footerContact:"Contact",footerSupport:"Soutenez-nous"
+  },
+  ru:{addBtn:"Добавить в Chrome",loginBtn:"Войти",pricingBtn:"Цены",aboutBtn:"О нас",
+    heroChromeBtn:"⚡ Добавить в Chrome — Бесплатно",heroPricingBtn:"Смотреть цены →",headline:"Думай быстрее.<br><span class='grad'>Создавай умнее.</span>",
+    subtext:"ИИ-мозговой штурм и умные заметки прямо в браузере.",
+    proof1:"Генератор идей ИИ",proof2:"Визуальные карты идей",proof3:"Голосовые заметки",proof4:"ИИ-чат в заметках",proof5:"Данные не продаются",mockUrl:"brainstorm-buddy · расширение chrome",mockPrompt:"10 идей стартапов в сфере устойчивого развития…",mockBtn:"✨ Генерировать идеи",mockLbl:"// результат",mockIdea1:"ИИ-трекер углеродного следа для МСБ",mockIdea2:"B2B-маркетплейс циклической экономики",mockIdea3:"Инструмент аудита зелёной цепочки поставок",mockIdea4:"Подписка на эко-товары для дома",toolsLabel:"Инструменты анализа ИИ",toolsDesc:"Применяйте к своим идеям — мгновенно, без дополнительных кредитов.",tool1:"🪞 Обратный мозговой штурм",tool2:"💪 SWOT-анализ",tool3:"🏆 Рейтинг идей",tool4:"🎯 Анализ ниш",tool5:"💡 Режим «А что если»",tool6:"🗺️ Карта идей",tool7:"🌡️ Радар трендов",footerCopy:"© 2025 Brainstorm Buddy · Создан для мыслителей",ctaBandBtnText:"⚡ Добавить в Chrome — Бесплатно",featuresLabel:"Функции",howLabel:"Как это работает",usecasesLabel:"Идеально для",featuresTitle:"Всё для лучшего мышления",featuresSub:"От первой идеи до готовой заметки.",
+    feature1Title:"Генератор идей ИИ",feature1:"Мгновенно получайте идеи для любой задачи.",
+    feature2Title:"Интеллект-карты",feature2:"Превратите результат в визуальную карту.",
+    feature3Title:"Умный блокнот",feature3:"Быстрое рабочее пространство с #тегами.",
+    feature4Title:"Голосовые заметки",feature4:"Записывайте или воспроизводите заметки.",
+    feature5Title:"ИИ-чат в заметках",feature5:"Общайтесь с ИИ внутри любой заметки.",
+    feature6Title:"Импорт и экспорт",feature6:"Экспорт в Markdown. Импорт любого файла.",
+    howTitle:"Готово за 60 секунд",howSub:"Без настройки. Просто открой и думай.",
+    step1Title:"Установите расширение",step1:"Добавьте Brainstorm Buddy в Chrome.",
+    step2Title:"Введите задачу",step2:"Напишите вопрос и нажмите Генерировать.",
+    step3Title:"Анализируйте и улучшайте",step3:"Используйте ИИ для ранжирования идей.",
+    step4Title:"Сохраняйте и экспортируйте",step4:"Сохраняйте, экспортируйте или записывайте.",
+    usecasesTitle:"Создан для вашего мышления",
+    studentTitle:"Студенты",studentDesc:"Идеи для эссе и учебные заметки.",
+    writerTitle:"Писатели",writerDesc:"Преодолейте творческий блок.",
+    entrepreneurTitle:"Предприниматели",entrepreneurDesc:"Быстрая проверка идей с ИИ.",
+    professionalTitle:"Профессионалы",professionalDesc:"Подготовка к встречам и идеи для команды.",
+    marketerTitle:"Маркетологи",marketerDesc:"Планируйте кампании с ИИ.",
+    developerTitle:"Разработчики",developerDesc:"Записывайте идеи не прерываясь.",
+    ctaTitle:"Готовы думать быстрее?",ctaDesc:"Установите Brainstorm Buddy. Бесплатно.",
+    footerPrivacy:"Конфиденциальность",footerTerms:"Условия",footerContact:"Контакт",footerSupport:"Поддержать"
+  },
+  it:{addBtn:"Aggiungi a Chrome",loginBtn:"Accedi",pricingBtn:"Prezzi",aboutBtn:"Chi siamo",
+    heroChromeBtn:"⚡ Aggiungi a Chrome — Gratis",heroPricingBtn:"Vedi prezzi →",headline:"Pensa più veloce.<br><span class='grad'>Costruisci meglio.</span>",
+    subtext:"Brainstorming IA e note intelligenti nel tuo browser.",
+    proof1:"Generatore di idee IA",proof2:"Mappe mentali visive",proof3:"Note vocali",proof4:"Chat IA nelle note",proof5:"Dati mai venduti",mockUrl:"brainstorm-buddy · estensione chrome",mockPrompt:"10 idee startup nel settore della sostenibilità…",mockBtn:"✨ Genera idee",mockLbl:"// risultato",mockIdea1:"Tracker IA impronta carbonica per PMI",mockIdea2:"Mercato B2B economia circolare",mockIdea3:"Strumento audit catena fornitura verde",mockIdea4:"Box abbonamento prodotti zero sprechi",toolsLabel:"Strumenti di analisi IA",toolsDesc:"Usali sulle tue idee — istantanei, senza crediti extra.",tool1:"🪞 Brainstorming inverso",tool2:"💪 Analisi SWOT",tool3:"🏆 Classifica idee",tool4:"🎯 Nicchia specifica",tool5:"💡 Modalità E se?",tool6:"🗺️ Mappa mentale",tool7:"🌡️ Radar tendenze",footerCopy:"© 2025 Brainstorm Buddy · Fatto per chi pensa",ctaBandBtnText:"⚡ Aggiungi a Chrome — È gratuito",featuresLabel:"Caratteristiche",howLabel:"Come funziona",usecasesLabel:"Perfetto per",featuresTitle:"Tutto per pensare meglio",featuresSub:"Dalla prima idea alla nota finale.",
+    feature1Title:"Generatore di idee IA",feature1:"Ottieni idee istantaneamente.",
+    feature2Title:"Mappe mentali",feature2:"Trasforma i risultati in mappe visive.",
+    feature3Title:"Blocco note smart",feature3:"Spazio veloce con #tag e ricerca.",
+    feature4Title:"Note vocali e TTS",feature4:"Registra o ascolta le tue note.",
+    feature5Title:"Chat IA nelle note",feature5:"Chatta con l'IA dentro ogni nota.",
+    feature6Title:"Import ed export",feature6:"Esporta in Markdown. Importa qualsiasi file.",
+    howTitle:"Pronto in 60 secondi",howSub:"Nessuna configurazione. Apri e pensa.",
+    step1Title:"Installa l'estensione",step1:"Aggiungi Brainstorm Buddy a Chrome.",
+    step2Title:"Scrivi la tua sfida",step2:"Digita una domanda e clicca Genera.",
+    step3Title:"Analizza e affina",step3:"Usa gli strumenti IA per classificare le idee.",
+    step4Title:"Salva o esporta",step4:"Salva, esporta o registra una nota vocale.",
+    usecasesTitle:"Progettato per il tuo modo di pensare",
+    studentTitle:"Studenti",studentDesc:"Idee per saggi e appunti di studio.",
+    writerTitle:"Scrittori",writerDesc:"Supera i blocchi creativi.",
+    entrepreneurTitle:"Imprenditori",entrepreneurDesc:"Valida idee rapidamente con l'IA.",
+    professionalTitle:"Professionisti",professionalDesc:"Prepara riunioni e cattura idee.",
+    marketerTitle:"Marketer",marketerDesc:"Pianifica campagne con l'IA.",
+    developerTitle:"Sviluppatori",developerDesc:"Registra idee senza interrompere il flusso.",
+    ctaTitle:"Pronto a pensare più veloce?",ctaDesc:"Installa Brainstorm Buddy. Gratuito.",
+    footerPrivacy:"Privacy",footerTerms:"Termini",footerContact:"Contatto",footerSupport:"Sostienici"
+  },
+  pt:{addBtn:"Adicionar ao Chrome",loginBtn:"Entrar",pricingBtn:"Preços",aboutBtn:"Sobre",
+    heroChromeBtn:"⚡ Adicionar ao Chrome — Grátis",heroPricingBtn:"Ver preços →",headline:"Pense mais rápido.<br><span class='grad'>Construa melhor.</span>",
+    subtext:"Brainstorming com IA e notas inteligentes no seu navegador.",
+    proof1:"Gerador de ideias IA",proof2:"Mapas mentais visuais",proof3:"Notas de voz",proof4:"Chat IA nas notas",proof5:"Dados nunca vendidos",mockUrl:"brainstorm-buddy · extensão chrome",mockPrompt:"10 ideias de startup no espaço de sustentabilidade…",mockBtn:"✨ Gerar ideias",mockLbl:"// resultado",mockIdea1:"Rastreador de pegada de carbono com IA para PMEs",mockIdea2:"Marketplace B2B de economia circular",mockIdea3:"Ferramenta de auditoria de cadeia verde",mockIdea4:"Assinatura de produtos zero desperdício",toolsLabel:"Ferramentas de análise IA",toolsDesc:"Use nas suas ideias — instantâneas, sem créditos extras.",tool1:"🪞 Brainstorming inverso",tool2:"💪 Análise SWOT",tool3:"🏆 Ranking de ideias",tool4:"🎯 Nicho específico",tool5:"💡 Modo E se?",tool6:"🗺️ Mapa mental",tool7:"🌡️ Radar de tendências",footerCopy:"© 2025 Brainstorm Buddy · Feito para pensadores",ctaBandBtnText:"⚡ Adicionar ao Chrome — É gratuito",featuresLabel:"Recursos",howLabel:"Como funciona",usecasesLabel:"Perfeito para",featuresTitle:"Tudo para pensar melhor",featuresSub:"Da primeira ideia à nota final.",
+    feature1Title:"Gerador de ideias IA",feature1:"Obtenha ideias instantaneamente.",
+    feature2Title:"Mapas mentais",feature2:"Transforme o resultado em mapa visual.",
+    feature3Title:"Bloco de notas smart",feature3:"Espaço rápido com #tags e pesquisa.",
+    feature4Title:"Notas de voz e TTS",feature4:"Grave ou ouça suas notas.",
+    feature5Title:"Chat IA nas notas",feature5:"Converse com IA dentro de qualquer nota.",
+    feature6Title:"Import e export",feature6:"Exporte em Markdown. Importe qualquer arquivo.",
+    howTitle:"Pronto em 60 segundos",howSub:"Sem configuração. Abra e pense.",
+    step1Title:"Instale a extensão",step1:"Adicione Brainstorm Buddy ao Chrome.",
+    step2Title:"Digite seu desafio",step2:"Escreva uma pergunta e clique em Gerar.",
+    step3Title:"Analise e refine",step3:"Use ferramentas IA para classificar ideias.",
+    step4Title:"Salve ou exporte",step4:"Salve, exporte ou grave uma nota de voz.",
+    usecasesTitle:"Feito para como você pensa",
+    studentTitle:"Estudantes",studentDesc:"Ideias para redações e notas de estudo.",
+    writerTitle:"Escritores",writerDesc:"Supere bloqueios criativos.",
+    entrepreneurTitle:"Empreendedores",entrepreneurDesc:"Valide ideias rápido com IA.",
+    professionalTitle:"Profissionais",professionalDesc:"Prepare reuniões e capture ideias.",
+    marketerTitle:"Marketing",marketerDesc:"Planeje campanhas com IA.",
+    developerTitle:"Desenvolvedores",developerDesc:"Registre ideias sem interromper o fluxo.",
+    ctaTitle:"Pronto para pensar mais rápido?",ctaDesc:"Instale Brainstorm Buddy. Gratuito.",
+    footerPrivacy:"Privacidade",footerTerms:"Termos",footerContact:"Contato",footerSupport:"Apoie-nos"
+  }
+};
+
+function changeLanguage(lang){
+  const t=translations[lang]||translations.en;
+  for(const key in t){
+    const el=document.getElementById(key);
+    if(!el) continue;
+    if(key==='headline') el.innerHTML=t[key];
+    else el.textContent=t[key];
+  }
+  localStorage.setItem('selectedLanguage',lang);
+  document.getElementById('langSelect').value=lang;
+}
+
+function toggleDarkMode(){
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('darkToggle').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('darkMode', isDark ? '1' : '0');
+}
+
+function toggleProfileMenu(){
+  const m=document.getElementById('profile-dropdown');
+  if(m) m.style.display=m.style.display==='block'?'none':'block';
+}
+
+async function logout(){
+  try{ await fetch(`${API_BASE}/logout`,{method:'POST',credentials:'include'}); }catch{}
+  localStorage.clear();
+  location.href='login.html';
+}
+
+function formatPlan(plan){
+  const p=String(plan||'').toLowerCase();
+  if(!p||p==='free') return 'Free';
+  return p.charAt(0).toUpperCase()+p.slice(1);
+}
+
+async function fetchCurrentPlan(email){
+  try{
+    const r=await fetch(`${API_BASE}/api/subscription-status?email=${encodeURIComponent(email)}`,{credentials:'include'});
+    if(!r.ok) throw new Error();
+    const d=await r.json();
+    return formatPlan(d?.plan||'Free');
+  }catch{ return 'Free'; }
+}
+
+function insertProfileUI({name,profileImage,plan}){
+  if(document.getElementById('profile-dropdown')) return;
+  document.getElementById('loginBtn').style.display='none';
+  const navRight=document.querySelector('.nav-right');
+  const wrap=document.createElement('div');
+  wrap.className='profile-container';
+  wrap.innerHTML=`
+    <div style="position:relative">
+      <button class="profile-trigger" onclick="toggleProfileMenu()">
+        <img id="profile-img" src="${profileImage||'default-avatar.png'}" alt="Profile"/>
+      </button>
+      <div class="dropdown" id="profile-dropdown">
+        <div class="dd-name">${name||'Account'}</div>
+        <div class="plan-label">Plan: <span id="plan-span">${formatPlan(plan)}</span></div>
+        <a href="billing.html">Billing & Plan</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </div>
+    </div>`;
+  navRight.appendChild(wrap);
+}
+
+async function checkSessionAndRender(){
+  try{
+    const r=await fetch(`${API_BASE}/me`,{credentials:'include'});
+    const d=await r.json();
+    if(r.ok&&d.ok){
+      localStorage.setItem('isLoggedIn','true');
+      if(d.email) localStorage.setItem('userEmail',d.email);
+      if(d.profileImage) localStorage.setItem('profileImage',d.profileImage);
+      document.getElementById('welcome').textContent=`Welcome back, ${d.name||d.email} 👋`;
+      insertProfileUI({name:d.name||d.email,profileImage:d.profileImage,plan:d.plan});
+      const plan=await fetchCurrentPlan(d.email);
+      localStorage.setItem('userPlan',plan);
+      const span=document.getElementById('plan-span');
+      if(span) span.textContent=plan;
+    } else {
+      ['isLoggedIn','userEmail','profileImage','userPlan'].forEach(k=>localStorage.removeItem(k));
+      document.getElementById('welcome').textContent='';
     }
+  }catch(e){ console.warn('Session check failed:',e); }
+}
 
-    function toggleDarkMode() { document.body.classList.toggle('dark'); }
+document.addEventListener('DOMContentLoaded',()=>{
+  // dark mode — default dark, only go light if user explicitly chose it
+  const savedMode = localStorage.getItem('darkMode');
+  if(savedMode === '0'){
+    document.body.classList.remove('dark');
+    document.getElementById('darkToggle').textContent = '🌙';
+  } else {
+    document.body.classList.add('dark');
+    document.getElementById('darkToggle').textContent = '☀️';
+  }
 
-    function toggleProfileMenu() {
-      const menu = document.getElementById("profile-dropdown");
-      if (menu) menu.style.display = menu.style.display === "block" ? "none" : "block";
-    }
+  // language
+  const lang=localStorage.getItem('selectedLanguage')||'en';
+  changeLanguage(lang);
+  document.getElementById('langSelect').addEventListener('change',e=>changeLanguage(e.target.value));
 
-    async function logout() {
-      try {
-        await fetch(`${API_BASE}/logout`, { method: 'POST', credentials: 'include' });
-      } catch {}
-      localStorage.clear();
-      location.href = 'login.html';
-    }
+  // nav
+  document.getElementById('addBtn')?.addEventListener('click',()=>
+    window.open('https://chromewebstore.google.com/detail/brainstorm-buddy-powered/cjdmgbbgficmdlgaihamohgpaadeagja?authuser=7&hl=en','_blank'));
+  document.getElementById('heroChromeBtn')?.addEventListener('click',()=>
+    window.open('https://chromewebstore.google.com/detail/brainstorm-buddy-powered/cjdmgbbgficmdlgaihamohgpaadeagja?authuser=7&hl=en','_blank'));
+  document.getElementById('loginBtn')?.addEventListener('click',()=>location.href='login.html');
+  document.getElementById('pricingBtn')?.addEventListener('click',()=>location.href='pricing.html');
+  document.getElementById('heroPricingBtn')?.addEventListener('click',()=>location.href='pricing.html');
+  document.getElementById('aboutBtn')?.addEventListener('click',()=>location.href='about.html');
 
-    function formatPlan(plan){
-      const p = String(plan || '').toLowerCase();
-      if (!p || p === 'free') return 'Free';
-      return p.charAt(0).toUpperCase() + p.slice(1);
-    }
+  checkSessionAndRender();
+});
 
-    async function fetchCurrentPlan(email){
-      try{
-        const res = await fetch(`${API_BASE}/api/subscription-status?email=${encodeURIComponent(email)}`, { credentials:'include' });
-        if(!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        return formatPlan(data?.plan || 'Free');
-      }catch{
-        return 'Free';
-      }
-    }
+window.addEventListener('focus',async()=>{
+  const email=localStorage.getItem('userEmail');
+  if(email){
+    const plan=await fetchCurrentPlan(email);
+    localStorage.setItem('userPlan',plan);
+    const span=document.getElementById('plan-span');
+    if(span) span.textContent=plan;
+  } else { checkSessionAndRender(); }
+});
 
-    function insertProfileUI({ name, profileImage, plan }) {
-      const navRight = document.querySelector(".nav-right");
-      if (document.getElementById('profile-dropdown')) return; // already inserted
-
-      const loginBtn = document.getElementById("loginBtn");
-      if (loginBtn) loginBtn.style.display = "none";
-
-      const profileDiv = document.createElement("div");
-      profileDiv.className = "profile-container";
-      profileDiv.innerHTML = `
-        <div style="position: relative;">
-          <button class="profile-trigger" onclick="toggleProfileMenu()" style="border: none; background: none;">
-            <img id="profile-img" src="${profileImage || 'default-avatar.png'}" alt="Profile" style="width: 32px; height: 32px; border-radius: 50%;">
-          </button>
-          <div class="dropdown" id="profile-dropdown">
-            <div><strong>${name ? name : 'Account'}</strong></div>
-            <div class="plan-label">Plan: <span id="plan-span">${formatPlan(plan)}</span></div>
-            <a href="billing.html">Billing & Plan</a>
-            <a href="#" onclick="logout()">Logout</a>
-          </div>
-        </div>
-      `;
-      navRight.appendChild(profileDiv);
-    }
-
-    async function checkSessionAndRender() {
-      try {
-        const res = await fetch(`${API_BASE}/me`, { credentials: 'include' });
-        const data = await res.json();
-
-        if (res.ok && data.ok) {
-          // Persist a bit for other pages
-          localStorage.setItem('isLoggedIn','true');
-          if (data.email) localStorage.setItem('userEmail', data.email);
-          if (data.profileImage) localStorage.setItem('profileImage', data.profileImage);
-
-          // UI: welcome + avatar
-          document.getElementById('welcome').textContent = `Welcome, ${data.name || data.email}!`;
-          insertProfileUI({ name: data.name || data.email, profileImage: data.profileImage, plan: data.plan });
-
-          // Refresh plan label from server (authoritative)
-          const plan = await fetchCurrentPlan(data.email);
-          localStorage.setItem('userPlan', plan);
-          const span = document.getElementById('plan-span');
-          if (span) span.textContent = plan;
-        } else {
-          // Not signed in
-          localStorage.removeItem('isLoggedIn');
-          localStorage.removeItem('userEmail');
-          localStorage.removeItem('profileImage');
-          localStorage.removeItem('userPlan');
-          document.getElementById('welcome').textContent = '';
-          // show Login button (already visible by default)
-        }
-      } catch (e) {
-        // Network or CORS issue — leave page usable
-        console.warn('Session check failed:', e);
-      }
-    }
-
-    // ====== Boot ======
-    document.addEventListener("DOMContentLoaded", () => {
-      // Language
-      const lang = localStorage.getItem('selectedLanguage') || 'en';
-      changeLanguage(lang);
-      document.getElementById('langSelect').addEventListener('change', e => changeLanguage(e.target.value));
-
-      // Nav buttons
-      document.getElementById("addBtn")?.addEventListener("click", () => {
-        window.open("https://chromewebstore.google.com/detail/brainstorm-buddy-powered/cjdmgbbgficmdlgaihamohgpaadeagja?authuser=7&hl=en", "_blank");
-      });
-      document.getElementById("loginBtn")?.addEventListener("click", () => { location.href = "login.html"; });
-      document.getElementById("pricingBtn")?.addEventListener("click", () => { location.href = "pricing.html"; });
-      document.getElementById("aboutBtn")?.addEventListener("click", () => { location.href = "about.html"; });
-
-      // Initial session check
-      checkSessionAndRender();
-    });
-
-    // Keep plan fresh when returning
-    window.addEventListener('focus', async () => {
-      const email = localStorage.getItem('userEmail');
-      if (email) {
-        const plan = await fetchCurrentPlan(email);
-        localStorage.setItem('userPlan', plan);
-        const span = document.getElementById('plan-span');
-        if (span) span.textContent = plan;
-      } else {
-        checkSessionAndRender();
-      }
-    });
-
-    // Close dropdown when clicking outside
-    window.addEventListener("click", function (e) {
-      if (!e.target.closest(".profile-container")) {
-        const menu = document.getElementById("profile-dropdown");
-        if (menu) menu.style.display = "none";
-      }
-    });
-  </script>
+window.addEventListener('click',e=>{
+  if(!e.target.closest('.profile-container')){
+    const m=document.getElementById('profile-dropdown');
+    if(m) m.style.display='none';
+  }
+});
+</script>
 </body>
 </html>
